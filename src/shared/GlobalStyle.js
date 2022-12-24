@@ -15,6 +15,7 @@ const GlobalStyle = createGlobalStyle`
     format("woff");
   font-weight: 400;
   font-style: normal;
+  color: '#191919';
 }
 
 /* body {
