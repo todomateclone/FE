@@ -3,7 +3,7 @@ import styled from "styled-components"
 import ButtonBasic from "./ButtonBasic"
 
 const TagBtn = (props) => {
-  return <ElTagBtn>{props.children}</ElTagBtn>
+  return <ElTagBtn style={{ color: props.color }}>{props.children}</ElTagBtn>
 }
 
 export default TagBtn
@@ -16,5 +16,5 @@ const ElTagBtn = styled(ButtonBasic)`
   padding: 0.6rem;
   background-color: #f5f5f5;
   font-weight: 700;
-  color: ${({ theme }) => theme.red.six};
+  color: ${(props) => props.color};
 `
