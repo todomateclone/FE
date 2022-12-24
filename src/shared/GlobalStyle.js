@@ -1,6 +1,5 @@
 import { createGlobalStyle } from "styled-components"
 import "normalize.css"
-import "../styles/font.css"
 
 const GlobalStyle = createGlobalStyle`
 
@@ -9,6 +8,20 @@ const GlobalStyle = createGlobalStyle`
     /* font-family: 'Noto Sans KR', sans-serif; */
     font-family: "Pretendard-Regular";
   }
+
+  @font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* body {
+  font-family: "Pretendard-Regular";
+  font-weight: 400;
+}
+ */
 `
 
 export default GlobalStyle
