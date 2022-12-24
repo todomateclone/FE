@@ -1,7 +1,7 @@
 import { instance } from "./axios"
 
 export const mainApis = {
-  getTodos: (year, month) =>
+  /* getTodos: (year, month) =>
     instance
       .get(`/api/todo/${year}/${month}`)
       .then((res) => {
@@ -9,7 +9,7 @@ export const mainApis = {
       })
       .catch((err) => {
         console.log(err.response.data.msg)
-      }),
+      }), */
 
   postTodo: (todoId, content) =>
     instance

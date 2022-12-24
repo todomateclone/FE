@@ -12,6 +12,7 @@ const ButtonBasic = (props) => {
     margin,
     padding,
     borderRadius,
+    color,
     children,
   } = props
 
@@ -21,6 +22,7 @@ const ButtonBasic = (props) => {
     height: height,
     padding: padding,
     borderRadius: borderRadius,
+    color: color,
   }
 
   return (
@@ -47,6 +49,7 @@ ButtonBasic.defaultProps = {
   padding: "10px",
   borderRadius: "",
   children: null,
+  color: "",
 }
 
 export default ButtonBasic
