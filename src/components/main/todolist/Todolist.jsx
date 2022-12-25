@@ -3,39 +3,48 @@ import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
 import TagBtn from "../../element/TagBtn"
 import { __getTodos } from "../../../redux/modules/todosSlice"
-import axios from "axios"
-import { serverUrl } from "../../../core/api"
 import Checkbox from "../../element/Checkbox"
+import { pendingIcon, plusIcon } from "../../../styles/assets"
 
 const Todolist = () => {
   const [todo, setTodo] = useState("")
   const [todos, setTodos] = useState({})
-  const { allTodos, error, msg } = useSelector((state) => state.allTodos)
-  const fetchTodos = () => {
-    const { data } = axios.get(`${serverUrl}`)
-    setTodos(data)
-  }
+  const { allTodos, isLoading, error } = useSelector((state) => state.allTodos)
+
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(__getTodos())
-    fetchTodos()
   }, [dispatch])
+
+  if (isLoading) return <div>loading...</div>
+
+  if (error) return <div>{error.message}</div>
+
   return (
     <div>
-      {allTodos.todos?.map((item) => {
-        const tag = allTodos.tags?.find((tag) => tag.tagId === item.tagId)
+      {allTodos.tags?.map((tag) => {
+        const todo = allTodos.todos?.filter((item) => item.tagId === tag.tagId)
         return (
-          <StTodolist key={"StTodolist" + item.todoId}>
+          // 태그
+          <StTodolist key={"StTodolist" + tag.tagId}>
             <StTagTitle
-              key={"StTagTitle" + item.todoId}
-              style={{ color: tag.tagColor }}
+              key={"StTagTitle" + tag.tagId}
+              // style={{ color: tag.tagColor }}
+              onClick={() => {
+                console.log(tag.tagName)
+              }}
             >
               {tag.tagName}
             </StTagTitle>
-            <StListBody key={"StListBody" + item.todoId}>
-              <Checkbox /> {item.content}
-            </StListBody>
-            <StTodoIcon key={"StTodoIcon" + item.todoId} src="#" />
+            {todo.map((val, idx) => (
+              <StFrag key={"frag" + val.todoId + idx}>
+                {/* 할 일 부분*/}
+                <StListBody key={"StListBody" + val.todoId}>
+                  <Checkbox /> {val.content}
+                </StListBody>
+                <StTodoIcon src={plusIcon} alt="" />
+              </StFrag>
+            ))}
           </StTodolist>
         )
       })}
@@ -47,25 +56,28 @@ export default Todolist
 
 const StTodolist = styled.div`
   display: grid;
-  grid-template-columns: 1fr 2rem;
-  grid-auto-rows: 3rem 3rem;
+  grid-template-columns: 1fr;
+  grid-auto-rows: 3rem 1fr;
   grid-area: todolist;
-  grid-template-areas:
-    "tagTitle ."
-    "listbody todoIcon";
   column-gap: 1em;
-  align-items: center;
 `
+const StFrag = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0 0.5rem;
+`
+
 const StTagTitle = styled(TagBtn)`
-  grid-area: tagTitle;
+  padding-bottom: 0.5rem;
 `
 
 const StListBody = styled.div`
   display: flex;
   align-items: center;
-  grid-area: listbody;
 `
 
 const StTodoIcon = styled.img`
-  grid-area: todoIcon;
+  width: 1rem;
+  height: 1rem;
 `

@@ -3,7 +3,14 @@ import styled from "styled-components"
 import ButtonBasic from "./ButtonBasic"
 
 const TagBtn = (props) => {
-  return <ElTagBtn style={{ color: props.color }}>{props.children}</ElTagBtn>
+  const { type, className, hidden, onClick, color, children } = props
+
+  const styles = { color: color }
+  return (
+    <ElTagBtn {...styles} type={type} className={className} onClick={onClick}>
+      {children}
+    </ElTagBtn>
+  )
 }
 
 export default TagBtn

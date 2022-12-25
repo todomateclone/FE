@@ -2,12 +2,12 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { mainApis } from "../../core/api/mainApi"
 import axios from "axios"
 import { serverUrl } from "../../core/api"
+import { instance } from "../../core/api/axios"
 
 const initialState = {
   allTodos: {},
   isLoading: false,
   error: null,
-  msg: "",
 }
 
 export const __getTodos = createAsyncThunk(
@@ -18,8 +18,7 @@ export const __getTodos = createAsyncThunk(
       // const data = await axios.getTodos(
       //   `${serverUrl}/api/todo/${todoYear}/${todoMonth}`
       // )
-      const data = await axios.get(`${serverUrl}/data`)
-      // return thunkAPI.fulfillWithValue(data.data.todos)
+      const data = await instance.get(`/data`)
       return thunkAPI.fulfillWithValue(data.data)
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
@@ -43,6 +42,10 @@ export const todosSlice = createSlice({
   name: "allTodos",
   initialState,
   reducers: {
+    getTodo: (state, action) => {
+      axios.get(`${serverUrl}/data`)
+      state.allTodos = state
+    },
     addTodo: (state, { todoYear, todoMonth }) => {
       axios.post(`${serverUrl}/todos/${todoYear.payload}/${todoMonth.payload}`)
       // state.allTodos = action.payload
