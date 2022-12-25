@@ -1,15 +1,16 @@
 import { instance } from "./axios"
 
 export const mainApis = {
-  /* getTodos: (year, month) =>
+  getTodos: (year, month) =>
     instance
-      .get(`/api/todo/${year}/${month}`)
+      // .get(`/api/todo/${year}/${month}`, {
+      .get(`/data`)
       .then((res) => {
         console.log(res.data.msg)
       })
       .catch((err) => {
         console.log(err.response.data.msg)
-      }), */
+      }),
 
   postTodo: (todoId, content) =>
     instance
