@@ -4,6 +4,7 @@ import CustomButton from "./CustomButton"
 import { SlArrowLeft } from "react-icons/sl"
 import { Link, useNavigate } from "react-router-dom"
 import { instance } from "../../core/api/axios"
+import Input from "../element/Input"
 
 const Login = () => {
   const navigate = useNavigate()
@@ -50,21 +51,21 @@ const Login = () => {
         </StLink>
         <div>로그인</div>
       </StLoginHead>
-      <StInput
+      <Input
         placeholder="이메일"
         name="email"
         value={userInfo.email}
         type="text"
-        autoFocus
+        autoFocus="autoFoucus"
         onChange={changeInputHandler}
-      ></StInput>
-      <StInput
+      ></Input>
+      <Input
         placeholder="비밀번호"
         name="password"
         type="password"
         value={userInfo.password}
         onChange={changeInputHandler}
-      ></StInput>
+      ></Input>
       {/* <StLink to="/main"> */}
       <CustomButton
         name="확인"
@@ -108,22 +109,21 @@ const StLink = styled(Link)`
   text-decoration: none;
 `
 
-const StInput = styled.input`
-  border: none;
-  border-bottom: 0.2rem solid #e4e2e2;
-  outline: none;
+// const StInput = styled.input`
+//   border: none;
+//   border-bottom: 0.2rem solid #e4e2e2;
+//   outline: none;
+//   width: 70rem;
+//   height: 2rem;
+//   font-size: 1.5rem;
+//   padding-bottom: 0.3rem;
 
-  width: 70rem;
-  height: 2rem;
-  font-size: 1.5rem;
-  padding-bottom: 0.3rem;
+//   ::placeholder {
+//     color: #c1bebe;
+//     font-weight: 400;
+//   }
 
-  ::placeholder {
-    color: #c1bebe;
-    font-weight: 400;
-  }
-
-  :focus {
-    border-bottom: 0.2rem solid #7c7b7b;
-  }
-`
+//   :focus {
+//     border-bottom: 0.2rem solid #7c7b7b;
+//   }
+// `

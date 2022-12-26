@@ -3,6 +3,7 @@ import styled from "styled-components"
 import CustomButton from "../login/CustomButton"
 import { SlArrowLeft } from "react-icons/sl"
 import { Link } from "react-router-dom"
+import Input from "../element/Input"
 
 const Profile = () => {
   return (
@@ -26,14 +27,14 @@ const Profile = () => {
       <StInputForm>
         <div>
           <label>이름</label>
-          <StInput placeholder="이름 입력" autoFocus></StInput>
+          <Input placeholder="이름 입력" autoFocus></Input>
         </div>
         <div>
           <label>자기소개</label>
-          <StInput
+          <Input
             placeholder="자기소개 입력(최대 50글자)"
             maxLength="50"
-          ></StInput>
+          ></Input>
         </div>
       </StInputForm>
     </StInputContainer>
@@ -86,18 +87,5 @@ const StInputForm = styled.div`
     font-size: 1.3rem;
     width: 5rem;
     margin-right: 1.1rem;
-  }
-`
-
-const StInput = styled.input`
-  border: none;
-  outline: none;
-  height: 2rem;
-  font-size: 1.3rem;
-  padding-bottom: 0.3rem;
-
-  ::placeholder {
-    color: #c1bebe;
-    font-weight: 400;
   }
 `

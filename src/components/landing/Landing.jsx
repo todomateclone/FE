@@ -2,12 +2,14 @@ import React from "react"
 import styled from "styled-components"
 import LoginButton from "../login/CustomButton"
 import { Link } from "react-router-dom"
+import { landingImg } from "../../styles/assets"
+import Input from "../element/Input"
 
 const Landing = () => {
   return (
     <StLoginContainer>
       <div>
-        <StLandingImg alt="Todomate" src="img/LandingImg.png"></StLandingImg>
+        <StLandingImg alt="Todomate" src={landingImg}></StLandingImg>
       </div>
       <div>
         <h1>todo mate</h1>
@@ -25,6 +27,16 @@ const Landing = () => {
       <Link to={"/signup"} style={{ color: "black" }}>
         <LinkSignUp>가입하기</LinkSignUp>
       </Link>
+      <Input
+        placeholder="입력"
+        fontSize="5rem"
+        height="7rem"
+        width="10rem"
+        color="red"
+        borderBottom="0.2rem solid #7c7b7b"
+      ></Input>
+      <Input placeholder="입력" autoFocus="autoFocus"></Input>
+      <Input value="안녕"></Input>
     </StLoginContainer>
   )
 }
