@@ -12,7 +12,7 @@ const Tags = () => {
           <SlArrowLeft size="20"></SlArrowLeft>
         </StLink>
         <div>목표</div>
-        <StLink to="/edittag">
+        <StLink to="/tag/1">
           <RxPlus size="25"></RxPlus>
         </StLink>
       </StLoginHead>
@@ -20,14 +20,14 @@ const Tags = () => {
       <StTagBox>
         <div>
           <label>일반</label>
-          <StTagLink to="/tag/:tagId">
+          <StTagLink to="/tag/1">
             <p>태그1asdads</p>
             <p>{">"}</p>
           </StTagLink>
           <hr />
         </div>
         <div>
-          <StTagLink to="/tag/:tagId">
+          <StTagLink to="/tag/1">
             <p>태그2adfadfasdfadsf</p>
             <p>{">"}</p>
           </StTagLink>
