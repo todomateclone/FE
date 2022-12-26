@@ -1,15 +1,10 @@
-import React, { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import React from "react"
 import styled from "styled-components"
 import Header from "../../shared/layout/Header"
-import { __getTodos } from "../../redux/modules/todosSlice"
 import Todolist from "./todolist/Todolist"
+import TodoCalendar from "./calendar/TodoCalendar"
 
 const Main = () => {
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(__getTodos())
-  }, [dispatch])
   return (
     <>
       <Header />
@@ -21,7 +16,8 @@ const Main = () => {
           <h3>FEED</h3>
         </StFeed>
         <StCalendar>
-          <h3>달력 부분</h3>
+          <TodoCalendar />
+          {/* <TestCalendar /> */}
         </StCalendar>
         <Todolist />
       </StMainWrapper>
@@ -33,13 +29,13 @@ export default Main
 
 const StMainWrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 22rem 1fr;
   grid-auto-rows: 4rem 1fr;
   grid-template-areas:
     "social feed"
     "calendar todolist";
   gap: 2em;
-  padding: 2rem 4rem 2rem;
+  padding: 2rem 3rem 2rem;
 
   @media screen and (max-width: 42.5rem) {
     grid-template-columns: 1fr;

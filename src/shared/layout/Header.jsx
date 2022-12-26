@@ -1,10 +1,13 @@
 import React from "react"
 import styled from "styled-components"
+import SubMenu from "../../components/subMenu/SubMenu"
 
 const Header = () => {
   return (
     <>
-      <StHeader>아이콘 아이콘 아이콘</StHeader>
+      <StHeader>
+        <SubMenu />
+      </StHeader>
     </>
   )
 }

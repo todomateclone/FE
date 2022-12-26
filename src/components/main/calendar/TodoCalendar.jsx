@@ -3,6 +3,7 @@ import Calendar from "react-calendar"
 import { useDispatch, useSelector } from "react-redux"
 import { __getTodos } from "../../../redux/modules/todosSlice"
 import "./Calendar.css"
+import Checkbox from "../../element/Checkbox"
 
 const TodoCalendar = () => {
   const [value, onChange] = useState(new Date())
@@ -35,14 +36,10 @@ const TodoCalendar = () => {
         tileContent={({ date, view }) => {
           const html = []
           // 현재 날짜가 post 작성한 날짜 배열(mark)에 있다면, dot div 추가
-          html.push(<div className="dot"></div>)
+          html.push(<Checkbox checked={false} />)
 
           // 다른 조건을 주어서 html.push 에 추가적인 html 태그를 적용할 수 있음.
-          return (
-            <>
-              <div>{html}</div>
-            </>
-          )
+          return <>{html}</>
         }}
         value={value}
       />
