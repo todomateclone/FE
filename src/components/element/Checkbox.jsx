@@ -1,18 +1,23 @@
 import React from "react"
 import styled from "styled-components"
 
-const CheckboxOn = (props) => {
-  return <ElCheckInput type="checkbox" onClick={props.onClick} />
+const Checkbox = (props) => {
+  return (
+    <ElCheckInput
+      type="checkbox"
+      onClick={props.onClick}
+      checked={props.checked}
+    />
+  )
 }
 
-export default CheckboxOn
+export default Checkbox
 
 const ElCheckInput = styled.input`
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 0.5rem;
   border: none;
-  margin-right: 0.8rem;
   background: #dadddf;
   appearance: none;
   :checked {
