@@ -6,6 +6,7 @@ import ProfilePage from "../pages/ProfilePage"
 import SignUpPage from "../pages/SignUpPage"
 import TagPage from "../pages/TagPage"
 import MainPage from "../pages/MainPage"
+import EditTagPage from "../pages/EditTagPage"
 
 const Router = () => {
   // 라우트 경로는 추후 수정 필요 임시
@@ -19,6 +20,7 @@ const Router = () => {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/tag" element={<TagPage />} />
+          <Route path="/tag/:tagId" element={<EditTagPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
