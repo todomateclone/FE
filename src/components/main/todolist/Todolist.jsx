@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
-import TagBtn from "../../element/TagBtn"
 import { __getTodos } from "../../../redux/modules/todosSlice"
-import Checkbox from "../../element/Checkbox"
-import { pendingIcon, plusIcon } from "../../../styles/assets"
+import TodoTag from "./TodoTag"
+import TodoBody from "./TodoBody"
 
 const Todolist = () => {
   const [todo, setTodo] = useState("")
@@ -12,6 +11,9 @@ const Todolist = () => {
   const { allTodos, isLoading, error } = useSelector((state) => state.allTodos)
 
   const dispatch = useDispatch()
+  // const fetchTodos = () => {
+  //   setTodos(allTodos)
+  // }
   useEffect(() => {
     dispatch(__getTodos())
   }, [dispatch])
@@ -25,25 +27,14 @@ const Todolist = () => {
       {allTodos.tags?.map((tag) => {
         const todo = allTodos.todos?.filter((item) => item.tagId === tag.tagId)
         return (
-          // 태그
           <StTodolist key={"StTodolist" + tag.tagId}>
-            <StTagTitle
-              key={"StTagTitle" + tag.tagId}
-              // style={{ color: tag.tagColor }}
-              onClick={() => {
-                console.log(tag.tagName)
-              }}
-            >
-              {tag.tagName}
-            </StTagTitle>
-            {todo.map((val, idx) => (
-              <StFrag key={"frag" + val.todoId + idx}>
-                {/* 할 일 부분*/}
-                <StListBody key={"StListBody" + val.todoId}>
-                  <Checkbox /> {val.content}
-                </StListBody>
-                <StTodoIcon src={plusIcon} alt="" />
-              </StFrag>
+            <TodoTag tag={tag} key={"StTagTitle" + tag.tagId} />
+            {todo.map((val) => (
+              <TodoBody
+                val={val}
+                tag={tag}
+                key={"frag" + val.todoId + Math.random()}
+              />
             ))}
           </StTodolist>
         )
@@ -55,29 +46,10 @@ const Todolist = () => {
 export default Todolist
 
 const StTodolist = styled.div`
-  display: grid;
+  /* 그리드를 깔면 배치는 깔끔한데 마진 패딩이 부자유스럽다. 1fr말고 마진 패딩 맘대로인 조절이 없을까? */
+  /* display: grid;
   grid-template-columns: 1fr;
-  grid-auto-rows: 3rem 1fr;
+  grid-auto-rows: 1fr 1fr;
   grid-area: todolist;
-  column-gap: 1em;
-`
-const StFrag = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 0 0.5rem;
-`
-
-const StTagTitle = styled(TagBtn)`
-  padding-bottom: 0.5rem;
-`
-
-const StListBody = styled.div`
-  display: flex;
-  align-items: center;
-`
-
-const StTodoIcon = styled.img`
-  width: 1rem;
-  height: 1rem;
+  column-gap: 1em; */
 `
