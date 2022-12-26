@@ -1,11 +1,11 @@
 import React from "react"
 import styled from "styled-components"
 
-const Checkbox = () => {
-  return <ElCheckInput type="checkbox" />
+const CheckboxOn = (props) => {
+  return <ElCheckInput type="checkbox" onClick={props.onClick} />
 }
 
-export default Checkbox
+export default CheckboxOn
 
 const ElCheckInput = styled.input`
   width: 1.5rem;
