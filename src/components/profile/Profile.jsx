@@ -11,14 +11,14 @@ const Profile = () => {
         <StLink to="/" style={{ color: "black" }}>
           <SlArrowLeft size="20"></SlArrowLeft>
         </StLink>
-        <div>프로필</div>
+        <div> 프로필</div>
         <StLink to="/main">
           <CustomButton
             name="확인"
-            height="3rem"
-            width="3rem"
-            color="#c9c7c7"
-            fontSize="1.1rem"
+            height="3.5rem"
+            width="3.5rem"
+            fontSize="1.45rem"
+            fontWeight="500"
             backGroundColor="transparent"
           ></CustomButton>
         </StLink>
@@ -26,7 +26,7 @@ const Profile = () => {
       <StInputForm>
         <div>
           <label>이름</label>
-          <StInput placeholder="이름 입력"></StInput>
+          <StInput placeholder="이름 입력" autoFocus></StInput>
         </div>
         <div>
           <label>자기소개</label>
@@ -41,6 +41,18 @@ const Profile = () => {
 }
 
 export default Profile
+
+const StInputContainer = styled.div`
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 2rem;
+  gap: 1rem;
+  font-size: 1.35rem;
+  font-weight: 600;
+`
+
 const StLoginHead = styled.div`
   display: flex;
   width: 100%;
@@ -50,23 +62,17 @@ const StLoginHead = styled.div`
   div {
   }
 `
-
-const StInputContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 2rem;
-  gap: 1rem;
-  font-size: 1.1rem;
-  font-weight: 600;
+const StLink = styled(Link)`
+  color: black;
+  text-decoration: none;
 `
 
 const StInputForm = styled.div`
   input {
-    width: 62rem;
-    border-bottom: 0.15rem solid #e4e2e2;
+    width: 65rem;
+    border-bottom: 0.2rem solid #e4e2e2;
     :focus {
-      border-bottom: 0.15rem solid #898787;
+      border-bottom: 0.2rem solid #7c7b7b;
     }
   }
   div {
@@ -77,25 +83,21 @@ const StInputForm = styled.div`
     margin-bottom: 1.5rem;
   }
   label {
+    font-size: 1.3rem;
     width: 5rem;
-    height: 1.5rem;
+    margin-right: 1.1rem;
   }
 `
 
 const StInput = styled.input`
   border: none;
   outline: none;
+  height: 2rem;
+  font-size: 1.3rem;
+  padding-bottom: 0.3rem;
+
   ::placeholder {
-    color: #d8d5d5;
+    color: #c1bebe;
     font-weight: 400;
   }
-  height: 2rem;
-  font-size: 1.2rem;
-  padding-bottom: 0.3rem;
-`
-
-const StLink = styled(Link)`
-  color: black;
-  text-decoration: none;
-  width: "3rem";
 `

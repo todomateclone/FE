@@ -10,10 +10,8 @@ const Landing = () => {
         <StLandingImg alt="Todomate" src="img/LandingImg.png"></StLandingImg>
       </div>
       <div>
-        <div>
-          <h1>todo mate</h1>
-          <p>할 일을 작성, 계획, 관리하세요.</p>
-        </div>
+        <h1>todo mate</h1>
+        <p>할 일을 작성, 계획, 관리하세요.</p>
       </div>
       <StBtnBox>
         <StLink to={"/login"}>
@@ -24,7 +22,7 @@ const Landing = () => {
           ></LoginButton>
         </StLink>
       </StBtnBox>
-      <Link to={"/signup"}>
+      <Link to={"/signup"} style={{ color: "black" }}>
         <LinkSignUp>가입하기</LinkSignUp>
       </Link>
     </StLoginContainer>
@@ -64,6 +62,7 @@ const LinkSignUp = styled.div`
   font-size: 0.9rem;
 `
 const StLandingImg = styled.img`
+  margin-top: 25rem;
   width: 20rem;
   height: 20rem;
 `

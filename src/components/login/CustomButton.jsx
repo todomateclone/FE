@@ -10,6 +10,7 @@ const CustomButton = ({
   fontSize,
   fontWeight,
   backGroundColor,
+  onClick,
 }) => {
   return (
     <StButton
@@ -19,6 +20,7 @@ const CustomButton = ({
       fontSize={fontSize}
       fontWeight={fontWeight}
       backGroundColor={backGroundColor}
+      onClick={onClick}
     >
       {name}
     </StButton>
@@ -28,7 +30,7 @@ const CustomButton = ({
 export default CustomButton
 
 const StButton = styled.button`
-  border-radius: 0.2rem;
+  border-radius: 0.4rem;
   border: none;
   width: ${({ width }) => width};
   background-color: ${({ backGroundColor }) => backGroundColor};
@@ -41,4 +43,5 @@ const StButton = styled.button`
   align-items: center;
   justify-content: center;
   outline: none;
+  cursor: pointer;
 `
