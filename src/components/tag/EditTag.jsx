@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { RiArrowDropDownFill } from "react-icons/ri"
 import { SlArrowLeft } from "react-icons/sl"
 import { Link } from "react-router-dom"
+import Input from "../element/Input"
 
 const EditTag = () => {
   return (
@@ -18,7 +19,13 @@ const EditTag = () => {
       </StLoginHead>
       <StTagBox>
         <div>
-          <StInput placeholder="목표 입력"></StInput>
+          <Input
+            placeholder="목표 입력"
+            borderBottom="0.2rem solid #040404;"
+            autoFocus="autoFocus"
+            width="70rem"
+          ></Input>
+
           <StSetColor>
             <p>공개설정</p>
             <p>
@@ -54,21 +61,7 @@ const StTagBox = styled.div`
   align-items: center;
   margin-top: 3rem;
 `
-const StInput = styled.input`
-  border: none;
-  outline: none;
-  width: 70rem;
-  border-bottom: 0.2rem solid #040404;
-  height: 2rem;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  padding-bottom: 0.3rem;
-  ::placeholder {
-    color: #d8d5d5;
-    font-weight: 400;
-    font-size: 1.4rem;
-  }
-`
+
 const StLink = styled(Link)`
   color: black;
   text-decoration: none;

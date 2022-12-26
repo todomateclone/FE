@@ -3,6 +3,7 @@ import styled from "styled-components"
 import CustomButton from "../login/CustomButton"
 import { SlArrowLeft } from "react-icons/sl"
 import { Link } from "react-router-dom"
+import Input from "../element/Input"
 
 const SignUp = () => {
   const [userInfo, setUserInfo] = useState({
@@ -20,8 +21,17 @@ const SignUp = () => {
         </StLink>
         <div>가입하기</div>
       </StLoginHead>
-      <StInput placeholder="이메일" autoFocus></StInput>
-      <StInput placeholder="비밀번호"></StInput>
+      <Input
+        placeholder="이메일"
+        width="70rem"
+        autoFocus="autoFocus"
+        borderBottom="0.2rem solid #7c7b7b;"
+      ></Input>
+      <Input
+        placeholder="비밀번호"
+        width="70rem"
+        borderBottom="0.2rem solid #7c7b7b;"
+      ></Input>
       <StLink to="/login">
         <CustomButton
           name="확인"
@@ -64,23 +74,4 @@ const StLoginHead = styled.div`
 const StLink = styled(Link)`
   color: black;
   text-decoration: none;
-`
-
-const StInput = styled.input`
-  border: none;
-  border-bottom: 0.2rem solid #e4e2e2;
-  outline: none;
-
-  width: 70rem;
-  height: 2rem;
-  font-size: 1.5rem;
-  padding-bottom: 0.3rem;
-
-  ::placeholder {
-    color: #c1bebe;
-    font-weight: 400;
-  }
-  :focus {
-    border-bottom: 0.2rem solid #7c7b7b;
-  }
 `
