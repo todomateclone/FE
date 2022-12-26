@@ -3,7 +3,8 @@ import styled from "styled-components"
 // 자주 쓰는 색
 
 const baseColor = {
-  gray: "#fafafa",
+  headerGray: "#fafafa",
+  btnGray: "#f5f5f5",
 }
 
 const red = {
@@ -25,11 +26,10 @@ const common = {
   }
   `, */
 
-  flexCenterColumn: `
+  flexCenter: `
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
   `,
 }
 
