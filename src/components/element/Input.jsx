@@ -37,6 +37,8 @@ const Input = ({
   )
 }
 
+Input.defaultProps = { onChange: () => {} }
+
 const StInput = styled.input`
   border: none;
   border-bottom: 0.08rem solid ${(props) => props.color};

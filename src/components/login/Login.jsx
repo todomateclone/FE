@@ -62,21 +62,21 @@ const Login = () => {
         type="text"
         autoFocus="autoFoucus"
         onChange={changeInputHandler}
-        width="70rem"
+        width="80%"
         borderBottom="0.2rem solid #7c7b7b;"
-      ></Input>
+      />
       <Input
         placeholder="비밀번호"
         name="password"
         type="password"
         value={userInfo.password}
         onChange={changeInputHandler}
-        width="70rem"
+        width="80%"
         borderBottom="0.2rem solid #7c7b7b;"
-      ></Input>
+      />
       <CustomButton
         name="확인"
-        width="70rem"
+        width="80%"
         height="3.7rem"
         color="#c9c7c7"
         fontSize="1.4rem"
@@ -90,9 +90,9 @@ const Login = () => {
 export default Login
 
 const StInputForm = styled.div`
-  display: flex;
+  ${({ theme }) => theme.common.flexCenter}
   flex-direction: column;
-  align-items: center;
+  width: 100%;
   margin-top: 1rem;
   gap: 2rem;
   font-size: 1.35rem;
@@ -103,7 +103,7 @@ const StInputForm = styled.div`
 `
 
 const StLoginHead = styled.div`
-  display: flex;
+  ${({ theme }) => theme.common.flexCenter}
   width: 100%;
   div {
     margin: auto;
