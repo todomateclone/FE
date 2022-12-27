@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { mainApis } from "../../core/api/mainApi"
 import axios from "axios"
 import { serverUrl } from "../../core/api"
-import { instance } from "../../core/api/axios"
+import { baseURL, instance } from "../../core/api/axios"
 
 const initialState = {
   allTodos: {},
@@ -15,10 +15,7 @@ export const __getTodos = createAsyncThunk(
   // async ({ todoYear, todoMonth }, thunkAPI) => {
   async (payload, thunkAPI) => {
     try {
-      // const data = await axios.getTodos(
-      //   `${serverUrl}/api/todo/${todoYear}/${todoMonth}`
-      // )
-      const data = await instance.get(`/data`)
+      const data = await baseURL.get(`/todo`)
       return thunkAPI.fulfillWithValue(data.data)
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
