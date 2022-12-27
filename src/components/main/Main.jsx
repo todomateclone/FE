@@ -17,7 +17,6 @@ const Main = () => {
         </StFeed>
         <StCalendar>
           <TodoCalendar />
-          {/* <TestCalendar /> */}
         </StCalendar>
         <Todolist />
       </StMainWrapper>
