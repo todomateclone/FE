@@ -8,18 +8,18 @@ const TodoBody = ({ val, tag }) => {
   const [todo, setTodo] = useState({ ...val })
   const [isDone, setIsDone] = useState()
 
-  const checkHandler = () => {
+  const handleCheck = () => {
     setChecked(!checked)
-    // checkedItemHandler(tag.id, i, e.target.checked)
-    checkedItemHandler()
+    // handleCheckedItem(tag.id, i, e.target.checked)
+    handleCheckedItem()
   }
-  /*   const checkedItemHandler = (id, idx, isCheck) => {
+  /*   const handleCheckedItem = (id, idx, isCheck) => {
     setIsDone((prev) => {
       return { ...prev, [id]: { [idx]: isCheck } }
     })
   } */
 
-  const checkedItemHandler = () => {
+  const handleCheckedItem = () => {
     setIsDone(!isDone)
     setTodo({ ...val, done: isDone })
     console.log(todo.done)
@@ -34,7 +34,7 @@ const TodoBody = ({ val, tag }) => {
         <Checkbox
           // 여기 onChange에서 에러 뜸, i 어떻게 넣을지 생각
           // map 돌릴 거 아니므로 i 일단 제외
-          _onChange={() => checkHandler()}
+          _onChange={() => handleCheck()}
           checked={checked}
           color={tag.tagColor}
           key={tag.tagId}
