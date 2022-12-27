@@ -1,8 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { mainApis } from "../../core/api/mainApi"
-import axios from "axios"
-import { serverUrl } from "../../core/api"
-import { baseURL, instance } from "../../core/api/axios"
+import { baseURL } from "../../core/api/axios"
 
 const initialState = {
   allTodos: {},
@@ -27,7 +24,7 @@ export const __addTodo = createAsyncThunk(
   "todos/add",
   async (tagId, thunkAPI) => {
     try {
-      await axios.post(`${serverUrl}/api/${tagId}`)
+      await baseURL.post(`/api/todo/${tagId}`)
       return thunkAPI.fulfillWithValue(console.log("success"))
     } catch (err) {
       return thunkAPI.rejectWithValue(console.log(err))
@@ -40,19 +37,19 @@ export const todosSlice = createSlice({
   initialState,
   reducers: {
     getTodo: (state, action) => {
-      axios.get(`${serverUrl}/data`)
+      baseURL.get(`/data`)
       state.allTodos = state
     },
     addTodo: (state, { todoYear, todoMonth }) => {
-      axios.post(`${serverUrl}/todos/${todoYear.payload}/${todoMonth.payload}`)
+      baseURL.post(`/todos/${todoYear.payload}/${todoMonth.payload}`)
       // state.allTodos = action.payload
     },
     delTodo: (state, action) => {
-      axios.delete(`${serverUrl}/todos/${action.payload}`)
+      baseURL.delete(`/todos/${action.payload}`)
       state.allTodos = state.allTodos.filter((v) => v.id !== action.payload)
     },
     updateTodo: (state, action) => {
-      axios.patch(`${serverUrl}/todos/${action.payload}`)
+      baseURL.patch(`/todos/${action.payload}`)
       state.allTodos = action.payload
     },
   },
@@ -66,6 +63,17 @@ export const todosSlice = createSlice({
         state.allTodos = action.payload
       })
       .addCase(__getTodos.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload
+      })
+      .addCase(__addTodo.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(__addTodo.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.allTodos = action.payload
+      })
+      .addCase(__addTodo.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload
       })
