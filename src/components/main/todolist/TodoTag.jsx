@@ -1,12 +1,24 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import styled from "styled-components"
 import { feedAddBtn } from "../../../styles/assets"
 import Checkbox from "../../element/Checkbox"
 import Input from "../../element/Input"
+import { __addTodo } from "../../../redux/modules/todosSlice"
+import { useDispatch } from "react-redux"
 
 const TodoTag = ({ tag }) => {
   const [inputHidden, setInputHidden] = useState(true)
-
+  const [post, setPost] = useState({
+    content: "todo 내용",
+    todoYear: 2022,
+    todoMonth: 12,
+    todoDay: 25,
+  })
+  const dispatch = useDispatch()
+  const handleAddTodo = (tagId) => {
+    __addTodo(tagId)
+  }
+  useEffect(() => {}, [dispatch])
   return (
     <>
       <StTagTitle
@@ -19,11 +31,23 @@ const TodoTag = ({ tag }) => {
           {tag.tagName} <img src={feedAddBtn} alt="" />{" "}
         </ElTagName>
       </StTagTitle>
-      <ElTodoInputWrap hidden={inputHidden}>
+      <ElTodoInputWrap
+        hidden={inputHidden}
+        onSubmit={() => {
+          handleAddTodo(tag.tagId)
+        }}
+      >
         <Checkbox readOnly />
         <ElInput
           placeholder="입력"
           style={{ borderBottom: `0.09rem solid ${tag.tagColor}` }}
+          onChange={(e) => {
+            setPost({
+              //클릭한 날짜 받아오기. useSelector?
+              content: e.target.value,
+            })
+            console.log(post)
+          }}
         />
       </ElTodoInputWrap>
     </>
@@ -53,7 +77,7 @@ const StTagTitle = styled.button`
 
 const ElTagName = styled.span``
 
-const ElTodoInputWrap = styled.div`
+const ElTodoInputWrap = styled.form`
   display: flex;
   flex-direction: row;
   margin-top: 0.5rem;

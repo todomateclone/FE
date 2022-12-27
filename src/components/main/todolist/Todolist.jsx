@@ -8,11 +8,13 @@ import TodoBody from "./TodoBody"
 const Todolist = () => {
   const [todos, setTodos] = useState({})
   const { allTodos, isLoading, error } = useSelector((state) => state.allTodos)
+  const [oneDayTodo, setOneDayTodo] = useState({})
 
   const dispatch = useDispatch()
-  // const fetchTodos = () => {
-  //   setTodos(allTodos)
-  // }
+  const fetchTodos = () => {
+    setTodos(allTodos.data)
+    setOneDayTodo(allTodos.data?.todos?.filter())
+  }
   useEffect(() => {
     dispatch(__getTodos())
   }, [dispatch])
@@ -23,11 +25,13 @@ const Todolist = () => {
 
   return (
     <div>
-      {allTodos.tags?.map((tag) => {
-        const todo = allTodos.todos?.filter((item) => item.tagId === tag.tagId)
+      {allTodos.data?.tags?.map((tag) => {
+        const todo = allTodos.data?.todos?.filter(
+          (item) => item.tagId === tag.tagId
+        )
         return (
-          <StTodolist key={"StTodolist" + tag.tagId}>
-            <TodoTag tag={tag} key={"StTagTitle" + tag.tagId} />
+          <StTodolist key={`StTodolist${tag.tagId}`}>
+            <TodoTag tag={tag} key={`StTagTitle${tag.tagId}`} />
             {todo.map((val) => (
               <TodoBody
                 val={val}
@@ -40,6 +44,8 @@ const Todolist = () => {
       })}
     </div>
   )
+
+  // if (allTodos === {}) return <div>할 일이 없어요ㅠ.ㅠ</div>
 }
 
 export default Todolist
