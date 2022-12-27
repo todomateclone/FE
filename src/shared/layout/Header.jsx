@@ -6,15 +6,29 @@ import { mainSideMenuBtn } from "../../styles/assets"
 
 const Header = () => {
   const [modalOpen, setModalOpen] = useState(false)
+  const [open, setOpen] = useState(false)
+
   const showModal = () => {
     setModalOpen(true)
   }
   return (
     <>
       <StHeader>
-        <BtnImg src={mainSideMenuBtn} alt="" onClick={showModal} />
-        {modalOpen && <SubMenuModal setModalOpen={setModalOpen} />}
-        {/* <SubMenu /> */}
+        <BtnImg
+          src={mainSideMenuBtn}
+          alt=""
+          onClick={() => {
+            setOpen(!open)
+          }}
+        />
+        {
+          /* modalOpen &&  */
+          <SubMenuModal
+            setModalOpen={setModalOpen}
+            open={open}
+            setOpen={setOpen}
+          />
+        }
       </StHeader>
     </>
   )
@@ -28,6 +42,7 @@ const StHeader = styled.header`
   height: 5rem;
   padding: 2rem;
   border-bottom: 0.1rem solid #f1f1f1;
+  overflow: hidden;
 `
 
 const BtnImg = styled.img`
