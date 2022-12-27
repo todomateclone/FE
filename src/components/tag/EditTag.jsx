@@ -75,27 +75,29 @@ const EditTag = () => {
       </StLoginHead>
       <StTagBox>
         <div>
-          <Input
-            placeholder={tag?.tagName ?? "목표 입력"} // undefined 거나 null 이면 목표입력이 나오도록
-            borderBottom="0.2rem solid #040404;"
-            autoFocus="autoFocus"
-            width="70rem"
-            value={newTag.tagName}
-            onChange={changeInputHandler}
-          ></Input>
+          <div>
+            <Input
+              placeholder={tag?.tagName ?? "목표 입력"} // undefined 거나 null 이면 목표입력이 나오도록
+              borderBottom="0.2rem solid #040404;"
+              autoFocus="autoFocus"
+              width="70rem"
+              value={newTag.tagName}
+              onChange={changeInputHandler}
+            ></Input>
 
-          <StSetColor>
-            <p>공개설정</p>
-            <p>
-              <RiArrowDropDownFill></RiArrowDropDownFill>
-            </p>
-          </StSetColor>
-          <StSetColor>
-            <p>색상</p>
-            <p>
-              <RiArrowDropDownFill></RiArrowDropDownFill>
-            </p>
-          </StSetColor>
+            <StSetColor>
+              <p>공개설정</p>
+              <p>
+                <RiArrowDropDownFill></RiArrowDropDownFill>
+              </p>
+            </StSetColor>
+            <StSetColor>
+              <p>색상</p>
+              <p>
+                <RiArrowDropDownFill></RiArrowDropDownFill>
+              </p>
+            </StSetColor>
+          </div>
           {tag && (
             <StBtnBox>
               <CustomButton
@@ -153,6 +155,7 @@ const StSetColor = styled.div`
   justify-content: space-between;
 
   border-bottom: 0.15rem solid #e4e2e2;
+  margin-top: 1.5rem;
   p {
     height: 1.5rem;
     font-weight: 300;
