@@ -8,16 +8,6 @@ const initialState = {
       tagName: "일반",
       tagColor: "black",
     },
-    {
-      tagId: "2",
-      tagName: "안녕하세요 태그2",
-      tagColor: "",
-    },
-    {
-      tagId: "3",
-      tagName: "안녕하세요 태그3",
-      tagColor: "",
-    },
   ],
   isLoading: false,
   error: null,

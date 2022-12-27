@@ -2,11 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { baseURL } from "../../core/api/axios"
 
 const initialState = {
-  profile: {
-    nickname: "",
-    description: "",
-    profileImageUrl: "",
-  },
+  profile: {},
   isLoading: false,
   error: null,
 }
@@ -16,6 +12,7 @@ export const __getProfile = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await baseURL.get(`/member`)
+      console.log("프로필 불러오기")
       console.log(data.data)
       return thunkAPI.fulfillWithValue(data.data)
     } catch (error) {
@@ -27,10 +24,8 @@ export const __getProfile = createAsyncThunk(
 export const __patchProfile = createAsyncThunk(
   "profile/patch",
   async (payload, thunkAPI) => {
-    console.log(payload)
     try {
-      const { data } = await baseURL.patch(`member`, payload)
-      console.log(data.data)
+      const data = await baseURL.patch(`member`, payload)
       return thunkAPI.fulfillWithValue(data)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
@@ -54,9 +49,7 @@ export const profileSlice = createSlice({
       })
       .addCase(__getProfile.fulfilled, (state, action) => {
         state.isLoading = false
-        console.log(action.payload)
-        state.profile = {}
-        // state.profile = {... state , action.payload}
+        state.profile = action.payload
       })
       .addCase(__getProfile.rejected, (state, action) => {
         state.isLoading = false
@@ -69,7 +62,10 @@ export const profileSlice = createSlice({
       })
       .addCase(__patchProfile.fulfilled, (state, action) => {
         state.isLoading = false
-        console.log(action.payload)
+        // console.log(action.payload.data.data)
+        const newProfile = action.payload.data.data
+        state.profile = newProfile
+
         // state.profile
       })
       .addCase(__patchProfile.rejected, (state, action) => {

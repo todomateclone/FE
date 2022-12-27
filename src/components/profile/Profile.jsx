@@ -6,8 +6,6 @@ import { Link, useNavigate } from "react-router-dom"
 import Input from "../element/Input"
 import { useDispatch, useSelector } from "react-redux"
 import { __getProfile, __patchProfile } from "../../redux/modules/profileSlice"
-import { patchProfile } from "../../redux/modules/profileSlice"
-import { landingImg } from "../../styles/assets"
 
 const Profile = () => {
   const dispatch = useDispatch()
@@ -15,20 +13,20 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(__getProfile())
-  }, [dispatch]) // then
-
-  const [isEditMode, setIsEditMode] = useState(false)
+  }, [dispatch])
 
   const data = useSelector((state) => state.profile)
-  // console.log(data.profile)
-
   const profile = data.profile
+  console.log(profile)
 
-  const [newProfile, setNewProfile] = useState(profile)
+  const [newProfile, setNewProfile] = useState({
+    nickname: profile.nickname,
+    description: profile.description,
+  })
+  console.log(newProfile)
 
   const changeInputHandler = (e) => {
     setNewProfile({ ...newProfile, [e.target.name]: e.target.value })
-    // console.log(newProfile)
   }
 
   const submitHandler = () => {
@@ -36,10 +34,9 @@ const Profile = () => {
       alert("프로필에 작성하지 않은 항목이 있습니다!")
     } else {
       return (
-        setIsEditMode(!isEditMode),
         dispatch(__patchProfile(newProfile)),
         alert("프로필 작성완료!"),
-        navigate("/")
+        navigate("/login")
       )
     }
   }
@@ -47,7 +44,7 @@ const Profile = () => {
   return (
     <StInputContainer>
       <StLoginHead>
-        <StLink to="/" style={{ color: "black" }}>
+        <StLink to="/signup" style={{ color: "black" }}>
           <SlArrowLeft size="20"></SlArrowLeft>
         </StLink>
         <div> 프로필</div>
@@ -61,7 +58,7 @@ const Profile = () => {
           onClick={submitHandler}
         ></CustomButton>
       </StLoginHead>
-      <StImage src={landingImg}></StImage>
+      {/* <StImage src={profile.profileImageUrl}></StImage>
       <lable>
         프로필 사진 업로드
         <input
@@ -72,13 +69,12 @@ const Profile = () => {
           // onChange={changeImgHandler}
           // ref={fileInput}
         />
-      </lable>
+      </lable> */}
 
       <StInputForm>
         <div>
           <label>이름</label>
           <Input
-            disable={!isEditMode}
             name="nickname"
             value={newProfile.nickname}
             onChange={changeInputHandler}
@@ -89,8 +85,8 @@ const Profile = () => {
         <div>
           <label>자기소개</label>
           <Input
-            disable={!isEditMode}
             name="description"
+            // defaultValue={}
             value={newProfile.description}
             onChange={changeInputHandler}
             placeholder="자기소개 입력(최대 50글자)"

@@ -22,7 +22,7 @@ export const baseURL = axios.create({
 baseURL.interceptors.request.use((config) => {
   if (config.headers === undefined) return
   const token = localStorage.getItem("authorization")
-  console.log(token)
+  // console.log(token)
   config.headers["Authorization"] = `${token}`
   return config
 })
