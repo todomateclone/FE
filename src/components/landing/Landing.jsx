@@ -3,7 +3,6 @@ import styled from "styled-components"
 import LoginButton from "../login/CustomButton"
 import { Link } from "react-router-dom"
 import { landingImg } from "../../styles/assets"
-import Input from "../element/Input"
 
 const Landing = () => {
   return (
@@ -27,16 +26,6 @@ const Landing = () => {
       <Link to={"/signup"} style={{ color: "black" }}>
         <LinkSignUp>가입하기</LinkSignUp>
       </Link>
-      <Input
-        placeholder="입력"
-        fontSize="5rem"
-        height="7rem"
-        width="10rem"
-        color="red"
-        borderBottom="0.2rem solid #7c7b7b"
-      ></Input>
-      <Input placeholder="입력" autoFocus="autoFocus"></Input>
-      <Input value="안녕"></Input>
     </StLoginContainer>
   )
 }
@@ -75,6 +64,6 @@ const LinkSignUp = styled.div`
 `
 const StLandingImg = styled.img`
   margin-top: 25rem;
-  width: 20rem;
-  height: 20rem;
+  width: 25rem;
+  height: 17rem;
 `

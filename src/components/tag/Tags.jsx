@@ -1,38 +1,46 @@
-import React from "react"
+import React, { useEffect } from "react"
 import styled from "styled-components"
 import { SlArrowLeft } from "react-icons/sl"
 import { RxPlus } from "react-icons/rx"
 import { Link } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { __getTags } from "../../redux/modules/tagSlice"
 
 const Tags = () => {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(__getTags())
+  }, [dispatch])
+
+  const tags = useSelector((state) => state.tag.tags)
+  console.log(tags)
+
   return (
     <StInputContainer>
       <StLoginHead>
         <StLink to="/" style={{ color: "black" }}>
-          <SlArrowLeft size="20"></SlArrowLeft>
+          <SlArrowLeft size="20" style={{ marginLeft: "1.5rem" }}></SlArrowLeft>
         </StLink>
         <div>목표</div>
         <StLink to="/tag/1">
-          <RxPlus size="25"></RxPlus>
+          <RxPlus size="25" style={{ marginRight: "1.5rem" }}></RxPlus>
         </StLink>
       </StLoginHead>
-
       <StTagBox>
-        <div>
-          <label>일반</label>
-          <StTagLink to="/tag/1">
-            <p>태그1asdads</p>
-            <p>{">"}</p>
-          </StTagLink>
-          <hr />
-        </div>
-        <div>
-          <StTagLink to="/tag/1">
-            <p>태그2adfadfasdfadsf</p>
-            <p>{">"}</p>
-          </StTagLink>
-          <hr />
-        </div>
+        <label>일반</label>
+        {tags &&
+          tags?.map((tag) => {
+            return (
+              <div key={tag.tagId}>
+                <StTagLink to={`/tag/${tag.tagId}`} state={{ tag }}>
+                  <p>{tag.tagName}</p>
+                  <p>{">"}</p>
+                </StTagLink>
+                <hr />
+              </div>
+            )
+          })}
       </StTagBox>
     </StInputContainer>
   )
@@ -41,9 +49,7 @@ const Tags = () => {
 export default Tags
 
 const StInputContainer = styled.div`
-  margin-top: 1rem;
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 1.3rem;
 `
 
 const StLoginHead = styled.div`
@@ -53,8 +59,7 @@ const StLoginHead = styled.div`
 
   div {
     margin: auto;
-    font-size: 1.4rem;
-    font-weight: 700;
+    font-size: 1.5rem;
   }
 `
 
@@ -66,6 +71,7 @@ const StTagBox = styled.div`
   label {
     font-size: 1.2rem;
     color: #d8d5d5;
+    width: 72rem;
   }
   p {
     display: flex;
