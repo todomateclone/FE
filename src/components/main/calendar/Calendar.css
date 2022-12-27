@@ -124,9 +124,9 @@
   background: #5176f8;
   border-radius: 0.4rem;
 }
-.react-calendar__tile--hasActive {
+/* .react-calendar__tile--hasActive {
   background: #76baff;
-}
+} */
 .react-calendar__tile--hasActive:enabled:hover,
 .react-calendar__tile--hasActive:enabled:focus {
   background: #a9d4ff;
