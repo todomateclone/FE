@@ -1,7 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit"
 
+const date = new Date()
+const pickYear = date.getFullYear()
+const pickMonth = date.getMonth()
+const pickDate = date.getDate()
+
 const initialState = {
-  todoDate: new Date(),
+  todoDate: { pickYear, pickMonth, pickDate },
   isLoading: false,
   error: null,
 }
