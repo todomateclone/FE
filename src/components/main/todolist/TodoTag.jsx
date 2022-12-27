@@ -1,10 +1,12 @@
 import { useState } from "react"
 import styled from "styled-components"
 import { feedAddBtn } from "../../../styles/assets"
+import Checkbox from "../../element/Checkbox"
 import Input from "../../element/Input"
 
 const TodoTag = ({ tag }) => {
   const [inputHidden, setInputHidden] = useState(true)
+
   return (
     <>
       <StTagTitle
@@ -13,9 +15,17 @@ const TodoTag = ({ tag }) => {
           setInputHidden(!inputHidden)
         }}
       >
-        {tag.tagName} <img src={feedAddBtn} alt="" />
+        <ElTagName>
+          {tag.tagName} <img src={feedAddBtn} alt="" />{" "}
+        </ElTagName>
       </StTagTitle>
-      <ElInput hidden={inputHidden} placeholder="입력" />
+      <ElTodoInputWrap hidden={inputHidden}>
+        <Checkbox color={tag.tagColor} />
+        <ElInput
+          placeholder="입력"
+          style={{ borderBottom: `0.09rem solid ${tag.tagColor}` }}
+        />
+      </ElTodoInputWrap>
     </>
   )
 }
@@ -41,8 +51,30 @@ const StTagTitle = styled.button`
   }
 `
 
-const ElInput = styled(Input)`
+const ElTagName = styled.span``
+
+const ElTodoInputWrap = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 0.5rem;
+`
+
+// const ElInput = styled(Input)`
+const ElInput = styled.input`
   width: 100%;
   font-size: medium;
-  color: red;
+  outline: none;
+  border: none;
+  animation-name: example;
+  animation-duration: 3s;
+
+  @keyframes example {
+    from {
+      border-bottom: 0.09rem solid #c1bebe;
+    }
+    to {
+      border-bottom: 0.09rem solid ${(tag) => tag.tagColor};
+    }
+  }
+  /* transition: 5s ease-in-out; */
 `

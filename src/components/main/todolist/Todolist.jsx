@@ -6,7 +6,6 @@ import TodoTag from "./TodoTag"
 import TodoBody from "./TodoBody"
 
 const Todolist = () => {
-  const [todo, setTodo] = useState("")
   const [todos, setTodos] = useState({})
   const { allTodos, isLoading, error } = useSelector((state) => state.allTodos)
 
