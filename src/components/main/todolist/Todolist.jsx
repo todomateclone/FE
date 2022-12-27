@@ -2,32 +2,34 @@ import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
 import { __getTodos } from "../../../redux/modules/todosSlice"
+import { __getTags } from "../../../redux/modules/tagSlice"
 import TodoTag from "./TodoTag"
 import TodoBody from "./TodoBody"
 
 const Todolist = () => {
-  const [todos, setTodos] = useState({})
   const { allTodos, isLoading, error } = useSelector((state) => state.allTodos)
-  const [oneDayTodo, setOneDayTodo] = useState({})
+  const tags = useSelector((state) => state.tag.tags)
+  const chosenDate = useSelector((state) => state.todoDate)
 
   const dispatch = useDispatch()
-  const fetchTodos = () => {
-    setTodos(allTodos.data)
-    setOneDayTodo(allTodos.data?.todos?.filter())
-  }
   useEffect(() => {
     dispatch(__getTodos())
+    dispatch(__getTags())
   }, [dispatch])
 
   if (isLoading) return <div>loading...</div>
 
-  if (error) return <div>{error.message}</div>
+  if (error) return <div>🌧{error.message}😢</div>
 
   return (
-    <div>
-      {allTodos.data?.tags?.map((tag) => {
+    <>
+      {tags?.map((tag) => {
         const todo = allTodos.data?.todos?.filter(
-          (item) => item.tagId === tag.tagId
+          (item) =>
+            item.tagId === tag.tagId &&
+            item.todoYear === chosenDate.todoDate.pickYear &&
+            item.todoMonth === chosenDate.todoDate.pickMonth &&
+            item.todoDay === chosenDate.todoDate.pickDate
         )
         return (
           <StTodolist key={`StTodolist${tag.tagId}`}>
@@ -42,19 +44,13 @@ const Todolist = () => {
           </StTodolist>
         )
       })}
-    </div>
+    </>
   )
-
-  // if (allTodos === {}) return <div>할 일이 없어요ㅠ.ㅠ</div>
 }
 
 export default Todolist
 
 const StTodolist = styled.div`
-  /* 그리드를 깔면 배치는 깔끔한데 마진 패딩이 부자유스럽다. 1fr말고 마진 패딩 맘대로인 조절이 없을까? */
-  /* display: grid;
-  grid-template-columns: 1fr;
-  grid-auto-rows: 1fr 1fr;
-  grid-area: todolist;
-  column-gap: 1em; */
+  overflow-y: auto;
+  overflow-x: hidden;
 `
