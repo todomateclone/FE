@@ -4,15 +4,40 @@ import Checkbox from "../../element/Checkbox"
 import { pendingIcon, plusIcon } from "../../../styles/assets"
 
 const TodoBody = ({ val, tag }) => {
-  const [isDone, setIsDone] = useState(false)
+  const [checked, setChecked] = useState(false)
+  const [todo, setTodo] = useState({ ...val })
+  const [isDone, setIsDone] = useState()
+
+  const checkHandler = () => {
+    setChecked(!checked)
+    // checkedItemHandler(tag.id, i, e.target.checked)
+    checkedItemHandler()
+  }
+  /*   const checkedItemHandler = (id, idx, isCheck) => {
+    setIsDone((prev) => {
+      return { ...prev, [id]: { [idx]: isCheck } }
+    })
+  } */
+
+  const checkedItemHandler = () => {
+    setIsDone(!isDone)
+    setTodo({ ...val, done: isDone })
+    console.log(todo.done)
+    // 이거 post 해야됨
+    // true일 경우 checked이도록 처리 필요
+    // 첫번째 true 전환에서 왜 undefined 나오지?
+  }
 
   return (
     <StFrag>
       <StListBody key={"StListBody" + val.todoId}>
         <Checkbox
-          onClick={() => {
-            setIsDone(!isDone)
-          }}
+          // 여기 onChange에서 에러 뜸, i 어떻게 넣을지 생각
+          // map 돌릴 거 아니므로 i 일단 제외
+          _onChange={() => checkHandler()}
+          checked={checked}
+          color={tag.tagColor}
+          key={tag.tagId}
         />
         {val.content}
       </StListBody>
@@ -35,6 +60,7 @@ const StListBody = styled.div`
   grid-template-columns: 2rem 1fr 0.5rem;
   grid-auto-rows: 1fr;
   line-height: 1.5rem;
+  cursor: pointer;
 `
 
 const StTodoIcon = styled.img`
