@@ -9,19 +9,29 @@ import { useSelector, useDispatch } from "react-redux"
 import { __addTag, __deleteTag, __patchTag } from "../../redux/modules/tagSlice"
 
 const EditTag = () => {
-  // const { tagId } = useParams()
-  // console.log(tagId)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const tag = useLocation()?.state?.tag // link로 클릭한 값 넘기기
-  console.log(tag)
 
   const [newTag, setNewTag] = useState({
     tagName: "",
+    tagColor: "#FFFFFF",
   })
 
   const changeInputHandler = (e) => {
-    setNewTag({ tagName: e.target.value })
+    setNewTag({ ...newTag, tagName: e.target.value })
+  }
+
+  const submitAddHandler = () => {
+    if (!newTag.tagName && !newTag.tagColor) {
+      return alert("태그를 입력해주세요!")
+    } else {
+      return (
+        dispatch(__addTag(newTag)),
+        alert("태그가 추가되었습니다!"),
+        navigate(-1)
+      )
+    }
   }
 
   const clickTagEditHandler = (tagId) => {
@@ -33,25 +43,12 @@ const EditTag = () => {
       navigate(-1)
     }
   }
-
-  const submitAddHandler = () => {
-    if (!newTag.tagName) {
-      return alert("태그를 입력해주세요!")
-    } else {
-      return (
-        dispatch(__addTag(newTag)),
-        alert("태그가 추가되었습니다!"),
-        navigate(-1)
-      )
-    }
-  }
-
   const clickTagDelHandler = (tagId) => {
-    console.log(tagId)
     if (!window.confirm("태그를 삭제 하시겠습니까?")) {
       return
     } else {
       dispatch(__deleteTag(tagId))
+      navigate(-1)
     }
   }
 

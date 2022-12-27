@@ -9,12 +9,12 @@ import { __getTags } from "../../redux/modules/tagSlice"
 const Tags = () => {
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    dispatch(__getTags())
-  }, [dispatch])
+  // useEffect(() => {
+  //   dispatch(__getTags())
+  // }, [dispatch])
 
   const tags = useSelector((state) => state.tag.tags)
-  // console.log(tags)
+  console.log(tags)
 
   return (
     <StInputContainer>
@@ -32,7 +32,7 @@ const Tags = () => {
         {tags &&
           tags?.map((tag) => {
             return (
-              <div key={tag.tagId}>
+              <div key={tag?.tagId}>
                 <StTagLink to={`/tag/${tag.tagId}`} state={{ tag }}>
                   <p>{tag.tagName}</p>
                   <p>{">"}</p>
