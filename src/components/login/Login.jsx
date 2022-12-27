@@ -15,13 +15,14 @@ const Login = () => {
 
   const changeInputHandler = (e) => {
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value })
+    console.log(userInfo)
   }
 
   const submitHandler = async (e) => {
     if (userInfo.email && userInfo.password) {
       try {
         const { headers, data } = await instance.post(`/auth/login`, userInfo)
-        // localStorage.setItem("authorization",headers.authorization)
+
         if (data.data.code === 200) {
           return (
             localStorage.setItem("authorization", headers.authorization),
@@ -39,7 +40,7 @@ const Login = () => {
       }
     } else {
       // 아이디 비밀번호 빈칸있을 때
-      alert("아이디, 비밀번호를 입력해주세요!")
+      alert("아이디, 비밀번호를 모두 입력해주세요!")
     }
   }
 
@@ -58,6 +59,8 @@ const Login = () => {
         type="text"
         autoFocus="autoFoucus"
         onChange={changeInputHandler}
+        width="70rem"
+        borderBottom="0.2rem solid #7c7b7b;"
       ></Input>
       <Input
         placeholder="비밀번호"
@@ -65,8 +68,9 @@ const Login = () => {
         type="password"
         value={userInfo.password}
         onChange={changeInputHandler}
+        width="70rem"
+        borderBottom="0.2rem solid #7c7b7b;"
       ></Input>
-      {/* <StLink to="/main"> */}
       <CustomButton
         name="확인"
         width="70rem"
@@ -76,7 +80,6 @@ const Login = () => {
         fontWeight="300"
         onClick={submitHandler}
       ></CustomButton>
-      {/* </StLink> */}
     </StInputForm>
   )
 }
@@ -108,22 +111,3 @@ const StLink = styled(Link)`
   color: black;
   text-decoration: none;
 `
-
-// const StInput = styled.input`
-//   border: none;
-//   border-bottom: 0.2rem solid #e4e2e2;
-//   outline: none;
-//   width: 70rem;
-//   height: 2rem;
-//   font-size: 1.5rem;
-//   padding-bottom: 0.3rem;
-
-//   ::placeholder {
-//     color: #c1bebe;
-//     font-weight: 400;
-//   }
-
-//   :focus {
-//     border-bottom: 0.2rem solid #7c7b7b;
-//   }
-// `
