@@ -20,7 +20,7 @@ const TodoTag = ({ tag }) => {
         </ElTagName>
       </StTagTitle>
       <ElTodoInputWrap hidden={inputHidden}>
-        <Checkbox color={tag.tagColor} />
+        <Checkbox readOnly />
         <ElInput
           placeholder="입력"
           style={{ borderBottom: `0.09rem solid ${tag.tagColor}` }}
