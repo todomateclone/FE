@@ -2,13 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { baseURL } from "../../core/api/axios"
 
 const initialState = {
-  tags: [
-    {
-      tagId: "1",
-      tagName: "일반",
-      tagColor: "black",
-    },
-  ],
+  tags: [],
   isLoading: false,
   error: null,
 }
@@ -18,7 +12,6 @@ export const __getTags = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await baseURL.get(`/mypage/tag`)
-      console.log(data)
       return thunkAPI.fulfillWithValue(data)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
@@ -31,8 +24,7 @@ export const __addTag = createAsyncThunk(
   async (payload, thunkAPI) => {
     console.log(payload)
     try {
-      const { data } = await baseURL.add(`/mypage/tag`, payload)
-      // console.log(data)
+      const { data } = await baseURL.post(`/mypage/tag`, payload)
       return thunkAPI.fulfillWithValue(data)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
@@ -43,11 +35,9 @@ export const __addTag = createAsyncThunk(
 export const __deleteTag = createAsyncThunk(
   "tag/delete",
   async (payload, thunkAPI) => {
-    console.log(payload)
     try {
       const { data } = await baseURL.delete(`mypage/tag/${payload}`)
-      console.log(data)
-      return thunkAPI.fulfillWithValue(data)
+      return thunkAPI.fulfillWithValue(payload)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
     }
@@ -57,9 +47,10 @@ export const __deleteTag = createAsyncThunk(
 export const __patchTag = createAsyncThunk(
   "tag/patch",
   async (payload, thunkAPI) => {
-    const { tagId, editTag } = payload
+    console.log(payload, payload.tagId)
+    const { tagId, newTag } = payload
     try {
-      const { data } = await baseURL.patch(`mypage/tag/${tagId}`, editTag)
+      const { data } = await baseURL.patch(`mypage/tag/${tagId}`, newTag)
       console.log(data)
       return thunkAPI.fulfillWithValue(data)
     } catch (error) {
@@ -71,12 +62,7 @@ export const __patchTag = createAsyncThunk(
 export const tagSlice = createSlice({
   name: "tag",
   initialState,
-  reducers: {
-    addTag: (state, action) => {
-      console.log(action.payload)
-      state.profile = action.payload
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(__getTags.pending, (state) => {
@@ -84,7 +70,8 @@ export const tagSlice = createSlice({
       })
       .addCase(__getTags.fulfilled, (state, action) => {
         state.isLoading = false
-        console.log(action.payload)
+
+        state.tags = action.payload.data
       })
       .addCase(__getTags.rejected, (state, action) => {
         state.isLoading = false
@@ -97,8 +84,8 @@ export const tagSlice = createSlice({
       })
       .addCase(__addTag.fulfilled, (state, action) => {
         state.isLoading = false
-        console.log(action.payload)
-        // state.tags
+
+        state.tags = [...state.tags, action.payload.data]
       })
       .addCase(__addTag.rejected, (state, action) => {
         state.isLoading = false
@@ -111,8 +98,8 @@ export const tagSlice = createSlice({
       })
       .addCase(__deleteTag.fulfilled, (state, action) => {
         state.isLoading = false
-        console.log(action.payload)
-        // state.tags
+
+        state.tags = state?.tags.filter((tag) => tag.tagId !== action.payload)
       })
       .addCase(__deleteTag.rejected, (state, action) => {
         state.isLoading = false
@@ -125,8 +112,16 @@ export const tagSlice = createSlice({
       })
       .addCase(__patchTag.fulfilled, (state, action) => {
         state.isLoading = false
-        console.log(action.payload)
-        // state.tags
+        console.log(action.payload.data.tagId)
+        state.tags = state.tags.map((tag) => {
+          if (tag.tagId === action.payload.data.tagId) {
+            return {
+              ...tag,
+              tagName: action.payload.data.tagName,
+              tagColor: action.payload.data.tagColor,
+            }
+          }
+        })
       })
       .addCase(__patchTag.rejected, (state, action) => {
         state.isLoading = false
@@ -135,5 +130,5 @@ export const tagSlice = createSlice({
   },
 })
 
-export const { addTag } = tagSlice.actions
+export const {} = tagSlice.actions
 export default tagSlice.reducer

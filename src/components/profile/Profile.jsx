@@ -23,7 +23,7 @@ const Profile = () => {
     nickname: profile.nickname,
     description: profile.description,
   })
-  console.log(newProfile)
+  console.log(newProfile.nickname)
 
   const changeInputHandler = (e) => {
     setNewProfile({ ...newProfile, [e.target.name]: e.target.value })
