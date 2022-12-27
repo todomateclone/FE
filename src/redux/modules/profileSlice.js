@@ -3,9 +3,9 @@ import { baseURL } from "../../core/api/axios"
 
 const initialState = {
   profile: {
-    nickname: "me",
+    nickname: "",
     description: "",
-    // profileImageUrl: "",
+    profileImageUrl: "",
   },
   isLoading: false,
   error: null,
@@ -16,8 +16,8 @@ export const __getProfile = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await baseURL.get(`/member`)
-      console.log(data)
-      return thunkAPI.fulfillWithValue(data)
+      console.log(data.data)
+      return thunkAPI.fulfillWithValue(data.data)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
     }
@@ -27,10 +27,10 @@ export const __getProfile = createAsyncThunk(
 export const __patchProfile = createAsyncThunk(
   "profile/patch",
   async (payload, thunkAPI) => {
-    const { profile } = payload
+    console.log(payload)
     try {
-      const { data } = await baseURL.patch(`member`, profile)
-      console.log(data)
+      const { data } = await baseURL.patch(`member`, payload)
+      console.log(data.data)
       return thunkAPI.fulfillWithValue(data)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
@@ -55,6 +55,7 @@ export const profileSlice = createSlice({
       .addCase(__getProfile.fulfilled, (state, action) => {
         state.isLoading = false
         console.log(action.payload)
+        state.profile = {}
         // state.profile = {... state , action.payload}
       })
       .addCase(__getProfile.rejected, (state, action) => {

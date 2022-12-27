@@ -10,19 +10,16 @@ import { __addTag, __deleteTag, __patchTag } from "../../redux/modules/tagSlice"
 
 const EditTag = () => {
   // const { tagId } = useParams()
+  // console.log(tagId)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const tag = useLocation()?.state?.tag // link로 클릭한 값 넘기기
   console.log(tag)
-  // console.log(tagName, tagColor)
-  // const tags = useSelector((state) => state.tag.tags)
-  // console.log(tags)
-  // console.log(tagId)
+
   const [newTag, setNewTag] = useState({
     tagName: "",
   })
 
-  // console.log(newTag.tagName)
   const changeInputHandler = (e) => {
     setNewTag({ tagName: e.target.value })
   }
@@ -144,8 +141,7 @@ const StTagBox = styled.div`
 const StLink = styled(Link)`
   color: black;
   text-decoration: none;
-  /* margin-left: 1rem; */
-  /* margin: 0 1rem 0 1rem; */
+
   div {
     margin-right: 1.5rem;
   }

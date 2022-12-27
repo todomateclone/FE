@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 import CustomButton from "../login/CustomButton"
 import { SlArrowLeft } from "react-icons/sl"
@@ -7,6 +7,8 @@ import Input from "../element/Input"
 import { useDispatch, useSelector } from "react-redux"
 import { __getProfile, __patchProfile } from "../../redux/modules/profileSlice"
 import { patchProfile } from "../../redux/modules/profileSlice"
+import { landingImg } from "../../styles/assets"
+
 const Profile = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -18,7 +20,7 @@ const Profile = () => {
   const [isEditMode, setIsEditMode] = useState(false)
 
   const data = useSelector((state) => state.profile)
-  console.log(data.profile)
+  // console.log(data.profile)
 
   const profile = data.profile
 
@@ -26,7 +28,7 @@ const Profile = () => {
 
   const changeInputHandler = (e) => {
     setNewProfile({ ...newProfile, [e.target.name]: e.target.value })
-    console.log(newProfile)
+    // console.log(newProfile)
   }
 
   const submitHandler = () => {
@@ -35,7 +37,7 @@ const Profile = () => {
     } else {
       return (
         setIsEditMode(!isEditMode),
-        dispatch(patchProfile(newProfile)),
+        dispatch(__patchProfile(newProfile)),
         alert("프로필 작성완료!"),
         navigate("/")
       )
@@ -59,6 +61,19 @@ const Profile = () => {
           onClick={submitHandler}
         ></CustomButton>
       </StLoginHead>
+      <StImage src={landingImg}></StImage>
+      <lable>
+        프로필 사진 업로드
+        <input
+          type="file"
+          style={{ display: "none" }}
+          accept="image/*"
+          name="profileImg"
+          // onChange={changeImgHandler}
+          // ref={fileInput}
+        />
+      </lable>
+
       <StInputForm>
         <div>
           <label>이름</label>
@@ -134,4 +149,11 @@ const StInputForm = styled.div`
     width: 5rem;
     margin-right: 1.1rem;
   }
+`
+const StImage = styled.img`
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid green;
 `
