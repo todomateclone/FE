@@ -1,11 +1,47 @@
-import React from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import styled from "styled-components"
 import CustomButton from "../login/CustomButton"
 import { SlArrowLeft } from "react-icons/sl"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import Input from "../element/Input"
-
+import { useDispatch, useSelector } from "react-redux"
+import { __getProfile, __patchProfile } from "../../redux/modules/profileSlice"
+import { patchProfile } from "../../redux/modules/profileSlice"
 const Profile = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    dispatch(__getProfile())
+  }, [dispatch]) // then
+
+  const [isEditMode, setIsEditMode] = useState(false)
+
+  const data = useSelector((state) => state.profile)
+  console.log(data.profile)
+
+  const profile = data.profile
+
+  const [newProfile, setNewProfile] = useState(profile)
+
+  const changeInputHandler = (e) => {
+    setNewProfile({ ...newProfile, [e.target.name]: e.target.value })
+    console.log(newProfile)
+  }
+
+  const submitHandler = () => {
+    if (!newProfile.nickname || !newProfile.description) {
+      alert("프로필에 작성하지 않은 항목이 있습니다!")
+    } else {
+      return (
+        setIsEditMode(!isEditMode),
+        dispatch(patchProfile(newProfile)),
+        alert("프로필 작성완료!"),
+        navigate("/")
+      )
+    }
+  }
+
   return (
     <StInputContainer>
       <StLoginHead>
@@ -13,25 +49,35 @@ const Profile = () => {
           <SlArrowLeft size="20"></SlArrowLeft>
         </StLink>
         <div> 프로필</div>
-        <StLink to="/main">
-          <CustomButton
-            name="확인"
-            height="3.5rem"
-            width="3.5rem"
-            fontSize="1.45rem"
-            fontWeight="500"
-            backGroundColor="transparent"
-          ></CustomButton>
-        </StLink>
+        <CustomButton
+          name="완료"
+          height="3.5rem"
+          width="3.5rem"
+          fontSize="1.45rem"
+          fontWeight="500"
+          backGroundColor="transparent"
+          onClick={submitHandler}
+        ></CustomButton>
       </StLoginHead>
       <StInputForm>
         <div>
           <label>이름</label>
-          <Input placeholder="이름 입력" autoFocus></Input>
+          <Input
+            disable={!isEditMode}
+            name="nickname"
+            value={newProfile.nickname}
+            onChange={changeInputHandler}
+            placeholder="이름 입력"
+            autoFocus
+          ></Input>
         </div>
         <div>
           <label>자기소개</label>
           <Input
+            disable={!isEditMode}
+            name="description"
+            value={newProfile.description}
+            onChange={changeInputHandler}
             placeholder="자기소개 입력(최대 50글자)"
             maxLength="50"
           ></Input>
