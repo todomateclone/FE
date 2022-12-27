@@ -1,16 +1,17 @@
-import React, { useState } from "react"
+import React from "react"
+import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
-// import SubMenu from "../../components/subMenu/SubMenu"
-import SubMenuModal from "../../components/subMenu/SubMenuModal"
 import { mainSideMenuBtn } from "../../styles/assets"
+import { sendModalStatus } from "../../redux/modules/modalSlice"
 
 const Header = () => {
-  const [modalOpen, setModalOpen] = useState(false)
-  const [open, setOpen] = useState(false)
+  const modalStatus = useSelector((state) => state.openModal.openModal)
+  // const [modalOpen, setModalOpen] = useState(false)
+  const dispatch = useDispatch()
 
-  const showModal = () => {
+  /* const showModal = () => {
     setModalOpen(true)
-  }
+  } */
   return (
     <>
       <StHeader>
@@ -18,16 +19,14 @@ const Header = () => {
           src={mainSideMenuBtn}
           alt=""
           onClick={() => {
-            setOpen(!open)
+            dispatch(sendModalStatus(!modalStatus))
           }}
         />
         {
           /* modalOpen &&  */
-          <SubMenuModal
-            setModalOpen={setModalOpen}
-            open={open}
-            setOpen={setOpen}
-          />
+          // <SubMenuModal
+          // setModalOpen={setModalOpen}
+          /* /> */
         }
       </StHeader>
     </>

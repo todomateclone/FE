@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 import Checkbox from "../../element/Checkbox"
-import { pendingIcon, plusIcon } from "../../../styles/assets"
+import { pendingIcon } from "../../../styles/assets"
 
 const TodoBody = ({ val, tag }) => {
   const [checked, setChecked] = useState(false)

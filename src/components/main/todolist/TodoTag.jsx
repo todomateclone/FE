@@ -2,23 +2,40 @@ import { useEffect, useState } from "react"
 import styled from "styled-components"
 import { feedAddBtn } from "../../../styles/assets"
 import Checkbox from "../../element/Checkbox"
-import Input from "../../element/Input"
-import { __addTodo } from "../../../redux/modules/todosSlice"
-import { useDispatch } from "react-redux"
+import { __addTodo, __getTodos } from "../../../redux/modules/todosSlice"
+import { useDispatch, useSelector } from "react-redux"
+import { baseURL } from "../../../core/api/axios"
+import { addTodo } from "../../../redux/modules/todosSlice"
+import { mainApis } from "../../../core/api/mainApi"
+import { async } from "q"
 
 const TodoTag = ({ tag }) => {
+  const chosenDate = useSelector((state) => state.todoDate)
   const [inputHidden, setInputHidden] = useState(true)
-  const [post, setPost] = useState({
-    content: "todo 내용",
-    todoYear: 2022,
-    todoMonth: 12,
-    todoDay: 25,
+  const [addTodo, setAddTodo] = useState({
+    content: "",
+    todoYear: new Date().getFullYear(),
+    todoMonth: new Date().getMonth(),
+    todoDay: new Date().getDate(),
   })
   const dispatch = useDispatch()
-  const handleAddTodo = (tagId) => {
-    __addTodo(tagId)
+  const handleAddTodo = async (tagId) => {
+    await mainApis.postTodo(tagId, addTodo)
+    // await dispatch(__addTodo({ tagId, addTodo }))
   }
-  useEffect(() => {}, [dispatch])
+
+  const handleDelTodo = async (todoId) => {
+    await mainApis.delTodo(todoId)
+  }
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    handleAddTodo(tag.tagId)
+    setAddTodo({ ...addTodo, content: "" })
+    // setInputHidden(!inputHidden)
+  }
+  useEffect(() => {
+    dispatch(__getTodos)
+  }, [dispatch])
   return (
     <>
       <StTagTitle
@@ -33,8 +50,8 @@ const TodoTag = ({ tag }) => {
       </StTagTitle>
       <ElTodoInputWrap
         hidden={inputHidden}
-        onSubmit={() => {
-          handleAddTodo(tag.tagId)
+        onSubmit={(e) => {
+          handleSubmit(e)
         }}
       >
         <Checkbox readOnly />
@@ -42,12 +59,14 @@ const TodoTag = ({ tag }) => {
           placeholder="입력"
           style={{ borderBottom: `0.09rem solid ${tag.tagColor}` }}
           onChange={(e) => {
-            setPost({
-              //클릭한 날짜 받아오기. useSelector?
+            setAddTodo({
               content: e.target.value,
+              todoYear: chosenDate.todoDate.pickYear,
+              todoMonth: chosenDate.todoDate.pickMonth,
+              todoDay: chosenDate.todoDate.pickDate,
             })
-            console.log(post)
           }}
+          value={addTodo.content}
         />
       </ElTodoInputWrap>
     </>
@@ -83,16 +102,16 @@ const ElTodoInputWrap = styled.form`
   margin-top: 0.5rem;
 `
 
-// const ElInput = styled(Input)`
 const ElInput = styled.input`
   width: 100%;
   font-size: medium;
   outline: none;
   border: none;
-  animation-name: example;
-  animation-duration: 3s;
+  animation-name: underline;
+  animation-duration: 0.5s;
+  margin-left: 0.4rem;
 
-  @keyframes example {
+  @keyframes underline {
     from {
       border-bottom: 0.09rem solid #c1bebe;
     }
@@ -100,5 +119,4 @@ const ElInput = styled.input`
       border-bottom: 0.09rem solid ${(tag) => tag.tagColor};
     }
   }
-  /* transition: 5s ease-in-out; */
 `

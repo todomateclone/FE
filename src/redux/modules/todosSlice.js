@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { baseURL } from "../../core/api/axios"
+import { mainApis } from "../../core/api/mainApi"
 
 const initialState = {
   allTodos: {},
@@ -22,9 +23,11 @@ export const __getTodos = createAsyncThunk(
 
 export const __addTodo = createAsyncThunk(
   "todos/add",
-  async (tagId, thunkAPI) => {
+  async ({ tagId, content }, thunkAPI) => {
     try {
-      await baseURL.post(`/api/todo/${tagId}`)
+      // 이걸 쓰면 터진다. 왤까...
+      // await mainApis.postTodo(tagId, content)
+      await baseURL.post(`/todo/${tagId}`, content)
       return thunkAPI.fulfillWithValue(console.log("success"))
     } catch (err) {
       return thunkAPI.rejectWithValue(console.log(err))
@@ -37,19 +40,21 @@ export const todosSlice = createSlice({
   initialState,
   reducers: {
     getTodo: (state, action) => {
-      baseURL.get(`/data`)
+      baseURL.get(`/todo`)
       state.allTodos = state
     },
-    addTodo: (state, { todoYear, todoMonth }) => {
-      baseURL.post(`/todos/${todoYear.payload}/${todoMonth.payload}`)
-      // state.allTodos = action.payload
+    // addTodo: (state, { todoYear, todoMonth }) => {
+    addTodo: (state, { tagId, content }) => {
+      // baseURL.post(`/todos/${todoYear.payload}/${todoMonth.payload}`)
+      baseURL.post(`/todo/${tagId}`, content)
+      state.allTodos = state.payload
     },
     delTodo: (state, action) => {
-      baseURL.delete(`/todos/${action.payload}`)
+      baseURL.delete(`/todo/${action.payload}`)
       state.allTodos = state.allTodos.filter((v) => v.id !== action.payload)
     },
     updateTodo: (state, action) => {
-      baseURL.patch(`/todos/${action.payload}`)
+      baseURL.patch(`/todo/${action.payload}`)
       state.allTodos = action.payload
     },
   },

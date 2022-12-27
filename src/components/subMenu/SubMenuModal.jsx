@@ -1,11 +1,15 @@
-import React, { useState, useRef, useEffect } from "react"
+import React, { useRef, useEffect } from "react"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { sendModalStatus } from "../../redux/modules/modalSlice"
 
-const SubMenuModal = ({ setModalOpen, open, setOpen }) => {
+const SubMenuModal = (/* setModalOpen */) => {
   /*   const closeModal = () => {
     setModalOpen(false)
   } */
+  const modalStatus = useSelector((state) => state.openModal.openModal)
+  const dispatch = useDispatch()
   const modalRef = useRef(HTMLDivElement)
 
   // 잠시 보류
@@ -14,7 +18,7 @@ const SubMenuModal = ({ setModalOpen, open, setOpen }) => {
     const handler = (event) => {
       // mousedown 이벤트가 발생한 영역이 모달창이 아닐 때, 모달창 제거 처리
       if (modalRef.current && !modalRef.current.contains(event.target)) {
-        setModalOpen(false)
+        // setModalOpen(false)
         // setOpen(!open)
       }
     }
@@ -32,14 +36,20 @@ const SubMenuModal = ({ setModalOpen, open, setOpen }) => {
 
   return (
     <>
-      <StSubWrap hidden={!open}></StSubWrap>
-      <StSubMenu ref={modalRef} toggle={open}>
-        <div>
+      <StSubWrap hidden={!modalStatus} toggle={modalStatus}></StSubWrap>
+      <StSubMenu ref={modalRef} toggle={modalStatus}>
+        <StInsideMenu toggle={modalStatus}>
           메뉴
           <br />
           <Link to="/login">로그인</Link>
-          <h3 onClick={() => setOpen(false)}>닫기</h3>
-        </div>
+          <h3
+            onClick={() => {
+              dispatch(sendModalStatus(!modalStatus))
+            }}
+          >
+            닫기
+          </h3>
+        </StInsideMenu>
       </StSubMenu>
     </>
   )
@@ -56,22 +66,25 @@ const StSubWrap = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  /* transition: ${(props) => (props.hidden ? "" : "all 3s ease-in")}; */
+  transition: ${(props) =>
+    props.toggle ? "all 3s ease-in" : "all 3s ease-in"};
   z-index: 4;
 `
 
 const StSubMenu = styled.div`
-  display: flex;
+  visibility: ${(props) => (props.toggle ? "visible" : "hidden")};
   justify-content: flex-start;
   background: white;
-  width: 17.5rem;
+  width: ${(props) => (props.toggle ? "17.5rem" : "0rem")};
   height: 100%;
   top: 0%;
   right: 0%;
   position: absolute;
   z-index: 5;
-  transform: ${(props) =>
-    props.toggle ? "translateX(0%)" : "translateX(100%)"};
-  transition: ${(props) =>
-    props.toggle ? "transform 0.4s ease-out" : "transform 0.4s ease-out"};
+  transition: ${(props) => (props.toggle ? "all 1s" : "all 1s")};
+  overflow-x: hidden;
+`
+
+const StInsideMenu = styled.div`
+  display: ${(props) => (props.toggle ? "flex" : "none")};
 `
