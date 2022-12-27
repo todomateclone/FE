@@ -14,7 +14,7 @@ const Tags = () => {
   }, [dispatch])
 
   const tags = useSelector((state) => state.tag.tags)
-  console.log(tags)
+  // console.log(tags)
 
   return (
     <StInputContainer>
@@ -23,7 +23,7 @@ const Tags = () => {
           <SlArrowLeft size="20" style={{ marginLeft: "1.5rem" }}></SlArrowLeft>
         </StLink>
         <div>목표</div>
-        <StLink to="/tag/1">
+        <StLink to={`/tag/:tagId`}>
           <RxPlus size="25" style={{ marginRight: "1.5rem" }}></RxPlus>
         </StLink>
       </StLoginHead>

@@ -18,16 +18,13 @@ const SignUp = () => {
 
   const changeEmailInputHandler = (e) => {
     const emailRegex =
-      /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
+      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/
     if (!e.target.value || emailRegex.test(e.target.value)) {
       setEmailError(false)
     } else {
       setEmailError(true)
     }
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value })
-    // console.log(emailRegex.test(e.target.value))
-    // console.log(userInfo)
-    console.log(emailError)
   }
   const changePwdInputHandler = (e) => {
     const emailRegex =
@@ -35,21 +32,23 @@ const SignUp = () => {
     if (!e.target.value || emailRegex.test(e.target.value)) setPwdError(false)
     else setPwdError(true)
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value })
-    // console.log(pwdError)
   }
 
   const submitHandler = async (e) => {
     if (!emailError && !pwdError) {
       try {
-        const { data } = await instance.post(`/auth/signup`, userInfo)
-        // console.log(data)
-        if (data.data.code === 200) {
-          navigate("/login")
+        const { headers, data } = await instance.post(`/auth/signup`, userInfo)
+        console.log("회원가입 성공", data)
+        if (data.code === 200) {
+          return (
+            localStorage.setItem("authorization", headers.authorization),
+            navigate("/profile")
+          )
         } else {
-          alert(data.data.msg)
+          alert(data.msg)
         }
       } catch (error) {
-        console.log(error)
+        alert("회원가입에 실패하였습니다")
       }
     } else {
       alert("아이디, 비밀번호를 모두 입력해주세요!")
@@ -64,9 +63,6 @@ const SignUp = () => {
         </StLink>
         <div>가입하기</div>
       </StLoginHead>
-      {/* <form>
-
-      </form> */}
       <Input
         name="email"
         value={userInfo.email}

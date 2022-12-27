@@ -15,28 +15,31 @@ const Login = () => {
 
   const changeInputHandler = (e) => {
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value })
-    console.log(userInfo)
+    // console.log(userInfo)
   }
 
   const submitHandler = async (e) => {
     if (userInfo.email && userInfo.password) {
       try {
         const { headers, data } = await instance.post(`/auth/login`, userInfo)
-
-        if (data.data.code === 200) {
+        console.log("로그인 성공:", data.code)
+        console.log("토큰 저장하기전 헤더:", headers)
+        if (data.code === 200) {
           return (
             localStorage.setItem("authorization", headers.authorization),
+            console.log("토큰 저장 후 헤더:", headers),
             navigate("/")
           )
         } else {
-          alert(data.data.msg) // 입력한 정보가 틀려서 로그인 실패시 code 400, msg: "잘못된 비밀번호입니다"
+          alert(data.msg) // 입력한 정보가 틀려서 로그인 실패시 code 400, msg: "잘못된 비밀번호입니다"
           setUserInfo({
             email: "",
             password: "",
           })
         }
       } catch (error) {
-        console.log(error)
+        console.log("1")
+        // alert("로그인에 실패하였습니다!")
       }
     } else {
       // 아이디 비밀번호 빈칸있을 때
