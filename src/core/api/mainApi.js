@@ -1,8 +1,8 @@
-import { instance } from "./axios"
+import { baseURL } from "./axios"
 
 export const mainApis = {
   getTodos: (year, month) =>
-    instance
+    baseURL
       // .get(`/api/todo/${year}/${month}`, {
       .get(`/data`)
       .then((res) => {
@@ -12,9 +12,10 @@ export const mainApis = {
         console.log(err.response.data.msg)
       }),
 
-  postTodo: (todoId, content) =>
-    instance
-      .post(`/api/todo/${todoId}`, content)
+  postTodo: (tagId, content) =>
+    baseURL
+      // .post(`/todo/${tagId}`, content)
+      .post(`/todo/${tagId}`, content)
       .then((res) => {
         console.log(res.data.msg)
       })
@@ -23,8 +24,8 @@ export const mainApis = {
       }),
 
   updateTodo: (todoId, content) =>
-    instance
-      .put(`/api/todo/${todoId}`, content)
+    baseURL
+      .put(`/todo/${todoId}`, content)
       .then((res) => {
         console.log(res.data.msg)
       })
@@ -33,8 +34,8 @@ export const mainApis = {
       }),
 
   delTodo: (todoId) =>
-    instance
-      .delete(`/api/todo/${todoId}`)
+    baseURL
+      .delete(`/todo/${todoId}`)
       .then((res) => {
         console.log(res.data.msg)
       })

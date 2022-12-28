@@ -9,9 +9,7 @@ import { sendDate } from "../../../redux/modules/dateSlice"
 const TodoCalendar = (props) => {
   const [currentDay, setCurrentDay] = useState("")
   const [currentMonth, setCurrentMonth] = useState("")
-  const chosenDate = useSelector((state) => state.todoDate)
-  // const test = React.useRef()
-  // const calendarRef = useRef(null)
+  // const chosenDate = useSelector((state) => state.todoDate)
   const [value, onChange] = useState(new Date())
   const dispatch = useDispatch()
   useEffect(() => {
