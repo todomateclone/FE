@@ -28,7 +28,7 @@ const Login = () => {
           return (
             localStorage.setItem("authorization", headers.authorization),
             console.log("토큰 저장 후 헤더:", headers),
-            navigate("/")
+            navigate("/main")
           )
         } else {
           alert(data.msg) // 입력한 정보가 틀려서 로그인 실패시 code 400, msg: "잘못된 비밀번호입니다"
@@ -50,7 +50,7 @@ const Login = () => {
   return (
     <StInputForm>
       <StLoginHead>
-        <StLink to="/landing">
+        <StLink to="/">
           <SlArrowLeft size="20"></SlArrowLeft>
         </StLink>
         <div>로그인</div>
@@ -62,8 +62,10 @@ const Login = () => {
         type="text"
         autoFocus="autoFoucus"
         onChange={changeInputHandler}
-        width="70rem"
+        width="80%"
+        maxWidth="70rem"
         borderBottom="0.2rem solid #7c7b7b;"
+        fontSize="1.5rem"
       ></Input>
       <Input
         placeholder="비밀번호"
@@ -71,12 +73,14 @@ const Login = () => {
         type="password"
         value={userInfo.password}
         onChange={changeInputHandler}
-        width="70rem"
+        width="80%"
+        maxWidth="70rem"
         borderBottom="0.2rem solid #7c7b7b;"
       ></Input>
       <CustomButton
         name="확인"
-        width="70rem"
+        width="80%"
+        maxWidth="70rem"
         height="3.7rem"
         color="#c9c7c7"
         fontSize="1.4rem"
@@ -90,9 +94,9 @@ const Login = () => {
 export default Login
 
 const StInputForm = styled.div`
-  display: flex;
+  ${({ theme }) => theme.common.flexCenter}
   flex-direction: column;
-  align-items: center;
+  width: 100%;
   margin-top: 1rem;
   gap: 2rem;
   font-size: 1.35rem;
@@ -103,7 +107,7 @@ const StInputForm = styled.div`
 `
 
 const StLoginHead = styled.div`
-  display: flex;
+  ${({ theme }) => theme.common.flexCenter}
   width: 100%;
   div {
     margin: auto;
