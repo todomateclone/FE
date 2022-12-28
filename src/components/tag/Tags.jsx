@@ -8,18 +8,18 @@ import { __getTags } from "../../redux/modules/tagSlice"
 
 const Tags = () => {
   const dispatch = useDispatch()
-
-  // useEffect(() => {
-  //   dispatch(__getTags())
-  // }, [dispatch])
-
   const tags = useSelector((state) => state.tag.tags)
+
+  useEffect(() => {
+    dispatch(__getTags())
+  }, [dispatch])
   console.log(tags)
+  // console.log(tags)
 
   return (
     <StInputContainer>
       <StLoginHead>
-        <StLink to="/" style={{ color: "black" }}>
+        <StLink to="/main" style={{ color: "black" }}>
           <SlArrowLeft size="20" style={{ marginLeft: "1.5rem" }}></SlArrowLeft>
         </StLink>
         <div>목표</div>
@@ -28,17 +28,19 @@ const Tags = () => {
         </StLink>
       </StLoginHead>
       <StTagBox>
-        <label>일반</label>
+        {/* <label>일반</label> */}
         {tags &&
           tags?.map((tag) => {
             return (
-              <div key={tag?.tagId}>
-                <StTagLink to={`/tag/${tag.tagId}`} state={{ tag }}>
-                  <p>{tag.tagName}</p>
-                  <p>{">"}</p>
-                </StTagLink>
-                <hr />
-              </div>
+              <StTag key={tag?.tagId}>
+                <div>
+                  <StTagLink to={`/tag/${tag?.tagId}`} state={{ tag }}>
+                    <p>{tag.tagName}</p>
+                    <p>{">"}</p>
+                  </StTagLink>
+                  <hr />
+                </div>
+              </StTag>
             )
           })}
       </StTagBox>
@@ -63,6 +65,15 @@ const StLoginHead = styled.div`
   }
 `
 
+const StTag = styled.div`
+  width: 100%;
+  ${({ theme }) => theme.common.flexCenter}
+  flex-direction: column;
+  div {
+    width: 70%;
+  }
+`
+
 const StTagBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -71,7 +82,8 @@ const StTagBox = styled.div`
   label {
     font-size: 1.2rem;
     color: #d8d5d5;
-    width: 72rem;
+    width: 80%;
+    max-width: 70rem;
   }
   p {
     display: flex;
@@ -80,10 +92,12 @@ const StTagBox = styled.div`
     height: 2rem;
     border-radius: 0.5rem;
     background-color: #f1eeee;
+    max-width: 70rem;
   }
 
   hr {
-    width: 72rem;
+    width: 80%;
+    max-width: 70rem;
     background-color: #f4f2f2;
     margin: 0rem;
     height: 0.01rem;
