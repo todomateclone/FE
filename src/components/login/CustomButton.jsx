@@ -11,6 +11,7 @@ const CustomButton = ({
   fontWeight,
   backGroundColor,
   onClick,
+  maxWidth,
 }) => {
   return (
     <StButton
@@ -21,6 +22,7 @@ const CustomButton = ({
       fontWeight={fontWeight}
       backGroundColor={backGroundColor}
       onClick={onClick}
+      maxWidth={maxWidth}
     >
       {name}
     </StButton>
@@ -38,6 +40,7 @@ const StButton = styled.button`
   height: ${({ height }) => height};
   font-size: ${({ fontSize }) => fontSize};
   font-weight: ${({ fontWeight }) => fontWeight};
+  max-width: ${({ maxWidth }) => maxWidth};
 
   display: flex;
   align-items: center;

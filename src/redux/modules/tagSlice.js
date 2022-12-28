@@ -1,8 +1,14 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice, TaskAbortError } from "@reduxjs/toolkit"
 import { baseURL } from "../../core/api/axios"
 
 const initialState = {
-  tags: [],
+  tags: [
+    {
+      tagId: 999,
+      tagName: "일반",
+      tagColor: "#FFFFFF",
+    },
+  ],
   isLoading: false,
   error: null,
 }
@@ -12,6 +18,7 @@ export const __getTags = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await baseURL.get(`/mypage/tag`)
+
       return thunkAPI.fulfillWithValue(data)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
@@ -47,12 +54,12 @@ export const __deleteTag = createAsyncThunk(
 export const __patchTag = createAsyncThunk(
   "tag/patch",
   async (payload, thunkAPI) => {
-    console.log(payload, payload.tagId)
     const { tagId, newTag } = payload
+    console.log(tagId, newTag)
     try {
       const { data } = await baseURL.patch(`mypage/tag/${tagId}`, newTag)
-      console.log(data)
-      return thunkAPI.fulfillWithValue(data)
+      console.log(data.data)
+      return thunkAPI.fulfillWithValue(data.data)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
     }
@@ -69,9 +76,13 @@ export const tagSlice = createSlice({
         state.isLoading = true
       })
       .addCase(__getTags.fulfilled, (state, action) => {
-        state.isLoading = false
+        // state.isLoading = false
+        // console.log(action.payload.data)
+        // const { tags } = state
+        // const temp = [...tags]
+        const tagList = action.payload.data
 
-        state.tags = action.payload.data
+        state.tags = tagList
       })
       .addCase(__getTags.rejected, (state, action) => {
         state.isLoading = false
@@ -112,15 +123,17 @@ export const tagSlice = createSlice({
       })
       .addCase(__patchTag.fulfilled, (state, action) => {
         state.isLoading = false
-        console.log(action.payload.data.tagId)
-        state.tags = state.tags.map((tag) => {
-          if (tag.tagId === action.payload.data.tagId) {
+        const { tags } = state
+        const temp = [...tags]
+        state.tags = temp?.map((tag) => {
+          console.log(tag)
+          if (tag?.tagId === action.payload?.tagId) {
             return {
               ...tag,
-              tagName: action.payload.data.tagName,
-              tagColor: action.payload.data.tagColor,
+              tagName: action.payload.tagName,
             }
           }
+          return { ...tag }
         })
       })
       .addCase(__patchTag.rejected, (state, action) => {

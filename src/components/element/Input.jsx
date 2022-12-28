@@ -16,6 +16,7 @@ const Input = ({
   borderBottom,
   maxLength,
   hidden,
+  maxWidth,
 }) => {
   return (
     <StInput
@@ -28,11 +29,12 @@ const Input = ({
       width={width}
       color={color}
       height={height}
-      // fontSize={fontSize}
+      fontSize={fontSize}
       fontWeight={fontWeight}
       borderBottom={borderBottom}
       maxLength={maxLength}
       hidden={hidden}
+      maxWidth={maxWidth}
     ></StInput>
   )
 }
@@ -44,8 +46,9 @@ const StInput = styled.input`
   border-bottom: 0.08rem solid ${(props) => props.color};
   outline: none;
   width: ${({ width }) => width};
+  max-width: ${({ maxWidth }) => maxWidth};
   height: ${({ height }) => height || "2rem"};
-  /* font-size: ${({ fontSize }) => fontSize || "1.5rem"}; */
+  font-size: ${({ fontSize }) => fontSize};
   padding-bottom: 0.3rem;
 
   ::placeholder {

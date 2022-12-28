@@ -12,8 +12,6 @@ export const __getProfile = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await baseURL.get(`/member`)
-      console.log("프로필 불러오기")
-      console.log(data.data)
       return thunkAPI.fulfillWithValue(data.data)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
@@ -33,15 +31,25 @@ export const __patchProfile = createAsyncThunk(
   }
 )
 
+export const __putProfileImg = createAsyncThunk(
+  "profileImg/put",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await baseURL.put(`/member/pimage`, payload)
+      return thunkAPI.fulfillWithValue(data.data)
+      // headers: {
+      //   "Content-Type": "multipart/form-data", // 굳이 안해줘도 자동으로 됨 //
+      // },
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error)
+    }
+  }
+)
+
 export const profileSlice = createSlice({
   name: "profile",
   initialState,
-  reducers: {
-    patchProfile: (state, action) => {
-      console.log(action.payload)
-      state.profile = action.payload
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(__getProfile.pending, (state) => {
@@ -62,18 +70,31 @@ export const profileSlice = createSlice({
       })
       .addCase(__patchProfile.fulfilled, (state, action) => {
         state.isLoading = false
-        // console.log(action.payload.data.data)
         const newProfile = action.payload.data.data
         state.profile = newProfile
-
-        // state.profile
       })
       .addCase(__patchProfile.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload
+      })
+
+    builder
+      .addCase(__putProfileImg.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(__putProfileImg.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.profile = {
+          ...state.profile,
+          profileImageUrl: action.payload.data.profileImageUrl,
+        }
+      })
+      .addCase(__putProfileImg.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload
       })
   },
 })
 
-export const { patchProfile } = profileSlice.actions
+export const {} = profileSlice.actions
 export default profileSlice.reducer

@@ -35,13 +35,13 @@ const EditTag = () => {
   }
 
   const clickTagEditHandler = (tagId) => {
-    if (tag.tagName.trim() === "") {
-      alert("태그를 입력해주세요!")
-      return
-    } else {
-      dispatch(__patchTag({ newTag, tagId }))
-      navigate(-1)
-    }
+    // if (tag.tagName.trim() === "") {
+    //   alert("태그를 입력해주세요!")
+    //   return
+    // } else {
+    dispatch(__patchTag({ newTag, tagId }))
+    navigate(-1)
+    // }
   }
   const clickTagDelHandler = (tagId) => {
     if (!window.confirm("태그를 삭제 하시겠습니까?")) {
@@ -71,47 +71,46 @@ const EditTag = () => {
         )}
       </StLoginHead>
       <StTagBox>
-        <div>
-          <div>
+        <StContainer>
+          <StBox>
             <Input
               placeholder={tag?.tagName ?? "목표 입력"} // undefined 거나 null 이면 목표입력이 나오도록
               borderBottom="0.2rem solid #040404;"
               autoFocus="autoFocus"
-              width="70rem"
+              width="80%"
+              height="3.0rem"
+              fontSize="1.5rem"
+              // maxWidth="70rem"
               value={newTag.tagName}
               onChange={changeInputHandler}
             ></Input>
-
             <StSetColor>
               <p>공개설정</p>
-              <p>
-                <RiArrowDropDownFill></RiArrowDropDownFill>
-              </p>
+              <RiArrowDropDownFill></RiArrowDropDownFill>
             </StSetColor>
             <StSetColor>
               <p>색상</p>
-              <p>
-                <RiArrowDropDownFill></RiArrowDropDownFill>
-              </p>
+              <RiArrowDropDownFill></RiArrowDropDownFill>
             </StSetColor>
-          </div>
-          {tag && (
-            <StBtnBox>
-              <CustomButton
-                name="수정하기"
-                width="34.5rem"
-                height="3.5rem"
-                onClick={() => clickTagEditHandler(tag.tagId)}
-              ></CustomButton>
-              <CustomButton
-                name="삭제"
-                width="34.5rem"
-                color="red"
-                onClick={() => clickTagDelHandler(tag.tagId)}
-              ></CustomButton>
-            </StBtnBox>
-          )}
-        </div>
+          </StBox>
+        </StContainer>
+        {tag && (
+          <StBtnBox>
+            <CustomButton
+              name="수정하기"
+              width="30%"
+              height="3.5rem"
+              onClick={() => clickTagEditHandler(tag.tagId)}
+            ></CustomButton>
+            <CustomButton
+              name="삭제"
+              width="30%"
+              color="red"
+              height="3.5rem"
+              onClick={() => clickTagDelHandler(tag.tagId)}
+            ></CustomButton>
+          </StBtnBox>
+        )}
       </StTagBox>
     </>
   )
@@ -131,38 +130,47 @@ const StLoginHead = styled.div`
   }
 `
 const StTagBox = styled.div`
-  display: flex;
+  ${({ theme }) => theme.common.flexCenter}
+
   flex-direction: column;
-  align-items: center;
+
   margin-top: 3rem;
+  div {
+    width: 80%;
+  }
 `
 
 const StLink = styled(Link)`
   color: black;
   text-decoration: none;
-
-  div {
-    margin-right: 1.5rem;
-  }
 `
 const StSetColor = styled.div`
   color: black;
   text-decoration: none;
   display: flex;
   justify-content: space-between;
-
   border-bottom: 0.15rem solid #e4e2e2;
   margin-top: 1.5rem;
   p {
+    width: 80%;
     height: 1.5rem;
     font-weight: 300;
     font-size: 1.2rem;
   }
 `
 const StBtnBox = styled.div`
-  display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  ${({ theme }) => theme.common.flexCenter}
+  gap: 3rem;
   margin-top: 2rem;
   font-size: 1.3rem;
+`
+const StContainer = styled.div`
+  /* width: 100%; */
+  ${({ theme }) => theme.common.flexCenter}
+`
+const StBox = styled.div`
+  /* width: 90%; */
+  ${({ theme }) => theme.common.flexCenter}
+  flex-direction: column;
 `
