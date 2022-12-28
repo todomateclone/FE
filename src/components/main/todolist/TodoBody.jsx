@@ -1,30 +1,37 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 import Checkbox from "../../element/Checkbox"
-import { pendingIcon, plusIcon } from "../../../styles/assets"
+import { pendingIcon } from "../../../styles/assets"
+import { useDispatch, useSelector } from "react-redux"
+import { sendBtmModalStatus } from "../../../redux/modules/modalSlice"
+import { sendTodoId } from "../../../redux/modules/todosSlice"
 
 const TodoBody = ({ val, tag }) => {
   const [checked, setChecked] = useState(false)
   const [todo, setTodo] = useState({ ...val })
-  const [isDone, setIsDone] = useState()
+  const [isDone, setIsDone] = useState(false)
+  const dispatch = useDispatch()
+  const modalStatus = useSelector((state) => state.openModal.openBottomModal)
+  const giveTodoId = useSelector((state) => state.allTodos.getTodoId)
 
-  const checkHandler = () => {
+  const handleCheck = () => {
     setChecked(!checked)
-    // checkedItemHandler(tag.id, i, e.target.checked)
-    checkedItemHandler()
+    // handleCheckedItem(tag.id, i, e.target.checked)
+    handleCheckedItem()
   }
-  /*   const checkedItemHandler = (id, idx, isCheck) => {
+  /*   const handleCheckedItem = (id, idx, isCheck) => {
     setIsDone((prev) => {
       return { ...prev, [id]: { [idx]: isCheck } }
     })
   } */
 
-  const checkedItemHandler = () => {
+  const handleCheckedItem = () => {
     setIsDone(!isDone)
-    setTodo({ ...val, done: isDone })
+    setTodo({ ...val, done: checked })
     console.log(todo.done)
     // 이거 post 해야됨
     // true일 경우 checked이도록 처리 필요
+    // isDone에 patch 필요
     // 첫번째 true 전환에서 왜 undefined 나오지?
   }
 
@@ -32,14 +39,21 @@ const TodoBody = ({ val, tag }) => {
     <StFrag>
       <StListBody key={"StListBody" + val.todoId}>
         <Checkbox
-          // 여기 onChange에서 에러 뜸, i 어떻게 넣을지 생각
-          // map 돌릴 거 아니므로 i 일단 제외
-          _onChange={() => checkHandler()}
+          _onChange={() => handleCheck()}
           checked={checked}
           color={tag.tagColor}
           key={tag.tagId}
         />
-        {val.content}
+        <span
+          onClick={() => {
+            dispatch(sendBtmModalStatus(!modalStatus))
+            dispatch(sendTodoId(todo.todoId))
+            // console.log(todo)
+            // console.log(giveTodoId)
+          }}
+        >
+          {val.content}
+        </span>
       </StListBody>
       <StTodoIcon src={pendingIcon} alt="" />
     </StFrag>

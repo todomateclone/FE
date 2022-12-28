@@ -67,6 +67,7 @@ const Login = () => {
         borderBottom="0.2rem solid #7c7b7b;"
         fontSize="1.5rem"
       ></Input>
+
       <Input
         placeholder="비밀번호"
         name="password"
@@ -76,7 +77,7 @@ const Login = () => {
         width="80%"
         maxWidth="70rem"
         borderBottom="0.2rem solid #7c7b7b;"
-      ></Input>
+      />
       <CustomButton
         name="확인"
         width="80%"

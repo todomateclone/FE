@@ -1,12 +1,41 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import styled from "styled-components"
 import { feedAddBtn } from "../../../styles/assets"
 import Checkbox from "../../element/Checkbox"
-import Input from "../../element/Input"
+import { __addTodo, __getTodos } from "../../../redux/modules/todosSlice"
+import { useDispatch, useSelector } from "react-redux"
+import { baseURL } from "../../../core/api/axios"
+import { addTodo } from "../../../redux/modules/todosSlice"
+import { mainApis } from "../../../core/api/mainApi"
+import { async } from "q"
 
 const TodoTag = ({ tag }) => {
+  const chosenDate = useSelector((state) => state.todoDate)
   const [inputHidden, setInputHidden] = useState(true)
+  const [addTodo, setAddTodo] = useState({
+    content: "",
+    todoYear: new Date().getFullYear(),
+    todoMonth: new Date().getMonth(),
+    todoDay: new Date().getDate(),
+  })
+  const dispatch = useDispatch()
+  const handleAddTodo = async (tagId) => {
+    await mainApis.postTodo(tagId, addTodo)
+    // await dispatch(__addTodo({ tagId, addTodo }))
+  }
 
+  const handleDelTodo = async (todoId) => {
+    await mainApis.delTodo(todoId)
+  }
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    handleAddTodo(tag.tagId)
+    setAddTodo({ ...addTodo, content: "" })
+    // setInputHidden(!inputHidden)
+  }
+  useEffect(() => {
+    dispatch(__getTodos)
+  }, [dispatch])
   return (
     <>
       <StTagTitle
@@ -19,11 +48,25 @@ const TodoTag = ({ tag }) => {
           {tag.tagName} <img src={feedAddBtn} alt="" />{" "}
         </ElTagName>
       </StTagTitle>
-      <ElTodoInputWrap hidden={inputHidden}>
+      <ElTodoInputWrap
+        hidden={inputHidden}
+        onSubmit={(e) => {
+          handleSubmit(e)
+        }}
+      >
         <Checkbox readOnly />
         <ElInput
           placeholder="입력"
           style={{ borderBottom: `0.09rem solid ${tag.tagColor}` }}
+          onChange={(e) => {
+            setAddTodo({
+              content: e.target.value,
+              todoYear: chosenDate.todoDate.pickYear,
+              todoMonth: chosenDate.todoDate.pickMonth,
+              todoDay: chosenDate.todoDate.pickDate,
+            })
+          }}
+          value={addTodo.content}
         />
       </ElTodoInputWrap>
     </>
@@ -53,22 +96,22 @@ const StTagTitle = styled.button`
 
 const ElTagName = styled.span``
 
-const ElTodoInputWrap = styled.div`
+const ElTodoInputWrap = styled.form`
   display: flex;
   flex-direction: row;
   margin-top: 0.5rem;
 `
 
-// const ElInput = styled(Input)`
 const ElInput = styled.input`
   width: 100%;
   font-size: medium;
   outline: none;
   border: none;
-  animation-name: example;
-  animation-duration: 3s;
+  animation-name: underline;
+  animation-duration: 0.5s;
+  margin-left: 0.4rem;
 
-  @keyframes example {
+  @keyframes underline {
     from {
       border-bottom: 0.09rem solid #c1bebe;
     }
@@ -76,5 +119,4 @@ const ElInput = styled.input`
       border-bottom: 0.09rem solid ${(tag) => tag.tagColor};
     }
   }
-  /* transition: 5s ease-in-out; */
 `

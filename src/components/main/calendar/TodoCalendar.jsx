@@ -4,29 +4,41 @@ import { useDispatch, useSelector } from "react-redux"
 import { __getTodos } from "../../../redux/modules/todosSlice"
 import "./Calendar.css"
 import Checkbox from "../../element/Checkbox"
+import { sendDate } from "../../../redux/modules/dateSlice"
 
-const TodoCalendar = () => {
-  // const test = React.useRef()
-  const calendarRef = useRef(null)
+const TodoCalendar = (props) => {
+  const [currentDay, setCurrentDay] = useState("")
+  const [currentMonth, setCurrentMonth] = useState("")
+  // const chosenDate = useSelector((state) => state.todoDate)
   const [value, onChange] = useState(new Date())
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(__getTodos())
+    dispatch(sendDate(currentDay))
   }, [dispatch])
 
+  const datesValue = (target) => {
+    const pickYear = target.getFullYear()
+    const pickMonth = target.getMonth() + 1
+    const pickDate = target.getDate()
+    setCurrentDay({ pickYear, pickMonth, pickDate })
+    setCurrentMonth({ pickYear, pickMonth })
+  }
   return (
     <div>
       <Calendar
-        onActiveStartDateChange={({ action, activeStartDate, value, view }) =>
-          console.log(
+        onActiveStartDateChange={({ action, activeStartDate, value, view }) => {
+          setCurrentMonth(
             activeStartDate.toLocaleString("ko", {
               year: "numeric",
               month: "numeric",
             })
           )
-        }
-        inputRef={calendarRef}
+          datesValue(activeStartDate)
+        }}
+        // inputRef={calendarRef}
         onChange={onChange}
+        showNeighboringMonth={null}
         formatDay={(locale, date) =>
           date.toLocaleString("en", { day: "numeric" })
         }
@@ -37,7 +49,11 @@ const TodoCalendar = () => {
         defaultView="month"
         next2Label={null}
         prev2Label={null}
-        showNeighboringMonth={false}
+        onClick
+        onClickDay={(value, event) => {
+          datesValue(value)
+          dispatch(sendDate(currentDay))
+        }}
         tileContent={({ date, view }) => {
           return (
             <>
