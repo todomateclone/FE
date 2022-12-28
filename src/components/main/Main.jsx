@@ -4,6 +4,7 @@ import Header from "../../shared/layout/Header"
 import Todolist from "./todolist/Todolist"
 import TodoCalendar from "./calendar/TodoCalendar"
 import SubMenuModal from "../subMenu/SubMenuModal"
+import BtmMenuModal from "../bottomMenu/BtmMenuModal"
 
 const Main = () => {
   return (
@@ -18,8 +19,9 @@ const Main = () => {
           <TodoCalendar />
         </StCalendar>
         <Todolist />
+        <SubMenuModal />
+        <BtmMenuModal />
       </StMainWrapper>
-      <SubMenuModal />
     </>
   )
 }
@@ -30,7 +32,7 @@ const StMainWrapper = styled.div`
   /* position: relative; */
   display: grid;
   grid-template-columns: 22rem 1fr;
-  grid-auto-rows: 4rem 1fr;
+  grid-auto-rows: 4rem auto;
   grid-template-areas:
     "social feed"
     "calendar todolist";
@@ -44,7 +46,7 @@ const StMainWrapper = styled.div`
 
   @media screen and (max-width: 42.5rem) {
     grid-template-columns: 1fr;
-    grid-auto-rows: 1fr;
+    grid-auto-rows: auto;
     grid-template-areas:
       "social"
       "calendar"
