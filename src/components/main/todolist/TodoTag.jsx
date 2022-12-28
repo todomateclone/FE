@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux"
 import { baseURL } from "../../../core/api/axios"
 import { addTodo } from "../../../redux/modules/todosSlice"
 import { mainApis } from "../../../core/api/mainApi"
-import { async } from "q"
 
 const TodoTag = ({ tag }) => {
   const chosenDate = useSelector((state) => state.todoDate)
@@ -21,18 +20,13 @@ const TodoTag = ({ tag }) => {
   const dispatch = useDispatch()
   const handleAddTodo = async (tagId) => {
     await mainApis.postTodo(tagId, addTodo)
-    // await dispatch(__addTodo({ tagId, addTodo }))
   }
 
-  const handleDelTodo = async (todoId) => {
-    await mainApis.delTodo(todoId)
-  }
   const handleSubmit = (e) => {
     e.preventDefault()
     handleAddTodo(tag.tagId)
     setAddTodo({ ...addTodo, content: "" })
     dispatch(__getTodos)
-    // setInputHidden(!inputHidden)
   }
   useEffect(() => {
     dispatch(__getTodos)

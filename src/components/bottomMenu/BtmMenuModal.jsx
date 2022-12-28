@@ -24,7 +24,6 @@ const BtmMenuModal = (/* setModalOpen */) => {
     setModalOpen(false)
   } */
   const { allTodos } = useSelector((state) => state.allTodos)
-  const [modifiedTodo, setModifiedTodo] = useState("")
   const modalStatus = useSelector((state) => state.openModal.openBottomModal)
   const giveTodoId = useSelector((state) => state.allTodos.getTodoId)
   const dispatch = useDispatch()
@@ -52,7 +51,6 @@ const BtmMenuModal = (/* setModalOpen */) => {
       document.removeEventListener("touchstart", handler) // 모바일 대응
     }
   }, [dispatch])
-
   return (
     <>
       <StBtmWrap hidden={!modalStatus} toggle={modalStatus}></StBtmWrap>
@@ -67,34 +65,28 @@ const BtmMenuModal = (/* setModalOpen */) => {
           </div>
           {/* 이것도 한 발 느림 */}
           {allTodos?.data?.todos?.map((item) =>
-            item?.todoId === giveTodoId ? null : ( // <h6 key={"f" + item.todoId}>임시타이틀</h6>
+            giveTodoId === item.todoId ? null : ( // <h6 key={"f" + item.todoId}>임시타이틀</h6>
               <h6 key={"t" + item.todoId}>{item.content}</h6>
             )
           )}
           <div>
-            <ElBtnBox>
-              <img
-                src={editIcon}
-                alt=""
-                onClick={() => {
-                  // dispatch(__putTodo(giveTodoId, modifiedTodo))
-                  dispatch(sendBtmModalStatus(!modalStatus))
-                  dispatch(sendModifying(modalStatus))
-                  // dispatch(__getTodos())
-                }}
-              />
+            <ElBtnBox
+              onClick={() => {
+                dispatch(sendBtmModalStatus(!modalStatus))
+                // dispatch(__getTodos())
+              }}
+            >
+              <img src={editIcon} alt="" />
               수정하기
             </ElBtnBox>
-            <ElBtnBox>
-              <img
-                src={deleteIcon}
-                alt=""
-                onClick={() => {
-                  dispatch(__delTodo(giveTodoId))
-                  dispatch(sendBtmModalStatus(!modalStatus))
-                  dispatch(__getTodos())
-                }}
-              />
+            <ElBtnBox
+              onClick={() => {
+                dispatch(__delTodo(giveTodoId))
+                dispatch(sendBtmModalStatus(!modalStatus))
+                dispatch(__getTodos())
+              }}
+            >
+              <img src={deleteIcon} alt="" />
               삭제하기
             </ElBtnBox>
           </div>
