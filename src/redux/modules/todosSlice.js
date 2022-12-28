@@ -5,6 +5,7 @@ import { baseURL } from "../../core/api/axios"
 const initialState = {
   allTodos: {},
   getTodoId: "",
+  isModifying: false,
   isLoading: false,
   error: null,
 }
@@ -97,6 +98,9 @@ export const todosSlice = createSlice({
     sendTodoId: (state, action) => {
       state.getTodoId = action.payload
     },
+    sendModifying: (state, action) => {
+      state.isModifying = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -168,6 +172,13 @@ export const todosSlice = createSlice({
   },
 })
 
-export const { addTodo, delTodo, updateTodo, sendTodoId, getTodoId } =
-  todosSlice.actions
+export const {
+  addTodo,
+  delTodo,
+  updateTodo,
+  sendTodoId,
+  getTodoId,
+  sendModifying,
+  isModifying,
+} = todosSlice.actions
 export default todosSlice.reducer

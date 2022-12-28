@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import styled from "styled-components"
 import Checkbox from "../../element/Checkbox"
 import { pendingIcon } from "../../../styles/assets"
@@ -6,14 +6,14 @@ import { useDispatch, useSelector } from "react-redux"
 import { sendBtmModalStatus } from "../../../redux/modules/modalSlice"
 import { sendTodoId } from "../../../redux/modules/todosSlice"
 
-const TodoBody = ({ val, tag }) => {
+const TodoBody = ({ val, tag, id }) => {
   const [checked, setChecked] = useState(false)
   const [todo, setTodo] = useState({ ...val })
   const [isDone, setIsDone] = useState(false)
   const dispatch = useDispatch()
   const modalStatus = useSelector((state) => state.openModal.openBottomModal)
   const giveTodoId = useSelector((state) => state.allTodos.getTodoId)
-
+  const modifyingStatus = useSelector((state) => state.allTodos.isModifying)
   const handleCheck = () => {
     setChecked(!checked)
     // handleCheckedItem(tag.id, i, e.target.checked)
@@ -34,35 +34,40 @@ const TodoBody = ({ val, tag }) => {
     // isDone에 patch 필요
     // 첫번째 true 전환에서 왜 undefined 나오지?
   }
-
   return (
     <StFrag>
-      <StListBody key={"StListBody" + val.todoId}>
+      <StListBody key={"StListBody" + val.todoId} id={id}>
         <Checkbox
           _onChange={() => handleCheck()}
           checked={checked}
           color={tag.tagColor}
           key={tag.tagId}
         />
+
         <span
           onClick={() => {
             dispatch(sendBtmModalStatus(!modalStatus))
             dispatch(sendTodoId(todo.todoId))
-            // console.log(todo)
-            // console.log(giveTodoId)
           }}
+          hidden={modifyingStatus}
         >
           {val.content}
         </span>
+        <ElInput defaultValue={val.content} hidden={!modifyingStatus} />
+
+        <StTodoIcon
+          src={pendingIcon}
+          alt=""
+          onClick={() => dispatch(sendBtmModalStatus(!modalStatus))}
+        />
       </StListBody>
-      <StTodoIcon src={pendingIcon} alt="" />
     </StFrag>
   )
 }
 
 export default TodoBody
 
-const StFrag = styled.div`
+const StFrag = styled.form`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -71,8 +76,9 @@ const StFrag = styled.div`
 
 const StListBody = styled.div`
   display: grid;
-  grid-template-columns: 2rem 1fr 0.5rem;
+  grid-template-columns: 2rem 1fr 1rem;
   grid-auto-rows: 1fr;
+  width: 100%;
   line-height: 1.5rem;
   cursor: pointer;
 `
@@ -81,4 +87,15 @@ const StTodoIcon = styled.img`
   width: 1rem;
   height: 1rem;
   margin-top: 0.2rem;
+`
+
+const ElInput = styled.input`
+  width: 100%;
+  font-size: medium;
+  outline: none;
+  border: none;
+  animation-name: underline;
+  animation-duration: 0.5s;
+  margin-left: 0.2rem;
+  border-bottom: 0.09rem solid ${(tag) => tag.tagColor};
 `
