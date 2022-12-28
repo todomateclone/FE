@@ -1,19 +1,42 @@
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 import Checkbox from "../../element/Checkbox"
 import { pendingIcon } from "../../../styles/assets"
 import { useDispatch, useSelector } from "react-redux"
 import { sendBtmModalStatus } from "../../../redux/modules/modalSlice"
-import { sendTodoId } from "../../../redux/modules/todosSlice"
+import {
+  sendModifying,
+  sendTodoId,
+  __putTodo,
+} from "../../../redux/modules/todosSlice"
+import { mainApis } from "../../../core/api/mainApi"
 
 const TodoBody = ({ val, tag, id }) => {
   const [checked, setChecked] = useState(false)
-  const [todo, setTodo] = useState({ ...val })
+  const [todo, setTodo] = useState({
+    content: "",
+    todoYear: val.todoYear,
+    todoMonth: val.todoMonth,
+    todoDay: val.todoDay,
+  })
   const [isDone, setIsDone] = useState(false)
+  const [modifiedTodo, setModifiedTodo] = useState({})
   const dispatch = useDispatch()
   const modalStatus = useSelector((state) => state.openModal.openBottomModal)
   const giveTodoId = useSelector((state) => state.allTodos.getTodoId)
   const modifyingStatus = useSelector((state) => state.allTodos.isModifying)
+
+  const handlePutTodo = async (todoId) => {
+    await mainApis.putTodo(todoId, modifiedTodo)
+  }
+
+  const handleSubmit = (e) => {
+    // e.preventDefault()
+    handlePutTodo(giveTodoId)
+    // dispatch(__putTodo(giveTodoId, modifiedTodo))
+    // setInputHidden(!inputHidden)
+  }
+
   const handleCheck = () => {
     setChecked(!checked)
     // handleCheckedItem(tag.id, i, e.target.checked)
@@ -28,33 +51,48 @@ const TodoBody = ({ val, tag, id }) => {
   const handleCheckedItem = () => {
     setIsDone(!isDone)
     setTodo({ ...val, done: checked })
-    console.log(todo.done)
     // 이거 post 해야됨
     // true일 경우 checked이도록 처리 필요
     // isDone에 patch 필요
     // 첫번째 true 전환에서 왜 undefined 나오지?
   }
+  useEffect(() => {}, [dispatch])
   return (
     <StFrag>
-      <StListBody key={"StListBody" + val.todoId} id={id}>
+      <StListBody
+        key={"StListBody" + val.todoId}
+        id={id}
+        onSubmit={(e) => {
+          handleSubmit(e)
+          console.log("done")
+        }}
+      >
         <Checkbox
           _onChange={() => handleCheck()}
           checked={checked}
           color={tag.tagColor}
           key={tag.tagId}
         />
-
-        <span
-          onClick={() => {
-            dispatch(sendBtmModalStatus(!modalStatus))
-            dispatch(sendTodoId(todo.todoId))
-          }}
-          hidden={modifyingStatus}
-        >
-          {val.content}
-        </span>
-        <ElInput defaultValue={val.content} hidden={!modifyingStatus} />
-
+        {giveTodoId === val.todoId ? (
+          <ElInput
+            defaultValue={val.content}
+            onChange={(e) => {
+              setModifiedTodo({
+                ...todo,
+                content: e.target.value,
+              })
+            }}
+          />
+        ) : (
+          <span
+            onClick={() => {
+              dispatch(sendBtmModalStatus(!modalStatus))
+              dispatch(sendTodoId(val.todoId))
+            }}
+          >
+            {val.content}
+          </span>
+        )}
         <StTodoIcon
           src={pendingIcon}
           alt=""
@@ -67,14 +105,14 @@ const TodoBody = ({ val, tag, id }) => {
 
 export default TodoBody
 
-const StFrag = styled.form`
+const StFrag = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   margin: 1rem 0 1rem;
 `
 
-const StListBody = styled.div`
+const StListBody = styled.form`
   display: grid;
   grid-template-columns: 2rem 1fr 1rem;
   grid-auto-rows: 1fr;

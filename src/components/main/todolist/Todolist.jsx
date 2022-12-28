@@ -11,7 +11,6 @@ const Todolist = () => {
   const tags = useSelector((state) => state.tag.tags)
   const chosenDate = useSelector((state) => state.todoDate)
   const giveTodoId = useSelector((state) => state.allTodos.getTodoId)
-  const [show, setShow] = useState(null)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -23,40 +22,55 @@ const Todolist = () => {
 
   if (error) return <div>🌧{error.message}😢</div>
 
-  return (
-    <>
-      {tags?.map((tag) => {
-        const todo = allTodos.data?.todos?.filter(
-          (item) =>
-            item.tagId === tag.tagId &&
-            item.todoYear === chosenDate.todoDate.pickYear &&
-            item.todoMonth === chosenDate.todoDate.pickMonth &&
-            item.todoDay === chosenDate.todoDate.pickDate
-        )
-        return (
-          <StTodolist key={`StTodolist${tag.tagId}`}>
-            <TodoTag tag={tag} key={`StTagTitle${tag.tagId}`} />
-            {todo.map(
-              (
-                val /* {
-                giveTodoId === val.todoId && (
-                  <TodoBody
-                    val={val}
-                    tag={tag}
-                    key={"frag" + val.todoId + Math.random()}
-                    // id={val.todoId}
-                  />
-                )
-              } */
-              ) => (
+  if (chosenDate.todoDate !== "")
+    return (
+      <>
+        {tags?.map((tag) => {
+          const todo = allTodos.data?.todos?.filter(
+            (item) =>
+              item.tagId === tag.tagId &&
+              item.todoYear === chosenDate.todoDate.pickYear &&
+              item.todoMonth === chosenDate.todoDate.pickMonth &&
+              item.todoDay === chosenDate.todoDate.pickDate
+          )
+          return (
+            <StTodolist key={`StTodolist${tag.tagId}`}>
+              <TodoTag tag={tag} key={`StTagTitle${tag.tagId}`} />
+              {todo?.map((val) => (
                 <TodoBody
                   val={val}
                   tag={tag}
                   key={"frag" + val.todoId + Math.random()}
                   id={val.todoId}
                 />
-              )
-            )}
+              ))}
+            </StTodolist>
+          )
+        })}
+      </>
+    )
+
+  return (
+    <>
+      {tags?.map((tag) => {
+        const todo = allTodos.data?.todos?.filter(
+          (item) =>
+            item.tagId === tag.tagId &&
+            item.todoYear === new Date().getFullYear() &&
+            item.todoMonth === new Date().getMonth() + 1 &&
+            item.todoDay === new Date().getDate()
+        )
+        return (
+          <StTodolist key={`StTodolist${tag.tagId}`}>
+            <TodoTag tag={tag} key={`StTagTitle${tag.tagId}`} />
+            {todo?.map((val) => (
+              <TodoBody
+                val={val}
+                tag={tag}
+                key={"frag" + val.todoId + Math.random()}
+                id={val.todoId}
+              />
+            ))}
           </StTodolist>
         )
       })}

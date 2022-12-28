@@ -23,7 +23,7 @@ export const mainApis = {
         console.log(err.response.data.msg)
       }),
 
-  updateTodo: (todoId, content) =>
+  putTodo: (todoId, content) =>
     baseURL
       .put(`/todo/${todoId}`, content)
       .then((res) => {
