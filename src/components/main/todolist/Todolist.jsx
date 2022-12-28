@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
 import { __getTodos } from "../../../redux/modules/todosSlice"
@@ -10,8 +10,10 @@ const Todolist = () => {
   const { allTodos, isLoading, error } = useSelector((state) => state.allTodos)
   const tags = useSelector((state) => state.tag.tags)
   const chosenDate = useSelector((state) => state.todoDate)
-
+  const giveTodoId = useSelector((state) => state.allTodos.getTodoId)
+  const [show, setShow] = useState(null)
   const dispatch = useDispatch()
+
   useEffect(() => {
     dispatch(__getTodos())
     dispatch(__getTags())
@@ -34,13 +36,27 @@ const Todolist = () => {
         return (
           <StTodolist key={`StTodolist${tag.tagId}`}>
             <TodoTag tag={tag} key={`StTagTitle${tag.tagId}`} />
-            {todo.map((val) => (
-              <TodoBody
-                val={val}
-                tag={tag}
-                key={"frag" + val.todoId + Math.random()}
-              />
-            ))}
+            {todo.map(
+              (
+                val /* {
+                giveTodoId === val.todoId && (
+                  <TodoBody
+                    val={val}
+                    tag={tag}
+                    key={"frag" + val.todoId + Math.random()}
+                    // id={val.todoId}
+                  />
+                )
+              } */
+              ) => (
+                <TodoBody
+                  val={val}
+                  tag={tag}
+                  key={"frag" + val.todoId + Math.random()}
+                  id={val.todoId}
+                />
+              )
+            )}
           </StTodolist>
         )
       })}

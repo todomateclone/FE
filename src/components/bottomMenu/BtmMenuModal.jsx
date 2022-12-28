@@ -1,13 +1,19 @@
-import React, { useRef, useEffect } from "react"
+import React, { useRef, useEffect, useState } from "react"
 import styled from "styled-components"
 import { useDispatch, useSelector } from "react-redux"
 import { sendBtmModalStatus } from "../../redux/modules/modalSlice"
-import { __delTodo } from "../../redux/modules/todosSlice"
+import {
+  sendModifying,
+  __delTodo,
+  __getTodos,
+  __putTodo,
+} from "../../redux/modules/todosSlice"
 
 const BtmMenuModal = (/* setModalOpen */) => {
   /*   const closeModal = () => {
     setModalOpen(false)
   } */
+  const [modifiedTodo, setModifiedTodo] = useState("")
   const modalStatus = useSelector((state) => state.openModal.openBottomModal)
   const giveTodoId = useSelector((state) => state.allTodos.getTodoId)
   const dispatch = useDispatch()
@@ -40,14 +46,24 @@ const BtmMenuModal = (/* setModalOpen */) => {
       <StBtmWrap hidden={!modalStatus} toggle={modalStatus}></StBtmWrap>
       <StBtmMenu ref={modalRef} toggle={modalStatus}>
         <StInsideMenu toggle={modalStatus}>
-          <h3>수정</h3>
+          <h3
+            onClick={() => {
+              // dispatch(__putTodo(giveTodoId, modifiedTodo))
+              dispatch(sendBtmModalStatus(!modalStatus))
+              dispatch(sendModifying(modalStatus))
+              // dispatch(__getTodos())
+            }}
+          >
+            수정 /
+          </h3>
           <h3
             onClick={() => {
               dispatch(__delTodo(giveTodoId))
-              // console.log(giveTodoId)
+              dispatch(sendBtmModalStatus(!modalStatus))
+              dispatch(__getTodos())
             }}
           >
-            삭제
+            삭제 /
           </h3>
           <h3
             onClick={() => {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import styled from "styled-components"
-import { feedAddBtn } from "../../../styles/assets"
+import { feedAddBtn, pendingIcon } from "../../../styles/assets"
 import Checkbox from "../../element/Checkbox"
 import { __addTodo, __getTodos } from "../../../redux/modules/todosSlice"
 import { useDispatch, useSelector } from "react-redux"
@@ -31,6 +31,7 @@ const TodoTag = ({ tag }) => {
     e.preventDefault()
     handleAddTodo(tag.tagId)
     setAddTodo({ ...addTodo, content: "" })
+    dispatch(__getTodos)
     // setInputHidden(!inputHidden)
   }
   useEffect(() => {
@@ -44,9 +45,9 @@ const TodoTag = ({ tag }) => {
           setInputHidden(!inputHidden)
         }}
       >
-        <ElTagName>
+        <span>
           {tag.tagName} <img src={feedAddBtn} alt="" />{" "}
-        </ElTagName>
+        </span>
       </StTagTitle>
       <ElTodoInputWrap
         hidden={inputHidden}
@@ -68,6 +69,7 @@ const TodoTag = ({ tag }) => {
           }}
           value={addTodo.content}
         />
+        <StTodoIcon src={pendingIcon} alt="" />
       </ElTodoInputWrap>
     </>
   )
@@ -94,11 +96,15 @@ const StTagTitle = styled.button`
   }
 `
 
-const ElTagName = styled.span``
+const StTodoIcon = styled.img`
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0.2rem;
+`
 
 const ElTodoInputWrap = styled.form`
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 2rem 1fr 1rem;
   margin-top: 0.5rem;
 `
 
@@ -109,7 +115,7 @@ const ElInput = styled.input`
   border: none;
   animation-name: underline;
   animation-duration: 0.5s;
-  margin-left: 0.4rem;
+  margin-left: 0.2rem;
 
   @keyframes underline {
     from {
