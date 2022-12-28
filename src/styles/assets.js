@@ -5,6 +5,12 @@ const landingImg = "/img/landing.webp"
 const mainSideMenuBtn = "/img/mainSideMenuBtn.webp"
 const settingIcon = "/img/settingIcon.webp"
 const goalRightArrow = "/img/goalRightArrow.webp"
+const againAnotherdayIcon = "/img/feedOptionMenuAgainAnotherdayIcon.webp"
+const againTomorrowIcon = "/img/feedOptionMenuAgainTomorrowIcon.webp"
+const anotherdayIcon = "/img/feedOptionMenuAnotherdayIcon.webp"
+const deleteIcon = "/img/feedOptionMenuDeleteIcon.webp"
+const editIcon = "/img/feedOptionMenuEditIcon.webp"
+const timeNotificationIcon = "/img/optionMenuTimeNotificationIcon.webp"
 
 export {
   plusIcon,
@@ -14,4 +20,10 @@ export {
   mainSideMenuBtn,
   settingIcon,
   goalRightArrow,
+  againAnotherdayIcon,
+  againTomorrowIcon,
+  anotherdayIcon,
+  deleteIcon,
+  editIcon,
+  timeNotificationIcon,
 }
