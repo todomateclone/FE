@@ -26,37 +26,30 @@ const TodoBody = ({ val, tag, id }) => {
   })
   const [isDone, setIsDone] = useState(false)
   const [modifiedTodo, setModifiedTodo] = useState({})
-  const [toggleElement, setToggleElement] = useState(false)
 
   // 셀렉터
   const modalStatus = useSelector((state) => state.openModal.openBottomModal)
   const giveTodoId = useSelector((state) => state.allTodos.getTodoId)
-  const putFullTodo = useSelector((state) => state.allTodos.putTodo)
 
   // 핸들러
   const handlePutTodo = async (todoId) => {
     await mainApis.putTodo(todoId, modifiedTodo)
   }
-  const handlePutFullTodo = async (todoId) => {
-    await mainApis.putTodo(todoId, fullTodo)
-  }
   const handleSubmit = (e) => {
-    // e.preventDefault()
-    handlePutTodo(giveTodoId)
+    e.preventDefault()
+    // handlePutTodo(giveTodoId)
   }
   const handleCheck = () => {
     setChecked(!checked)
     handleCheckedItem()
   }
+
   // done을 put 할 수 있어야 함. 여기 하는 중
   const handleCheckedItem = () => {
     setIsDone(!isDone)
-    setFullTodo({ ...val, done: !checked })
-    handlePutFullTodo(val.todoId)
-    dispatch(__getTodos)
+    // dispatch(__getTodos)
   }
   const handleClickOutside = () => {
-    setToggleElement(!toggleElement)
     dispatch(sendTodoId(null))
   }
 
@@ -70,12 +63,16 @@ const TodoBody = ({ val, tag, id }) => {
         key={"StListBody" + val.todoId}
         id={id}
         onSubmit={(e) => {
+          e.preventDefault()
           handleSubmit(e)
         }}
       >
         <Checkbox
-          _onChange={() => handleCheck()}
-          checked={val.done}
+          _onChange={(e) => {
+            handleCheck()
+          }}
+          checked={checked}
+          // checked={val.done}
           color={tag.tagColor}
           key={tag.tagId}
         />
@@ -102,9 +99,9 @@ const TodoBody = ({ val, tag, id }) => {
         <StTodoIcon
           src={pendingIcon}
           alt=""
-          onClick={() => {
-            dispatch(sendBtmModalStatus(!modalStatus))
+          onClick={(e) => {
             dispatch(sendTodoId(val.todoId))
+            dispatch(sendBtmModalStatus(!modalStatus))
           }}
         />
       </StListBody>
