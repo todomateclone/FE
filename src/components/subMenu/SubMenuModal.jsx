@@ -1,17 +1,14 @@
 import React, { useRef, useEffect } from "react"
 import styled from "styled-components"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { sendModalStatus } from "../../redux/modules/modalSlice"
 import { __getTags } from "../../redux/modules/tagSlice"
 import { settingIcon, goalRightArrow } from "../../styles/assets"
-import TagBtn from "../element/TagBtn"
 import useOutsideClick from "../../hooks/useOutsideClick"
-import { profile, __getProfile } from "../../redux/modules/profileSlice"
+import ProfileBox from "./ProfileBox"
 
 const SubMenuModal = () => {
-  const profileData = useSelector((state) => state.profile)
-  const profile = profileData.profile
   const modalStatus = useSelector((state) => state.openModal.openModal)
   const tags = useSelector((state) => state.tag.tags)
   const navigate = useNavigate()
@@ -22,7 +19,6 @@ const SubMenuModal = () => {
   const ref = useOutsideClick(handleOutsideClick)
   useEffect(() => {
     dispatch(__getTags())
-    dispatch(__getProfile())
   }, [dispatch])
   return (
     <>
@@ -46,18 +42,7 @@ const SubMenuModal = () => {
             />
           </ElTitle>
 
-          <ElProfile
-            onClick={() => {
-              dispatch(sendModalStatus(false))
-              navigate("/profile")
-            }}
-          >
-            <img src={profile?.profileImageUrl} alt="" />
-            <div>
-              <span>{profile?.nickname}</span>
-              <span>{profile?.description}</span>
-            </div>
-          </ElProfile>
+          <ProfileBox />
           <hr />
 
           <ElTagBox>
@@ -125,30 +110,6 @@ const StInsideMenu = styled.div`
   hr {
     margin-block: 0.5rem;
     color: #818181;
-  }
-`
-const ElProfile = styled.div`
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  img {
-    margin-right: 1rem;
-    width: 3rem;
-    height: 3rem;
-    border: 1px solid ${({ theme }) => theme.baseColor.btnGray};
-    border-radius: 1.5rem;
-  }
-  div {
-    display: flex;
-    flex-direction: column;
-    span {
-      font-weight: 700;
-    }
-    span + span {
-      font-size: small;
-      font-weight: 100;
-      color: #818181;
-    }
   }
 `
 
