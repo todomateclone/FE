@@ -4,45 +4,31 @@ import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { sendModalStatus } from "../../redux/modules/modalSlice"
 import { __getTags } from "../../redux/modules/tagSlice"
-import TagBtn from "../element/TagBtn"
 import { settingIcon, goalRightArrow } from "../../styles/assets"
+import TagBtn from "../element/TagBtn"
+import useOutsideClick from "../../hooks/useOutsideClick"
+import { profile, __getProfile } from "../../redux/modules/profileSlice"
 
-const SubMenuModal = (/* setModalOpen */) => {
-  /*   const closeModal = () => {
-    setModalOpen(false)
-  } */
-  const dispatch = useDispatch()
+const SubMenuModal = () => {
+  const profileData = useSelector((state) => state.profile)
+  const profile = profileData.profile
   const modalStatus = useSelector((state) => state.openModal.openModal)
   const tags = useSelector((state) => state.tag.tags)
-  const modalRef = useRef(HTMLDivElement)
   const navigate = useNavigate()
+  const handleOutsideClick = () => {
+    dispatch(sendModalStatus(false))
+  }
+  const dispatch = useDispatch()
+  const ref = useOutsideClick(handleOutsideClick)
 
-  // 잠시 보류
   useEffect(() => {
     dispatch(__getTags())
-    // 이벤트 핸들러 함수
-    const handler = (event) => {
-      // mousedown 이벤트가 발생한 영역이 모달창이 아닐 때, 모달창 제거 처리
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        // setModalOpen(false)
-        // setOpen(!open)
-      }
-    }
-
-    // 이벤트 핸들러 등록
-    document.addEventListener("mousedown", handler)
-    document.addEventListener("touchstart", handler) // 모바일 대응
-
-    return () => {
-      // 이벤트 핸들러 해제
-      document.removeEventListener("mousedown", handler)
-      document.removeEventListener("touchstart", handler) // 모바일 대응
-    }
+    dispatch(__getProfile())
   }, [dispatch])
   return (
     <>
       <StSubWrap hidden={!modalStatus} toggle={modalStatus}></StSubWrap>
-      <StSubMenu ref={modalRef} toggle={modalStatus}>
+      <StSubMenu ref={ref} toggle={modalStatus}>
         <StInsideMenu toggle={modalStatus}>
           <ElTitle>
             <span
@@ -62,10 +48,10 @@ const SubMenuModal = (/* setModalOpen */) => {
           </ElTitle>
 
           <ElProfile>
-            <img src="" alt="프로필" />
+            <img src={profile?.profileImageUrl} alt="" />
             <div>
-              <span>닉네임</span>
-              <span>소개말</span>
+              <span>{profile?.nickname}</span>
+              <span>{profile?.description}</span>
             </div>
           </ElProfile>
           <hr />
@@ -82,7 +68,7 @@ const SubMenuModal = (/* setModalOpen */) => {
               />
             </h6>
             {tags?.map((tag) => (
-              <TagBtn key={tag.tagId}>{tag.tagName}</TagBtn>
+              <StTag key={tag.tagId}>{tag.tagName}</StTag>
             ))}
           </ElTagBox>
         </StInsideMenu>
@@ -127,6 +113,7 @@ const StInsideMenu = styled.div`
   padding: 1.2rem;
   hr {
     margin-block: 0.5rem;
+    color: #818181;
   }
 `
 const ElProfile = styled.div`
@@ -135,10 +122,22 @@ const ElProfile = styled.div`
   align-items: center;
   img {
     margin-right: 1rem;
+    width: 3rem;
+    height: 3rem;
+    border: 1px solid ${({ theme }) => theme.baseColor.btnGray};
+    border-radius: 1.5rem;
   }
   div {
     display: flex;
     flex-direction: column;
+    span {
+      font-weight: 700;
+    }
+    span + span {
+      font-size: small;
+      font-weight: 100;
+      color: #818181;
+    }
   }
 `
 
@@ -159,9 +158,21 @@ const ElTagBox = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    font-weight: 700;
     img {
       width: calc(1.625rem / 3);
       height: calc(2.75rem / 3);
     }
   }
+`
+const StTag = styled.button`
+  border: none;
+  border-radius: 0.3em;
+  height: 2.5rem;
+  width: fit-content;
+  margin-right: 0.5rem;
+  padding: 0.6rem;
+  background-color: ${({ theme }) => theme.baseColor.btnGray};
+  font-weight: 700;
+  color: ${(props) => props.color};
 `
