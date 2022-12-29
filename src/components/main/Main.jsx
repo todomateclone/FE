@@ -3,9 +3,9 @@ import styled from "styled-components"
 import Header from "../../shared/layout/Header"
 import Todolist from "./todolist/Todolist"
 import TodoCalendar from "./calendar/TodoCalendar"
-import SubMenuModal from "../subMenu/SubMenuModal"
-import BtmMenuModal from "../bottomMenu/BtmMenuModal"
-import ProfileBox from "../subMenu/ProfileBox"
+import SubMenuModal from "../modal/subMenu/SubMenuModal"
+import BtmMenuModal from "../modal/bottomMenu/BtmMenuModal"
+import ProfileBox from "../modal/subMenu/ProfileBox"
 
 const Main = () => {
   return (

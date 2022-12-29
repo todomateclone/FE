@@ -2,8 +2,8 @@ import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import { sendModalStatus } from "../../redux/modules/modalSlice"
-import { __getProfile } from "../../redux/modules/profileSlice"
+import { sendModalStatus } from "../../../redux/modules/modalSlice"
+import { __getProfile } from "../../../redux/modules/profileSlice"
 
 const ProfileBox = () => {
   const profileData = useSelector((state) => state.profile)

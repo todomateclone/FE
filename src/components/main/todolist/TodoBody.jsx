@@ -31,8 +31,9 @@ const TodoBody = ({ val, tag, id }) => {
   const giveTodoId = useSelector((state) => state.allTodos.getTodoId)
 
   // 핸들러
-  const handlePutTodo = async (todoId) => {
-    await mainApis.putTodo(todoId, modifiedTodo)
+  const handlePutTodo = (todoId) => {
+    dispatch(__putTodo({ modifiedTodo, todoId }))
+    // await mainApis.putTodo(todoId, modifiedTodo)
   }
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -49,7 +50,7 @@ const TodoBody = ({ val, tag, id }) => {
     // dispatch(__getTodos)
   }
   const handleClickOutside = () => {
-    dispatch(sendTodoId(null))
+    // dispatch(sendTodoId(null))
     dispatch(sendTodoId(giveTodoId))
   }
   const ref = useOutsideClick(handleClickOutside)
@@ -134,7 +135,7 @@ const StTodoIcon = styled.img`
 `
 
 const ElInput = styled.input`
-  width: 100%;
+  width: 98%;
   font-size: medium;
   outline: none;
   border: none;

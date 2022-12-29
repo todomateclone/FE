@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react"
 import styled from "styled-components"
 import { useDispatch, useSelector } from "react-redux"
-import { sendBtmModalStatus } from "../../redux/modules/modalSlice"
+import { sendBtmModalStatus } from "../../../redux/modules/modalSlice"
 import {
   getTodoId,
   sendTodoId,
@@ -9,7 +9,7 @@ import {
   __delTodo,
   __getTodos,
   __putTodo,
-} from "../../redux/modules/todosSlice"
+} from "../../../redux/modules/todosSlice"
 import {
   deleteIcon,
   editIcon,
@@ -17,8 +17,8 @@ import {
   againTomorrowIcon,
   anotherdayIcon,
   timeNotificationIcon,
-} from "../../styles/assets"
-import useOutsideClick from "../../hooks/useOutsideClick"
+} from "../../../styles/assets"
+import useOutsideClick from "../../../hooks/useOutsideClick"
 
 const BtmMenuModal = (/* setModalOpen */) => {
   /*   const closeModal = () => {
@@ -32,8 +32,7 @@ const BtmMenuModal = (/* setModalOpen */) => {
   }
   const ref = useOutsideClick(handleOutsideClick)
   const dispatch = useDispatch()
-
-  // 잠시 보류
+  console.log(allTodos)
   useEffect(() => {
     dispatch(__getTodos())
   }, [dispatch])

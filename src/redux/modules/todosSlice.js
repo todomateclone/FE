@@ -12,7 +12,6 @@ const initialState = {
 
 export const __getTodos = createAsyncThunk(
   "todos/get",
-  // async ({ todoYear, todoMonth }, thunkAPI) => {
   async (payload, thunkAPI) => {
     try {
       const data = await baseURL.get(`/todo`)
@@ -37,12 +36,11 @@ export const __getMonthlyTodos = createAsyncThunk(
 
 export const __addTodo = createAsyncThunk(
   "todos/add",
-  async ({ tagId, content }, thunkAPI) => {
+  async (payload, thunkAPI) => {
+    const { tagId, addTodo } = payload
     try {
-      // thunk는 하나의 arg밖에 가질 수 없음ㅜ
-      // await mainApis.postTodo(tagId, content)
-      await baseURL.post(`/todo/${tagId}`, content)
-      return thunkAPI.fulfillWithValue(console.log("success"))
+      const { data } = await baseURL.post(`/${tagId}/todo`, addTodo)
+      return thunkAPI.fulfillWithValue(data)
     } catch (err) {
       return thunkAPI.rejectWithValue(console.log(err))
     }
@@ -54,7 +52,7 @@ export const __delTodo = createAsyncThunk(
   async (todoId, thunkAPI) => {
     try {
       await baseURL.delete(`/todo/${todoId}`)
-      return thunkAPI.fulfillWithValue(console.log("success"))
+      return thunkAPI.fulfillWithValue(todoId)
     } catch (err) {
       return thunkAPI.rejectWithValue(console.log(err))
     }
@@ -63,10 +61,11 @@ export const __delTodo = createAsyncThunk(
 
 export const __putTodo = createAsyncThunk(
   "todos/put",
-  async (todoId, thunkAPI) => {
+  async (payload, thunkAPI) => {
+    const { todoId, modifiedTodo } = payload
     try {
-      await baseURL.put(`/todo/${todoId}`, {})
-      return thunkAPI.fulfillWithValue(console.log("success"))
+      const { data } = await baseURL.put(`/todo/${todoId}`, modifiedTodo)
+      return thunkAPI.fulfillWithValue(data.data)
     } catch (err) {
       return thunkAPI.rejectWithValue(console.log(err))
     }
@@ -109,8 +108,9 @@ export const todosSlice = createSlice({
         state.isLoading = true
       })
       .addCase(__getTodos.fulfilled, (state, action) => {
+        const todoList = action.payload
         state.isLoading = false
-        state.allTodos = action.payload
+        state.allTodos = todoList
       })
       .addCase(__getTodos.rejected, (state, action) => {
         state.isLoading = false
@@ -133,8 +133,15 @@ export const todosSlice = createSlice({
         state.isLoading = true
       })
       .addCase(__addTodo.fulfilled, (state, action) => {
+        const please = action.payload.data
         state.isLoading = false
-        state.allTodos = action.payload
+        console.log(action)
+        state.allTodos.allTodos.data.todos = {
+          ...state.allTodos.allTodos.data.todos,
+          please,
+        }
+
+        // state.allTodos = action.payload
       })
       .addCase(__addTodo.rejected, (state, action) => {
         state.isLoading = false
@@ -159,13 +166,22 @@ export const todosSlice = createSlice({
         state.isLoading = true
       })
       .addCase(__putTodo.fulfilled, (state, action) => {
-        /* const idx = state.findIndex((todo) => todo.todoId === action.payload.id)
-        state[idx] = {
-          ...state[idx],
-          ...action.payload, */
         state.isLoading = false
-        state.allTodos = action.payload
-        // )
+        const { todos } = state.allTodos
+        console.log(todos)
+        const temp = [{ ...todos }]
+        state.todos = temp?.map((todo) => {
+          if (todo?.todoId === action.payload?.todoId) {
+            return {
+              ...todo,
+              content: action.payload.content,
+            }
+          }
+        })
+        console.log(state)
+        // console.log(action)
+        // const {modTodo} = state
+        // state.allTodos = action.payload
       })
       .addCase(__putTodo.rejected, (state, action) => {
         state.isLoading = false
