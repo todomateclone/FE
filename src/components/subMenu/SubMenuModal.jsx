@@ -20,7 +20,6 @@ const SubMenuModal = () => {
   }
   const dispatch = useDispatch()
   const ref = useOutsideClick(handleOutsideClick)
-
   useEffect(() => {
     dispatch(__getTags())
     dispatch(__getProfile())
@@ -47,7 +46,12 @@ const SubMenuModal = () => {
             />
           </ElTitle>
 
-          <ElProfile>
+          <ElProfile
+            onClick={() => {
+              dispatch(sendModalStatus(false))
+              navigate("/profile")
+            }}
+          >
             <img src={profile?.profileImageUrl} alt="" />
             <div>
               <span>{profile?.nickname}</span>
@@ -57,7 +61,12 @@ const SubMenuModal = () => {
           <hr />
 
           <ElTagBox>
-            <h6>
+            <h6
+              onClick={() => {
+                dispatch(sendModalStatus(false))
+                navigate("/tag")
+              }}
+            >
               목표
               <img
                 src={goalRightArrow}
@@ -68,7 +77,9 @@ const SubMenuModal = () => {
               />
             </h6>
             {tags?.map((tag) => (
-              <StTag key={tag.tagId}>{tag.tagName}</StTag>
+              <StTag key={tag.tagId} style={{ color: tag.tagColor }}>
+                {tag.tagName}
+              </StTag>
             ))}
           </ElTagBox>
         </StInsideMenu>
@@ -101,7 +112,7 @@ const StSubMenu = styled.div`
   right: 0%;
   position: absolute;
   z-index: 5;
-  transition: ${(props) => (props.toggle ? "all 1s" : "all 1s")};
+  transition: ${(props) => (props.toggle ? "all 0.5s" : "all 0.5s")};
   overflow-x: hidden;
 `
 
@@ -170,7 +181,7 @@ const StTag = styled.button`
   border-radius: 0.3em;
   height: 2.5rem;
   width: fit-content;
-  margin-right: 0.5rem;
+  margin: 0.3rem;
   padding: 0.6rem;
   background-color: ${({ theme }) => theme.baseColor.btnGray};
   font-weight: 700;
