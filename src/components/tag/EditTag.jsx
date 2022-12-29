@@ -4,16 +4,16 @@ import { RiArrowDropDownFill } from "react-icons/ri"
 import { SlArrowLeft } from "react-icons/sl"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import Input from "../element/Input"
-import CustomButton from "../login/CustomButton"
+import CustomButton from "../element/CustomButton"
 import { useSelector, useDispatch } from "react-redux"
 import { __addTag, __deleteTag, __patchTag } from "../../redux/modules/tagSlice"
 import {
   sendColorBtmModalStatus,
   sendSetBtmModalStatus,
 } from "../../redux/modules/modalSlice"
-import ColorBtmModal from "./ColorBtmModal"
 import { goalSeeOnlyIcon } from "../../styles/assets"
-import SetBtmModal from "./SetBtmModal"
+import ColorBtmModal from "../modal/ColorBtmModal"
+import SetBtmModal from "../modal/SetBtmModal"
 
 const EditTag = () => {
   const dispatch = useDispatch()
