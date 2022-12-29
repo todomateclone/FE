@@ -2,7 +2,7 @@ import React, { useRef } from "react"
 import styled from "styled-components"
 import { useDispatch, useSelector } from "react-redux"
 import { sendColorBtmModalStatus } from "../../redux/modules/modalSlice"
-import CustomButton from "../login/CustomButton"
+import CustomButton from "../element/CustomButton"
 
 const ColorBtmModal = ({ tagColorClickHandler }) => {
   const modalStatus = useSelector(

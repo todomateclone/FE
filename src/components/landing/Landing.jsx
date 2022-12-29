@@ -1,8 +1,9 @@
 import React from "react"
 import styled from "styled-components"
-import LoginButton from "../login/CustomButton"
+
 import { Link } from "react-router-dom"
 import { landingImg } from "../../styles/assets"
+import CustomButton from "../element/CustomButton"
 
 const Landing = () => {
   return (
@@ -16,7 +17,11 @@ const Landing = () => {
       </div>
       <StBtnBox>
         <StLink to={"/login"}>
-          <LoginButton width="18rem" name="로그인" height="3rem"></LoginButton>
+          <CustomButton
+            width="18rem"
+            name="로그인"
+            height="3rem"
+          ></CustomButton>
         </StLink>
       </StBtnBox>
       <Link to={"/signup"} style={{ color: "black" }}>

@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import CustomButton from "./CustomButton"
+import CustomButton from "../element/CustomButton"
 import { SlArrowLeft } from "react-icons/sl"
 import { Link, useNavigate } from "react-router-dom"
 import { instance } from "../../core/api/axios"

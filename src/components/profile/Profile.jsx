@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
 import styled from "styled-components"
-import CustomButton from "../login/CustomButton"
+import CustomButton from "../element/CustomButton"
 import { SlArrowLeft } from "react-icons/sl"
 import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
