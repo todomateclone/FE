@@ -9,13 +9,11 @@ import {
   __patchProfile,
   __putProfileImg,
 } from "../../redux/modules/profileSlice"
-import { baseURL } from "../../core/api/axios"
 
 const Profile = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const profileImgInput = useRef()
-  // const [profileImg, setProfileImg] = useState([])
 
   useEffect(() => {
     dispatch(__getProfile())
@@ -35,15 +33,8 @@ const Profile = () => {
   }
 
   const submitHandler = () => {
-    if (!profile.nickname && !profile.description) {
-      alert("프로필에 작성하지 않은 항목이 있습니다!")
-    } else {
-      return (
-        dispatch(__patchProfile(newProfile)),
-        alert("프로필 작성완료!"),
-        navigate("/login")
-      )
-    }
+    dispatch(__patchProfile(newProfile))
+    navigate("/login")
   }
   const profileImgClickHandler = (e) => {
     e.preventDefault()
@@ -71,7 +62,6 @@ const Profile = () => {
           <StLink to="/main" style={{ color: "black" }}>
             <SlArrowLeft size="20"></SlArrowLeft>
           </StLink>
-
           <div style={{ marginRight: "3rem" }}>
             <CustomButton
               name="완료"
@@ -137,7 +127,6 @@ const StInputContainer = styled.div`
   ${({ theme }) => theme.common.flexCenter}
   flex-direction: column;
   margin: 0 2rem;
-  /* gap: 1rem; */
   font-size: 1.35rem;
   font-weight: 600;
   width: 100%;
@@ -148,7 +137,6 @@ const StLoginHead = styled.div`
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  /* margin-bottom: 5rem; */
 `
 const StTitle = styled.div`
   font-size: 2rem;
@@ -162,7 +150,6 @@ const StImg = styled.img`
   border-radius: 50%;
   margin-bottom: 4rem;
   border: 0.08rem solid #7c7b7b;
-  /* object-fit: cover; */
 `
 
 const StLink = styled(Link)`

@@ -50,14 +50,15 @@ const StInput = styled.input`
   height: ${({ height }) => height || "2rem"};
   font-size: ${({ fontSize }) => fontSize};
   padding-bottom: 0.3rem;
+  color: ${({ color }) => color};
 
   ::placeholder {
-    color: ${({ color }) => color || "#c1bebe"};
+    color: "#c1bebe";
     font-weight: ${({ fontWeight }) => fontWeight};
   }
 
   :focus {
-    border-bottom: ${({ borderBottom }) => borderBottom};
+    border-bottom: 0.2rem solid ${({ color }) => color};
   }
 `
 export default Input

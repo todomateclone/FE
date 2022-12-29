@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import styled from "styled-components"
 import { SlArrowLeft } from "react-icons/sl"
-import { RxPlus } from "react-icons/rx"
+import { RxHeight, RxPlus } from "react-icons/rx"
 import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { __getTags } from "../../redux/modules/tagSlice"
@@ -14,7 +14,6 @@ const Tags = () => {
     dispatch(__getTags())
   }, [dispatch])
   console.log(tags)
-  // console.log(tags)
 
   return (
     <StInputContainer>
@@ -28,17 +27,15 @@ const Tags = () => {
         </StLink>
       </StLoginHead>
       <StTagBox>
-        {/* <label>일반</label> */}
         {tags &&
           tags?.map((tag) => {
             return (
               <StTag key={tag?.tagId}>
                 <div>
                   <StTagLink to={`/tag/${tag?.tagId}`} state={{ tag }}>
-                    <p>{tag.tagName}</p>
+                    <p style={{ color: tag.tagColor }}>{tag.tagName}</p>
                     <p>{">"}</p>
                   </StTagLink>
-                  <hr />
                 </div>
               </StTag>
             )
@@ -109,11 +106,14 @@ const StTagLink = styled(Link)`
   text-decoration: none;
   display: flex;
   justify-content: space-between;
+  border-bottom: 0.15rem solid #f0efef;
+  margin-bottom: 1rem;
   p {
     &:last-child {
       background-color: transparent;
       color: #d8d5d5;
     }
+    height: 2.8rem;
   }
 `
 

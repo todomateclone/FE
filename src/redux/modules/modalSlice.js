@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
   openModal: false,
   openBottomModal: false,
+  openColorBottomModal: false,
+  openSetBottomModal: false,
   isLoading: false,
   error: null,
 }
@@ -17,6 +19,12 @@ const modalSlice = createSlice({
     sendBtmModalStatus: (state, action) => {
       state.openBottomModal = action.payload
     },
+    sendColorBtmModalStatus: (state, action) => {
+      state.openColorBottomModal = action.payload
+    },
+    sendSetBtmModalStatus: (state, action) => {
+      state.openSetBottomModal = action.payload
+    },
   },
 })
 
@@ -25,5 +33,7 @@ export const {
   sendModalStatus,
   openBottomModal,
   sendBtmModalStatus,
+  sendColorBtmModalStatus,
+  sendSetBtmModalStatus,
 } = modalSlice.actions
 export default modalSlice.reducer
