@@ -27,13 +27,23 @@ const Profile = () => {
     description: "",
   })
 
-  const changeInputHandler = (e) => {
-    setNewProfile({ ...newProfile, [e.target.name]: e.target.value })
+  const changeNameHandler = (e) => {
+    setNewProfile({
+      description: profile.description,
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  const changeDescriptionHandler = (e) => {
+    setNewProfile({
+      nickname: profile.nickname,
+      [e.target.name]: e.target.value,
+    })
   }
 
   const submitHandler = () => {
     if (newProfile.nickname === "" || newProfile.description === "")
-      navigate("/main")
+      navigate(-1)
     else {
       dispatch(__patchProfile(newProfile))
       navigate("/main")
@@ -95,7 +105,7 @@ const Profile = () => {
                   ? profile.nickname
                   : newProfile.nickname
               }
-              onChange={changeInputHandler}
+              onChange={changeNameHandler}
               placeholder="이름 입력"
               autoFocus
             />
@@ -109,7 +119,7 @@ const Profile = () => {
                   ? profile.description
                   : newProfile.description
               }
-              onChange={changeInputHandler}
+              onChange={changeDescriptionHandler}
               placeholder="자기소개 입력(최대 50글자)"
               maxLength="50"
             ></StInput>
