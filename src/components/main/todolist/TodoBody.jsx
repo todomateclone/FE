@@ -50,7 +50,7 @@ const TodoBody = ({ val, tag, id }) => {
     // dispatch(__getTodos)
   }
   const handleClickOutside = () => {
-    dispatch(sendTodoId(null))
+    // dispatch(sendTodoId(null))
   }
 
   const ref = useOutsideClick(handleClickOutside)

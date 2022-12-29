@@ -34,17 +34,19 @@ const Todolist = () => {
               item.todoDay === chosenDate.todoDate.pickDate
           )
           return (
-            <StTodolist key={`StTodolist${tag.tagId}`}>
-              <TodoTag tag={tag} key={`StTagTitle${tag.tagId}`} />
-              {todo?.map((val) => (
-                <TodoBody
-                  val={val}
-                  tag={tag}
-                  key={"frag" + val.todoId + Math.random()}
-                  id={val.todoId}
-                />
-              ))}
-            </StTodolist>
+            <StTodoWrap key={"stWrap" + tag.tagId}>
+              <StTodolist key={`StTodolist${tag.tagId}`}>
+                <TodoTag tag={tag} key={`StTagTitle${tag.tagId}`} />
+                {todo?.map((val) => (
+                  <TodoBody
+                    val={val}
+                    tag={tag}
+                    key={"frag" + val.todoId + Math.random()}
+                    id={val.todoId}
+                  />
+                ))}
+              </StTodolist>
+            </StTodoWrap>
           )
         })}
       </>
@@ -61,17 +63,19 @@ const Todolist = () => {
             item.todoDay === new Date().getDate()
         )
         return (
-          <StTodolist key={`StTodolist${tag.tagId}`}>
-            <TodoTag tag={tag} key={`StTagTitle${tag.tagId}`} />
-            {todo?.map((val) => (
-              <TodoBody
-                val={val}
-                tag={tag}
-                key={"frag" + val.todoId + Math.random()}
-                id={val.todoId}
-              />
-            ))}
-          </StTodolist>
+          <StTodoWrap key={"stWrap" + tag.tagId}>
+            <StTodolist key={`StTodolist${tag.tagId}`}>
+              <TodoTag tag={tag} key={`StTagTitle${tag.tagId}`} />
+              {todo?.map((val) => (
+                <TodoBody
+                  val={val}
+                  tag={tag}
+                  key={"frag" + val.todoId + Math.random()}
+                  id={val.todoId}
+                />
+              ))}
+            </StTodolist>
+          </StTodoWrap>
         )
       })}
     </>
@@ -79,6 +83,13 @@ const Todolist = () => {
 }
 
 export default Todolist
+
+const StTodoWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+`
 
 const StTodolist = styled.div`
   overflow-y: auto;

@@ -18,7 +18,7 @@ import {
   anotherdayIcon,
   timeNotificationIcon,
 } from "../../styles/assets"
-import useOutsideCLick from "../../hooks/useOutsideClick"
+import useOutsideClick from "../../hooks/useOutsideClick"
 
 const BtmMenuModal = (/* setModalOpen */) => {
   /*   const closeModal = () => {
@@ -30,7 +30,7 @@ const BtmMenuModal = (/* setModalOpen */) => {
   const handleOutsideClick = () => {
     dispatch(sendBtmModalStatus(false))
   }
-  const ref = useOutsideCLick(handleOutsideClick)
+  const ref = useOutsideClick(handleOutsideClick)
   const dispatch = useDispatch()
 
   // 잠시 보류

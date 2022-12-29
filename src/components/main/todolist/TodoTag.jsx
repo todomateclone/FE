@@ -25,7 +25,7 @@ const TodoTag = ({ tag }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     handleAddTodo(tag.tagId)
-    setAddTodo({ ...addTodo, content: "" })
+    // setAddTodo({ ...addTodo, content: "" })
     dispatch(__getTodos)
   }
   useEffect(() => {

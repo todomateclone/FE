@@ -11,14 +11,18 @@ const Main = () => {
     <>
       <Header />
       <StMainWrapper>
-        <StSocial></StSocial>
-        <StFeed>
-          <h3>FEED</h3>
-        </StFeed>
-        <StCalendar>
-          <TodoCalendar />
-        </StCalendar>
-        <Todolist />
+        <StLeftWrap>
+          <StSocial></StSocial>
+          <StCalendar>
+            <TodoCalendar />
+          </StCalendar>
+        </StLeftWrap>
+        <StRightWrap>
+          <StFeed>
+            <h3>FEED</h3>
+          </StFeed>
+          <Todolist />
+        </StRightWrap>
         <SubMenuModal />
         <BtmMenuModal />
       </StMainWrapper>
@@ -28,30 +32,48 @@ const Main = () => {
 
 export default Main
 
-const StMainWrapper = styled.div`
-  /* position: relative; */
+const StLeftWrap = styled.div`
   display: grid;
-  grid-template-columns: 22rem 1fr;
+  max-width: 42.5rem;
+  grid-template-columns: 100%;
   grid-auto-rows: 4rem auto;
   grid-template-areas:
-    "social feed"
-    "calendar todolist";
-  gap: 2em;
-  padding: 2rem 3rem 2rem;
-  overflow-x: hidden;
+    "social"
+    "calendar";
+  gap: 2rem;
+  padding: 2rem 1rem 3rem 2rem;
+  overflow: hidden;
+  grid-area: leftSide;
+`
+
+const StRightWrap = styled.div`
+  display: grid;
+  width: 100%;
+  /* grid-template-columns: 22rem; */
+  grid-auto-rows: 5rem auto;
+  grid-template-areas: "feed";
+  gap: 1rem;
+  padding: 2rem 3rem 1rem 2rem;
+  overflow: hidden;
   h3 {
     font-size: xx-large;
     font-weight: 700;
   }
+  grid-area: rightSide;
+`
+
+const StMainWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
 
   @media screen and (max-width: 42.5rem) {
+    display: grid;
     grid-template-columns: 1fr;
     grid-auto-rows: auto;
     grid-template-areas:
-      "social"
-      "calendar"
-      "feed"
-      "todolist";
+      "leftSide"
+      "rightSide";
     gap: 2em;
     padding: 1.25rem;
     overflow-x: hidden;
