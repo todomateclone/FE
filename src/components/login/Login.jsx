@@ -23,6 +23,7 @@ const Login = () => {
         const { headers, data } = await instance.post(`/auth/login`, userInfo)
         console.log("로그인 성공:", data.code)
         console.log("토큰 저장하기전 헤더:", headers)
+        console.log(data)
         if (data.code === 200) {
           return (
             localStorage.setItem("authorization", headers.authorization),
@@ -30,14 +31,15 @@ const Login = () => {
             navigate("/main")
           )
         } else {
-          alert(data.msg) // 입력한 정보가 틀려서 로그인 실패시 code 400, msg: "잘못된 비밀번호입니다"
-          setUserInfo({
-            email: "",
-            password: "",
-          })
+          console.log(data)
         }
       } catch (error) {
-        // alert("로그인에 실패하였습니다!")
+        console.log(error)
+        // setUserInfo({
+        //   email: "",
+        //   password: "",
+        // })
+        alert(error.response.data.msg)
       }
     } else {
       alert("아이디, 비밀번호를 모두 입력해주세요!")
