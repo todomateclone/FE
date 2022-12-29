@@ -14,7 +14,6 @@ const Tags = () => {
     dispatch(__getTags())
   }, [dispatch])
   console.log(tags)
-  // console.log(tags)
 
   return (
     <StInputContainer>
@@ -28,7 +27,6 @@ const Tags = () => {
         </StLink>
       </StLoginHead>
       <StTagBox>
-        {/* <label>일반</label> */}
         {tags &&
           tags?.map((tag) => {
             return (
