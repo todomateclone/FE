@@ -15,7 +15,7 @@ export const mainApis = {
   postTodo: (tagId, content) =>
     baseURL
       // .post(`/todo/${tagId}`, content)
-      .post(`/todo/${tagId}`, content)
+      .post(`/${tagId}/todo`, content)
       .then((res) => {
         console.log(res.data.msg)
       })

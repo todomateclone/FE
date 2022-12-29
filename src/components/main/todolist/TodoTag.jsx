@@ -4,9 +4,6 @@ import { feedAddBtn, pendingIcon } from "../../../styles/assets"
 import Checkbox from "../../element/Checkbox"
 import { __addTodo, __getTodos } from "../../../redux/modules/todosSlice"
 import { useDispatch, useSelector } from "react-redux"
-import { baseURL } from "../../../core/api/axios"
-import { addTodo } from "../../../redux/modules/todosSlice"
-import { mainApis } from "../../../core/api/mainApi"
 import { sendDate } from "../../../redux/modules/dateSlice"
 
 const TodoTag = ({ tag }) => {
@@ -23,7 +20,7 @@ const TodoTag = ({ tag }) => {
   })
   const dispatch = useDispatch()
   const handleAddTodo = async (tagId) => {
-    await mainApis.postTodo(tagId, addTodo)
+    dispatch(__addTodo({ tagId, addTodo }))
   }
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -36,9 +33,6 @@ const TodoTag = ({ tag }) => {
     dispatch(__getTodos)
     dispatch(sendDate(chosenDate.todoDate))
   }, [dispatch])
-
-  console.log(chosenDate.todoDate)
-  console.log(addTodo)
 
   return (
     <>
@@ -110,7 +104,7 @@ const ElTodoInputWrap = styled.form`
 `
 
 const ElInput = styled.input`
-  width: 100%;
+  width: 98%;
   font-size: medium;
   outline: none;
   border: none;
