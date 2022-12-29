@@ -21,24 +21,13 @@ const Login = () => {
     if (userInfo.email && userInfo.password) {
       try {
         const { headers, data } = await instance.post(`/auth/login`, userInfo)
-        console.log("로그인 성공:", data.code)
-        console.log("토큰 저장하기전 헤더:", headers)
-        console.log(data)
         if (data.code === 200) {
           return (
             localStorage.setItem("authorization", headers.authorization),
-            console.log("토큰 저장 후 헤더:", headers),
             navigate("/main")
           )
-        } else {
-          console.log(data)
         }
       } catch (error) {
-        console.log(error)
-        // setUserInfo({
-        //   email: "",
-        //   password: "",
-        // })
         alert(error.response.data.msg)
       }
     } else {

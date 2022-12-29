@@ -37,9 +37,6 @@ export const __putProfileImg = createAsyncThunk(
     try {
       const data = await baseURL.put(`/member/pimage`, payload)
       return thunkAPI.fulfillWithValue(data.data)
-      // headers: {
-      //   "Content-Type": "multipart/form-data", // 굳이 안해줘도 자동으로 됨 //
-      // },
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
     }
@@ -51,48 +48,24 @@ export const profileSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder
-      .addCase(__getProfile.pending, (state) => {
-        state.isLoading = true
-      })
-      .addCase(__getProfile.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.profile = action.payload
-      })
-      .addCase(__getProfile.rejected, (state, action) => {
-        state.isLoading = false
-        state.error = action.payload
-      })
+    builder.addCase(__getProfile.fulfilled, (state, action) => {
+      state.isLoading = false
+      state.profile = action.payload
+    })
 
-    builder
-      .addCase(__patchProfile.pending, (state) => {
-        state.isLoading = true
-      })
-      .addCase(__patchProfile.fulfilled, (state, action) => {
-        state.isLoading = false
-        const newProfile = action.payload.data.data
-        state.profile = newProfile
-      })
-      .addCase(__patchProfile.rejected, (state, action) => {
-        state.isLoading = false
-        state.error = action.payload
-      })
+    builder.addCase(__patchProfile.fulfilled, (state, action) => {
+      state.isLoading = false
+      const newProfile = action.payload.data.data
+      state.profile = newProfile
+    })
 
-    builder
-      .addCase(__putProfileImg.pending, (state) => {
-        state.isLoading = true
-      })
-      .addCase(__putProfileImg.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.profile = {
-          ...state.profile,
-          profileImageUrl: action.payload.data.profileImageUrl,
-        }
-      })
-      .addCase(__putProfileImg.rejected, (state, action) => {
-        state.isLoading = false
-        state.error = action.payload
-      })
+    builder.addCase(__putProfileImg.fulfilled, (state, action) => {
+      state.isLoading = false
+      state.profile = {
+        ...state.profile,
+        profileImageUrl: action.payload.data.profileImageUrl,
+      }
+    })
   },
 })
 

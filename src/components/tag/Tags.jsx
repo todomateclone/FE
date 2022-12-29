@@ -13,7 +13,6 @@ const Tags = () => {
   useEffect(() => {
     dispatch(__getTags())
   }, [dispatch])
-  console.log(tags)
 
   return (
     <StInputContainer>
