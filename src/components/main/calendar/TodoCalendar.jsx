@@ -12,10 +12,9 @@ const TodoCalendar = (props) => {
   // const chosenDate = useSelector((state) => state.todoDate)
   const [value, onChange] = useState(new Date())
   const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(__getTodos())
-    dispatch(sendDate(currentDay))
-  }, [dispatch])
+  const handleCalendarClick = (event) => {
+    event.stopPropagation()
+  }
 
   const datesValue = (target) => {
     const pickYear = target.getFullYear()
@@ -24,6 +23,10 @@ const TodoCalendar = (props) => {
     setCurrentDay({ pickYear, pickMonth, pickDate })
     setCurrentMonth({ pickYear, pickMonth })
   }
+  useEffect(() => {
+    dispatch(__getTodos())
+    dispatch(sendDate(currentDay))
+  }, [dispatch])
   return (
     <div>
       <Calendar
@@ -49,7 +52,7 @@ const TodoCalendar = (props) => {
         defaultView="month"
         next2Label={null}
         prev2Label={null}
-        onClick
+        onClick={handleCalendarClick}
         onClickDay={(value, event) => {
           datesValue(value)
           dispatch(sendDate(currentDay))
