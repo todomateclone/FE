@@ -16,16 +16,7 @@ const red = {
   six: "#cb2f49",
 }
 
-// input / textarea / select
 const common = {
-  /* inputs: `
-  border: 1px solid ${red.deep};
-  border-radius: 16px;
-  :focus {
-    outline: 2px solid ${red.deep};
-  }
-  `, */
-
   flexCenter: `
   display: flex;
   align-items: center;
