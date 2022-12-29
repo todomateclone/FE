@@ -18,11 +18,10 @@ export const baseURL = axios.create({
 })
 
 // interceptors를 통해 토큰값을 보내주는 것에 사용
-// 쿠키에 토큰 값 넣기
+// 로컬스토리지에 토큰 값 넣기
 baseURL.interceptors.request.use((config) => {
   if (config.headers === undefined) return
   const token = localStorage.getItem("authorization")
-  // console.log(token)
   config.headers["Authorization"] = `${token}`
   return config
 })

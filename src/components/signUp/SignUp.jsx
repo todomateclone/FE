@@ -37,7 +37,6 @@ const SignUp = () => {
     if (!emailError && !pwdError) {
       try {
         const { headers, data } = await instance.post(`/auth/signup`, userInfo)
-        console.log("회원가입 성공", data)
         if (data.code === 200) {
           return (
             localStorage.setItem("authorization", headers.authorization),

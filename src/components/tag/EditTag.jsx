@@ -18,13 +18,14 @@ import SetBtmModal from "./SetBtmModal"
 const EditTag = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const tag = useLocation()?.state?.tag // link로 클릭한 값 넘기기
+  const tag = useLocation()?.state?.tag
   const modalStatus = useSelector((state) => state.openModal.openBottomModal)
   const tagInfo = useSelector((state) => state.tag.tags)
 
   const initialTag = tagInfo.filter((val) => {
     return tag?.tagId === val?.tagId
   })
+
   const [newTag, setNewTag] = useState(initialTag[0])
 
   const changeInputHandler = (e) => {
@@ -44,15 +45,17 @@ const EditTag = () => {
   }
 
   const tagColorClickHandler = (e) => {
-    console.log(e.target.value)
     const colorValue = e.target.value
     setNewTag({ ...newTag, tagColor: colorValue })
-    console.log(newTag)
   }
 
   const clickTagEditHandler = (tagId) => {
-    dispatch(__patchTag({ newTag, tagId }))
-    navigate(-1)
+    if (!window.confirm("태그를 수정 하시겠습니까?")) {
+      return
+    } else {
+      dispatch(__patchTag({ newTag, tagId }))
+      navigate(-1)
+    }
   }
   const clickTagDelHandler = (tagId) => {
     if (!window.confirm("태그를 삭제 하시겠습니까?")) {
@@ -84,8 +87,7 @@ const EditTag = () => {
       <StTagBox>
         <StBox>
           <Input
-            placeholder={tag?.tagName ?? "목표 입력"} // undefined 거나 null 이면 목표입력이 나오도록
-            // borderBottom="0.2rem solid #040404;"
+            placeholder={tag?.tagName ?? "목표 입력"}
             color={newTag?.tagColor}
             autoFocus="autoFocus"
             width="100%"

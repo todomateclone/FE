@@ -21,7 +21,6 @@ const Profile = () => {
 
   const data = useSelector((state) => state.profile) // 비동기
   const profile = data.profile
-  console.log(profile)
 
   const [newProfile, setNewProfile] = useState({
     nickname: "",

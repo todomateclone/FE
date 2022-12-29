@@ -16,11 +16,7 @@ const Landing = () => {
       </div>
       <StBtnBox>
         <StLink to={"/login"}>
-          <LoginButton
-            width="18rem"
-            name="로그인"
-            height="2.3rem"
-          ></LoginButton>
+          <LoginButton width="18rem" name="로그인" height="3rem"></LoginButton>
         </StLink>
       </StBtnBox>
       <Link to={"/signup"} style={{ color: "black" }}>
@@ -63,7 +59,7 @@ const LinkSignUp = styled.div`
   font-size: 0.9rem;
 `
 const StLandingImg = styled.img`
-  margin-top: 25rem;
-  width: 25rem;
-  height: 17rem;
+  margin-top: 18rem;
+  width: 35rem;
+  height: 27rem;
 `
