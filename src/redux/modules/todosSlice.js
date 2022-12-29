@@ -5,7 +5,7 @@ import { baseURL } from "../../core/api/axios"
 const initialState = {
   allTodos: {},
   getTodoId: "",
-  isModifying: false,
+  isModifying: null,
   isLoading: false,
   error: null,
 }
@@ -39,7 +39,7 @@ export const __addTodo = createAsyncThunk(
   "todos/add",
   async ({ tagId, content }, thunkAPI) => {
     try {
-      // 이걸 쓰면 터진다. 왤까...
+      // thunk는 하나의 arg밖에 가질 수 없음ㅜ
       // await mainApis.postTodo(tagId, content)
       await baseURL.post(`/todo/${tagId}`, content)
       return thunkAPI.fulfillWithValue(console.log("success"))
@@ -63,9 +63,9 @@ export const __delTodo = createAsyncThunk(
 
 export const __putTodo = createAsyncThunk(
   "todos/put",
-  async ({ todoId, content }, thunkAPI) => {
+  async (todoId, thunkAPI) => {
     try {
-      await baseURL.put(`/todo/${todoId}`, content)
+      await baseURL.put(`/todo/${todoId}`, {})
       return thunkAPI.fulfillWithValue(console.log("success"))
     } catch (err) {
       return thunkAPI.rejectWithValue(console.log(err))
@@ -91,9 +91,9 @@ export const todosSlice = createSlice({
       baseURL.delete(`/todo/${action.payload}`)
       state.allTodos = state.allTodos.filter((v) => v.todoId !== action.payload)
     },
-    updateTodo: (state, action) => {
-      baseURL.patch(`/todo/${action.payload}`)
-      state.allTodos = action.payload
+    putTodo: (state, { todoId, content }) => {
+      baseURL.patch(`/todo/${todoId}`, content)
+      state.allTodos = state.payload
     },
     sendTodoId: (state, action) => {
       state.getTodoId = action.payload
@@ -159,11 +159,13 @@ export const todosSlice = createSlice({
         state.isLoading = true
       })
       .addCase(__putTodo.fulfilled, (state, action) => {
-        const idx = state.findIndex((todo) => todo.id === action.payload.id)
+        /* const idx = state.findIndex((todo) => todo.todoId === action.payload.id)
         state[idx] = {
           ...state[idx],
-          ...action.payload,
-        }
+          ...action.payload, */
+        state.isLoading = false
+        state.allTodos = action.payload
+        // )
       })
       .addCase(__putTodo.rejected, (state, action) => {
         state.isLoading = false
@@ -175,7 +177,7 @@ export const todosSlice = createSlice({
 export const {
   addTodo,
   delTodo,
-  updateTodo,
+  putTodo,
   sendTodoId,
   getTodoId,
   sendModifying,
