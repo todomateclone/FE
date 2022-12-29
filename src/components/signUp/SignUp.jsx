@@ -5,8 +5,7 @@ import { SlArrowLeft } from "react-icons/sl"
 import { Link, useNavigate } from "react-router-dom"
 import Input from "../element/Input"
 import { instance } from "../../core/api/axios"
-// 이메일 비밀번호 입력해서 post 요청 보내고 => email 입력했을 때 이메일 형식 확인 둘다 입력시 확인버튼 누르면 회원정보 수정 페이지로 (프로필)
-// 이메일 동의 ? =>
+
 const SignUp = () => {
   const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState({

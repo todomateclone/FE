@@ -15,7 +15,6 @@ const Login = () => {
 
   const changeInputHandler = (e) => {
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value })
-    // console.log(userInfo)
   }
 
   const submitHandler = async (e) => {
@@ -38,11 +37,9 @@ const Login = () => {
           })
         }
       } catch (error) {
-        console.log("1")
         // alert("로그인에 실패하였습니다!")
       }
     } else {
-      // 아이디 비밀번호 빈칸있을 때
       alert("아이디, 비밀번호를 모두 입력해주세요!")
     }
   }

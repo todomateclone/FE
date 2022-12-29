@@ -6,7 +6,7 @@ const initialState = {
     {
       tagId: 999,
       tagName: "일반",
-      tagColor: "#FFFFFF",
+      tagColor: "#D3FF8B",
     },
   ],
   isLoading: false,
@@ -95,7 +95,6 @@ export const tagSlice = createSlice({
       })
       .addCase(__addTag.fulfilled, (state, action) => {
         state.isLoading = false
-
         state.tags = [...state.tags, action.payload.data]
       })
       .addCase(__addTag.rejected, (state, action) => {
@@ -126,11 +125,11 @@ export const tagSlice = createSlice({
         const { tags } = state
         const temp = [...tags]
         state.tags = temp?.map((tag) => {
-          console.log(tag)
           if (tag?.tagId === action.payload?.tagId) {
             return {
               ...tag,
               tagName: action.payload.tagName,
+              tagColor: action.payload.tagColor,
             }
           }
           return { ...tag }
