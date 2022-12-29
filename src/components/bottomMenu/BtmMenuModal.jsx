@@ -65,9 +65,10 @@ const BtmMenuModal = (/* setModalOpen */) => {
           </div>
           {/* 이것도 한 발 느림 */}
           {allTodos?.data?.todos?.map((item) =>
-            giveTodoId === item.todoId ? null : ( // <h6 key={"f" + item.todoId}>임시타이틀</h6>
+            item.todoId === giveTodoId ? (
               <h6 key={"t" + item.todoId}>{item.content}</h6>
-            )
+            ) : // <h6 key={"f" + item.todoId}>임시타이틀</h6>
+            null
           )}
           <div>
             <ElBtnBox
