@@ -47,7 +47,7 @@ const SignUp = () => {
           alert(data.msg)
         }
       } catch (error) {
-        alert("회원가입에 실패하였습니다")
+        alert(error.response.data.msg)
       }
     } else {
       alert("아이디, 비밀번호를 모두 입력해주세요!")
@@ -66,9 +66,11 @@ const SignUp = () => {
         name="email"
         value={userInfo.email}
         placeholder="이메일"
-        width="70rem"
+        width="80%"
+        maxWidth="70rem"
         autoFocus="autoFocus"
         borderBottom="0.2rem solid #7c7b7b;"
+        fontSize="1.5rem"
         onChange={changeEmailInputHandler}
       ></Input>
       {emailError && <span>올바른 이메일 형식으로 작성해주세요.</span>}
@@ -77,7 +79,8 @@ const SignUp = () => {
         value={userInfo.password}
         type="password"
         placeholder="비밀번호"
-        width="70rem"
+        width="80%"
+        maxWidth="70rem"
         borderBottom="0.2rem solid #7c7b7b;"
         onChange={changePwdInputHandler}
       ></Input>
@@ -87,7 +90,8 @@ const SignUp = () => {
 
       <CustomButton
         name="확인"
-        width="70rem"
+        width="80%"
+        maxWidth="70rem"
         height="3.7rem"
         color="#c9c7c7"
         fontSize="1.4rem"
@@ -108,6 +112,7 @@ const StInputForm = styled.div`
   gap: 2rem;
   font-size: 1.35rem;
   font-weight: 600;
+  width: 100%;
   div {
     margin-bottom: 2rem;
   }

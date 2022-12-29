@@ -2,13 +2,7 @@ import { createAsyncThunk, createSlice, TaskAbortError } from "@reduxjs/toolkit"
 import { baseURL } from "../../core/api/axios"
 
 const initialState = {
-  tags: [
-    {
-      tagId: 999,
-      tagName: "일반",
-      tagColor: "#D3FF8B",
-    },
-  ],
+  tags: [],
   isLoading: false,
   error: null,
 }
@@ -18,7 +12,6 @@ export const __getTags = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await baseURL.get(`/mypage/tag`)
-
       return thunkAPI.fulfillWithValue(data)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
@@ -32,6 +25,7 @@ export const __addTag = createAsyncThunk(
     console.log(payload)
     try {
       const { data } = await baseURL.post(`/mypage/tag`, payload)
+      console.log(data)
       return thunkAPI.fulfillWithValue(data)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
