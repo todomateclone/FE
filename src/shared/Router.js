@@ -9,7 +9,6 @@ import MainPage from "../pages/MainPage"
 import EditTagPage from "../pages/EditTagPage"
 
 const Router = () => {
-  // 라우트 경로는 추후 수정 필요 임시
   return (
     <BrowserRouter>
       <Routes>
