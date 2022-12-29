@@ -102,8 +102,6 @@ const StSubWrap = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  transition: ${(props) =>
-    props.toggle ? "all 3s ease-in" : "all 3s ease-in"};
   z-index: 4;
 `
 

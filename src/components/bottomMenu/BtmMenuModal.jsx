@@ -18,6 +18,7 @@ import {
   anotherdayIcon,
   timeNotificationIcon,
 } from "../../styles/assets"
+import useOutsideCLick from "../../hooks/useOutsideClick"
 
 const BtmMenuModal = (/* setModalOpen */) => {
   /*   const closeModal = () => {
@@ -26,35 +27,24 @@ const BtmMenuModal = (/* setModalOpen */) => {
   const { allTodos } = useSelector((state) => state.allTodos)
   const modalStatus = useSelector((state) => state.openModal.openBottomModal)
   const giveTodoId = useSelector((state) => state.allTodos.getTodoId)
+  const handleOutsideClick = () => {
+    dispatch(sendBtmModalStatus(false))
+  }
+  const ref = useOutsideCLick(handleOutsideClick)
   const dispatch = useDispatch()
-  const modalRef = useRef(HTMLDivElement)
 
   // 잠시 보류
   useEffect(() => {
     dispatch(__getTodos())
-    // 이벤트 핸들러 함수
-    const handler = (event) => {
-      // mousedown 이벤트가 발생한 영역이 모달창이 아닐 때, 모달창 제거 처리
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        // setModalOpen(false)
-        // setOpen(!open)
-      }
-    }
-
-    // 이벤트 핸들러 등록
-    document.addEventListener("mousedown", handler)
-    document.addEventListener("touchstart", handler) // 모바일 대응
-
-    return () => {
-      // 이벤트 핸들러 해제
-      document.removeEventListener("mousedown", handler)
-      document.removeEventListener("touchstart", handler) // 모바일 대응
-    }
   }, [dispatch])
   return (
     <>
       <StBtmWrap hidden={!modalStatus} toggle={modalStatus}></StBtmWrap>
-      <StBtmMenu ref={modalRef} toggle={modalStatus}>
+      <StBtmMenu
+        toggle={modalStatus}
+        ref={ref}
+        onClick={(e) => e.stopPropagation()}
+      >
         <StInsideMenu toggle={modalStatus}>
           <div
             onClick={() => {
@@ -124,8 +114,6 @@ const StBtmWrap = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  transition: ${(props) =>
-    props.toggle ? "all 3s ease-in" : "all 3s ease-in"};
   z-index: 4;
 `
 
