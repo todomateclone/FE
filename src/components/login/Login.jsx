@@ -28,7 +28,7 @@ const Login = () => {
           return (
             localStorage.setItem("authorization", headers.authorization),
             console.log("토큰 저장 후 헤더:", headers),
-            navigate("/")
+            navigate("/main")
           )
         } else {
           alert(data.msg) // 입력한 정보가 틀려서 로그인 실패시 code 400, msg: "잘못된 비밀번호입니다"
