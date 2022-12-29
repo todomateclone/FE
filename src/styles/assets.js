@@ -15,7 +15,7 @@ const anotherdayIcon = "/img/feedOptionMenuAnotherdayIcon.webp"
 const deleteIcon = "/img/feedOptionMenuDeleteIcon.webp"
 const editIcon = "/img/feedOptionMenuEditIcon.webp"
 const timeNotificationIcon = "/img/optionMenuTimeNotificationIcon.webp"
-
+const calendarVictoryIcon = "/img/calendarVictoryIcon.webp"
 
 export {
   plusIcon,
@@ -35,4 +35,5 @@ export {
   deleteIcon,
   editIcon,
   timeNotificationIcon,
+  calendarVictoryIcon,
 }

@@ -75,6 +75,7 @@ const BtmMenuModal = (/* setModalOpen */) => {
                 dispatch(__delTodo(giveTodoId))
                 dispatch(sendBtmModalStatus(!modalStatus))
                 dispatch(__getTodos())
+                dispatch(sendTodoId(null))
               }}
             >
               <img src={deleteIcon} alt="" />

@@ -5,6 +5,7 @@ import Todolist from "./todolist/Todolist"
 import TodoCalendar from "./calendar/TodoCalendar"
 import SubMenuModal from "../subMenu/SubMenuModal"
 import BtmMenuModal from "../bottomMenu/BtmMenuModal"
+import ProfileBox from "../subMenu/ProfileBox"
 
 const Main = () => {
   return (
@@ -12,14 +13,16 @@ const Main = () => {
       <Header />
       <StMainWrapper>
         <StLeftWrap>
-          <StSocial></StSocial>
+          <StSocial>
+            <ProfileBox />
+          </StSocial>
           <StCalendar>
             <TodoCalendar />
           </StCalendar>
         </StLeftWrap>
         <StRightWrap>
           <StFeed>
-            <h3>FEED</h3>
+            <h3 id="feed">Feed</h3>
           </StFeed>
           <Todolist />
         </StRightWrap>
@@ -40,8 +43,7 @@ const StLeftWrap = styled.div`
   grid-template-areas:
     "social"
     "calendar";
-  gap: 2rem;
-  padding: 2rem 1rem 3rem 2rem;
+  padding: 0 1rem 0 2rem;
   overflow: hidden;
   grid-area: leftSide;
 `
@@ -50,14 +52,15 @@ const StRightWrap = styled.div`
   display: grid;
   width: 100%;
   /* grid-template-columns: 22rem; */
-  grid-auto-rows: 5rem auto;
+  grid-auto-rows: auto auto;
   grid-template-areas: "feed";
   gap: 1rem;
-  padding: 2rem 3rem 1rem 2rem;
+  padding: 0 3rem 1rem 2rem;
   overflow: hidden;
-  h3 {
+  #feed {
     font-size: xx-large;
-    font-weight: 700;
+    font-family: "Roboto", sans-serif;
+    font-weight: 900;
   }
   grid-area: rightSide;
 `
@@ -66,6 +69,7 @@ const StMainWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
+  padding-top: 2rem;
 
   @media screen and (max-width: 42.5rem) {
     display: grid;
@@ -75,8 +79,11 @@ const StMainWrapper = styled.div`
       "leftSide"
       "rightSide";
     gap: 2em;
-    padding: 1.25rem;
+    padding: 2rem 1.25rem;
     overflow-x: hidden;
+    #feed {
+      display: none;
+    }
   }
 `
 
