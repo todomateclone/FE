@@ -12,12 +12,14 @@ import { sendDate } from "../../../redux/modules/dateSlice"
 const TodoTag = ({ tag }) => {
   const chosenDate = useSelector((state) => state.todoDate)
   const [inputHidden, setInputHidden] = useState(true)
-  const date = new Date()
-  const [addTodo, setAddTodo] = useState({
-    content: "",
+  const date = {
     todoYear: chosenDate.todoDate.pickYear,
     todoMonth: chosenDate.todoDate.pickMonth,
     todoDay: chosenDate.todoDate.pickDate,
+  }
+  const [addTodo, setAddTodo] = useState({
+    ...date,
+    content: "",
   })
   const dispatch = useDispatch()
   const handleAddTodo = async (tagId) => {
@@ -34,6 +36,10 @@ const TodoTag = ({ tag }) => {
     dispatch(__getTodos)
     dispatch(sendDate(chosenDate.todoDate))
   }, [dispatch])
+
+  console.log(chosenDate.todoDate)
+  console.log(addTodo)
+
   return (
     <>
       <StTagTitle
@@ -57,19 +63,9 @@ const TodoTag = ({ tag }) => {
           placeholder="입력"
           style={{ borderBottom: `0.09rem solid ${tag.tagColor}` }}
           onChange={(e) => {
-            /* addTodo.todoDay === date.getDate()
-              ? setAddTodo({
-                  content: e.target.value,
-                  todoYear: date?.getFullYear(),
-                  todoMonth: date?.getMonth(),
-                  todoDay: date?.getDate(),
-                })
-              :  */ setAddTodo({
-              ...addTodo,
+            setAddTodo({
+              ...date,
               content: e.target.value,
-              /* todoYear: chosenDate.todoDate.pickYear,
-              todoMonth: chosenDate.todoDate.pickMonth,
-              todoDay: chosenDate.todoDate.pickDate, */
             })
           }}
           value={addTodo.content}
