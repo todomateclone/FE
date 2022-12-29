@@ -76,12 +76,7 @@ export const tagSlice = createSlice({
         state.isLoading = true
       })
       .addCase(__getTags.fulfilled, (state, action) => {
-        // state.isLoading = false
-        // console.log(action.payload.data)
-        // const { tags } = state
-        // const temp = [...tags]
         const tagList = action.payload.data
-
         state.tags = tagList
       })
       .addCase(__getTags.rejected, (state, action) => {

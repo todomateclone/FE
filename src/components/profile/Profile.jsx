@@ -33,8 +33,12 @@ const Profile = () => {
   }
 
   const submitHandler = () => {
-    dispatch(__patchProfile(newProfile))
-    navigate("/login")
+    if (newProfile.nickname === "" || newProfile.description === "")
+      navigate("/main")
+    else {
+      dispatch(__patchProfile(newProfile))
+      navigate("/main")
+    }
   }
   const profileImgClickHandler = (e) => {
     e.preventDefault()
@@ -47,11 +51,7 @@ const Profile = () => {
 
   const changeImgHandler = (e) => {
     const formData = new FormData()
-    // console.log(formData) // FormData {}
-    console.log(e.target.files[0]) // name: "ee.jpeg"...
-    // setProfileImg(e.target.files)
-    formData.append("multipartFile", e.target.files[0]) // append (key/value)
-    // console.log(profileImg)
+    formData.append("multipartFile", e.target.files[0])
     dispatch(__putProfileImg(formData))
   }
 

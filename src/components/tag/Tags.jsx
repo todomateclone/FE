@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import styled from "styled-components"
 import { SlArrowLeft } from "react-icons/sl"
-import { RxHeight, RxPlus } from "react-icons/rx"
+import { RxPlus } from "react-icons/rx"
 import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { __getTags } from "../../redux/modules/tagSlice"
