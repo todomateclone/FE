@@ -16,7 +16,7 @@
 <img src="https://img.shields.io/badge/Amazon EC2-yellow?style=for-the-badge&logo=AmazonEC2&logoColor=white"> <img src="https://img.shields.io/badge/Amazon S3-yellow?style=for-the-badge&logo=AmazonS3&logoColor=white"> <img src="https://img.shields.io/badge/Github Actions-2088FF?style=for-the-badge&logo=Github Actions&logoColor=white"> <img src="https://img.shields.io/badge/Amazon RDS-527FFF?style=for-the-badge&logo=Amazon RDS&logoColor=white">
 
 ## 🛠️ Tech-Stack Architecture 
-![기술 스택](img_2.png)
+![기술 스택](https://github.com/todomateclone/BE/raw/develop/img_2.png)
 
 ## 📌 목표 설정
 ### 1단계(완료)
@@ -34,7 +34,7 @@
 - 이메일 인증
 
 ## 구현 이미지
-![첫 페이지](img_3.png)
+![첫 페이지](https://github.com/todomateclone/BE/raw/develop/img_3.png)
 
 ## ERD
 ![image](https://user-images.githubusercontent.com/105099062/209951945-ed0e751c-974f-4434-94bd-46d89773322d.png)
