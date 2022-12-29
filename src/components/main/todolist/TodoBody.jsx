@@ -17,7 +17,6 @@ import useOutsideClick from "../../../hooks/useOutsideClick"
 const TodoBody = ({ val, tag, id }) => {
   // 상태
   const [checked, setChecked] = useState(false)
-  const [fullTodo, setFullTodo] = useState({})
   const [todo, setTodo] = useState({
     content: "",
     todoYear: val.todoYear,
@@ -37,7 +36,7 @@ const TodoBody = ({ val, tag, id }) => {
   }
   const handleSubmit = (e) => {
     e.preventDefault()
-    // handlePutTodo(giveTodoId)
+    handlePutTodo(giveTodoId)
   }
   const handleCheck = () => {
     setChecked(!checked)
@@ -50,9 +49,9 @@ const TodoBody = ({ val, tag, id }) => {
     // dispatch(__getTodos)
   }
   const handleClickOutside = () => {
-    // dispatch(sendTodoId(null))
+    dispatch(sendTodoId(null))
+    dispatch(sendTodoId(giveTodoId))
   }
-
   const ref = useOutsideClick(handleClickOutside)
 
   const dispatch = useDispatch()
@@ -100,6 +99,7 @@ const TodoBody = ({ val, tag, id }) => {
           src={pendingIcon}
           alt=""
           onClick={(e) => {
+            e.stopPropagation()
             dispatch(sendTodoId(val.todoId))
             dispatch(sendBtmModalStatus(!modalStatus))
           }}

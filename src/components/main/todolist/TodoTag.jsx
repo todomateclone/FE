@@ -7,29 +7,32 @@ import { useDispatch, useSelector } from "react-redux"
 import { baseURL } from "../../../core/api/axios"
 import { addTodo } from "../../../redux/modules/todosSlice"
 import { mainApis } from "../../../core/api/mainApi"
+import { sendDate } from "../../../redux/modules/dateSlice"
 
 const TodoTag = ({ tag }) => {
   const chosenDate = useSelector((state) => state.todoDate)
   const [inputHidden, setInputHidden] = useState(true)
+  const date = new Date()
   const [addTodo, setAddTodo] = useState({
     content: "",
-    todoYear: new Date().getFullYear(),
-    todoMonth: new Date().getMonth(),
-    todoDay: new Date().getDate(),
+    todoYear: chosenDate.todoDate.pickYear,
+    todoMonth: chosenDate.todoDate.pickMonth,
+    todoDay: chosenDate.todoDate.pickDate,
   })
   const dispatch = useDispatch()
   const handleAddTodo = async (tagId) => {
     await mainApis.postTodo(tagId, addTodo)
   }
-
   const handleSubmit = (e) => {
     e.preventDefault()
     handleAddTodo(tag.tagId)
-    // setAddTodo({ ...addTodo, content: "" })
+    setAddTodo({ ...addTodo, content: "" })
     dispatch(__getTodos)
   }
+
   useEffect(() => {
     dispatch(__getTodos)
+    dispatch(sendDate(chosenDate.todoDate))
   }, [dispatch])
   return (
     <>
@@ -54,11 +57,19 @@ const TodoTag = ({ tag }) => {
           placeholder="입력"
           style={{ borderBottom: `0.09rem solid ${tag.tagColor}` }}
           onChange={(e) => {
-            setAddTodo({
+            /* addTodo.todoDay === date.getDate()
+              ? setAddTodo({
+                  content: e.target.value,
+                  todoYear: date?.getFullYear(),
+                  todoMonth: date?.getMonth(),
+                  todoDay: date?.getDate(),
+                })
+              :  */ setAddTodo({
+              ...addTodo,
               content: e.target.value,
-              todoYear: chosenDate.todoDate.pickYear,
+              /* todoYear: chosenDate.todoDate.pickYear,
               todoMonth: chosenDate.todoDate.pickMonth,
-              todoDay: chosenDate.todoDate.pickDate,
+              todoDay: chosenDate.todoDate.pickDate, */
             })
           }}
           value={addTodo.content}
