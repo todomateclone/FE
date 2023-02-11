@@ -1,5 +1,5 @@
 # todomate (클론코딩)
-### [클론페이지](https://www.todomate.net/), [노션페이지](https://educated-library-708.notion.site/6-SA-466502a9508e4523a53e097b790b7539#02f2b5b2cac942e7be515460f30538b2)
+### [클론 대상 원본 사이트](https://www.todomate.net/), [노션페이지](https://educated-library-708.notion.site/6-SA-466502a9508e4523a53e097b790b7539#02f2b5b2cac942e7be515460f30538b2)
 
 ## 👨‍👨‍👧‍👦 팀원
 ### FE : [권령빈](https://github.com/Dev-RyanK), [서강산](https://github.com/dkaodkaork)
